@@ -1,48 +1,76 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#IGNORE_BRACES
+#INTERACTIVE_COMMENTS
+#NO_BANG_HIST
+#KSH_OPTION_PRINT
+#NO_MULTIOS
+#POSIX_BUILTINS
+#PROMPT_BANG
+#SINGLE_LINE_ZLE
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/icnh/.oh-my-zsh"
 
-# Enable vi mode
-bindkey -v
+###############################
+### Expansion and globbing ###
+#############################
 
-# Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
-VIM_MODE_ESC_PREFIXED_WANTED='bdfhul.g'  # Default is 'bdf.g'
+# Set qualifiers on (DEFAULT)
+#setopt BARE_GLOB_QUAL
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Treats characters resulting from parameter expansion as being valid for
+# fileame expansion and generation (DEFAULT)
+#setopt NO_GLOB_SUBST
 
-plugins=(
-            git
-            zsh-syntax-highlighting
-            zsh-autosuggestions
-            #zsh-vim-mode
-            vi-mode
-        )
+# Doesn't expand relative pathnames to absolute pathnames (DEFAULT)
+#setopt NO_SH_FILE_EXPANSION
+#setopt NO_SH_GLOB
+#setopt NO_KSH_GLOB
 
-source $ZSH/oh-my-zsh.sh
+# Count strings in parameters as single words (DEFAULT)
+#setopt NO_SH_WORD_SPLIT
 
-export LANG=en_US.UTF-8
+# Enable error messages when searching (DEFAULT)
+#setopt NOMATCH
+#setopt BAD_PATTERN
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Compilation flags
-export ARCHFLAGS="-arch x86_64"
 
-# Aliases
-alias sczsh='source ~/.zshrc'
-alias v='\nvim'
-alias vim=''
-alias nvim=''
-alias cfv='v ~/.vimrc'
-alias cfnv='v ~/.config/nvim/init.vim'
-alias cfz='v ~/.zshrc'
+#############################
+### Background Processes ###
+###########################
+
+# Background processes are ran at a lower priority (DEFAULT)
+#setopt BG_NICE
+
+# Print a message immediately after a background processes finishes, then
+# reprint the line you were on, as far as you've got (DEFAULT)
+#setopt NOTIFY
+
+# Whenever you exit the shell, kill all background processes (DEFAULT)
+#setopt HUP
+
+
+
+#####################
+### Miscellanous ###
+###################
+
+# Don't use ksh syntax for defining arrays (DEFAULT)
+#setopt NO_KSH_ARRAYS
+
+# Don't use $0 (argument zero) as ksh uses it; allow for usage inside functions,
+# where there it represents the function's name (DEFAULT)
+#setopt FUNCTION_ARG_ZERO
+
+# TODO: learn what this does (DEFAULT)
+#setopt NO_KSH_AUTOLOAD
+
+# Don't use ksh-like syntax for building prompts (DEFAULT)
+#setopt PROMPT_PERCENT
+#setopt NO_PROMPT_SUBST
+
+# If zsh detects an asterisk on the command line when the command is 'rm', it
+# will ask you to double-check (DEFAULT)
+#setopt NO_RM_STAR_SILENT
+
+# Don't have single letter options be more like those in sh and ksh (DEFAULT)
+#setopt NO_SH_OPTION_LETTERS
+
