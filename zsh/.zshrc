@@ -2,19 +2,44 @@
 ### Oh-my-zsh ###
 ################
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Path to your oh-my-zsh installation.
 export ZSH="/home/icnh/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
 plugins=(
             git
             zsh-syntax-highlighting
             zsh-autosuggestions
+            vi-mode
         )
 
+# Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
+# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
+# Compilation flags
+export ARCHFLAGS="-arch x86_64"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
 
@@ -119,32 +144,6 @@ setopt NO_HIST_BEEP
 
 
 
-###############
-### Prompt ###
-#############
-
-# Don't use ksh-like syntax for defining prompts [DEFAULT]
-#setopt PROMPT_PERCENT
-#setopt NO_PROMPT_SUBST
-
-# Main prompt
-#PS1=$'\e[0;32m%m \e[1;34m%# \e[0m'
-#PS1='%m%# '    # (DEFAULT)
-
-# Main prompt at the right of the screen
-# Displays time in a 24 hour format, but with seconds
-RPS1='%(?..(%?%)) %w, %*'
-
-# Prompt shown when the shell is waiting for some more input
-PS2='%_> '      # (DEFAULT)
-
-# Prompt displayed within a loop, started by the shell's 'select' mechanism
-PS3='?# '      # (DEFAULT)
-
-# Prompt useful for debugging
-PS4='+%N:%i> ' # (DEFAULT)
-
-
 #############################
 ### Background Processes ###
 ###########################
@@ -172,7 +171,9 @@ PS4='+%N:%i> ' # (DEFAULT)
 # where there it represents the function's name (DEFAULT)
 #setopt FUNCTION_ARG_ZERO
 
-# TODO: learn what this does (DEFAULT)
+# Don't emulate ksh function autoloading (basically, when a function is
+# autoloaded, the corresponding file is merely executed, and must define the
+# function itself)
 #setopt NO_KSH_AUTOLOAD
 
 # If zsh detects an asterisk on the command line when the command is 'rm', it
@@ -185,13 +186,11 @@ PS4='+%N:%i> ' # (DEFAULT)
 # Use zsh-like syntax for loops instead of csh-like syntax (DEFAULT)
 #setopt NO_CSH_JUNKIE_LOOPS
 
-# Add the ~/bin directory to path, if it exists:
-#if [[ -d "$HOME/bin" ]]; then
-#    PATH="$HOME/bin:$PATH"
-#fi
-
-# Enable vi mode
-bindkey -v
+# Add the ~/bin directory to path if it exists, but no duplicates:
+if [[ -d "$HOME/bin" ]]; then
+    typeset -U path
+    path=($HOME/bin $path)
+fi
 
 # zsh beeps when it doesn't like something by default, and that I find annoying
 setopt NO_BEEP
@@ -208,3 +207,44 @@ setopt NO_BEEP
 if [[ -r ~/.aliasrc.sh ]]; then
     source ~/.aliasrc.sh
 fi
+
+
+
+########################
+### ZSH Line Editor ###
+######################
+
+# Set the $VISUAL parameter
+if command -v nvim &> /dev/null; then
+    VISUAL=nvim
+    bindkey -v
+elif command -v emacs &> /dev/null; then
+    VISUAL=emacs
+    bindkey -e
+elif command -v vim &> /dev/null; then
+    VISUAL=vim
+    bindkey -v
+elif command -v vi &> /dev/null; then
+    VISUAL=vi
+    bindkey -v
+fi
+
+# Don't use ksh-like syntax for defining prompts [DEFAULT]
+#setopt PROMPT_PERCENT
+#setopt NO_PROMPT_SUBST
+
+# Main prompt
+#PS1='%m%# '    # (DEFAULT)
+
+# Main prompt at the right of the screen
+# Displays time in a 24 hour format, but with seconds
+#RPS1='%(?..(%?%)) %w, %*'
+
+# Prompt shown when the shell is waiting for some more input
+#PS2='%_> '      # (DEFAULT)
+
+# Prompt displayed within a loop, started by the shell's 'select' mechanism
+#PS3='?# '      # (DEFAULT)
+
+# Prompt useful for debugging
+#PS4='+%N:%i> ' # (DEFAULT)
