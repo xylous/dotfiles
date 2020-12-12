@@ -7,8 +7,8 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 
 "" BASIC VIM OPTIONS
-" Be iMproved, required
-set nocompatible
+" Be iMproved, required (nvim is always nocompatible)
+"set nocompatible
 
 " Gives visual feedback; highlight syntax
 syntax enable
@@ -16,10 +16,14 @@ syntax enable
 " Loads filetype specific plugins and filetype specific indentation
 filetype plugin indent on
 
-" Each tab is 4 spaces wide set tabstop=4
+" Each tab is 4 spaces wide 
+set tabstop=4
 
 " Uses 4 spaces for each step of (auto)indent
 set shiftwidth=4
+
+" Sets the maximum number of columns to 80
+set textwidth=80
 
 " Tabs become spaces
 set expandtab
@@ -120,13 +124,58 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
 " Fixes the file everytime it is saved
-let g:ale_fix_on_save = 1
+"let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 
-" coc.nvim config
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"" coc.nvim config
+" Use tab for trigger completion, completion confirm, snippet expand and jump
+" requires coc-snippets extension
+"inoremap <silent><expr> <TAB>
+	  "\ pumvisible() ? coc#_select_confirm() :
+	  "\ coc#expandableOrJumpable() ?
+	  "\ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+	  "\ <SID>check_back_space() ? "\<TAB>" :
+	  "\ coc#refresh()
+
+"function! s:check_back_space() abort
+	"let col = col('.') - 1
+	"return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
+"let g:coc_snippet_next = '<tab>'
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Integrate coc.nvim with Airline
+let g:airline#exxtensions#coc#enabled = 1
 
 " C++ highlighting configuration
 let g:cpp_class_scope_highlight = 1
@@ -136,9 +185,9 @@ let g:cpp_concepts_highlight = 1
 let c_no_curly_error=1
 
 " Javascript highlighting configuration
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
+"let g:javascript_plugin_jsdoc = 1
+"let g:javascript_plugin_ngdoc = 1
+"let g:javascript_plugin_flow = 1
 
 
 
