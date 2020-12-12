@@ -24,9 +24,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
             git
-            zsh-syntax-highlighting
             zsh-autosuggestions
             vi-mode
+            zsh-syntax-highlighting
         )
 
 # Load oh-my-zsh
@@ -160,6 +160,64 @@ setopt NO_HIST_BEEP
 
 
 
+################
+### Aliases ###
+##############
+
+# It is best practice to put your aliases into a separate file, to keep them
+# neatly ordered. The following automatically loads the file .aliasrc.sh if it
+# exists:
+if [[ -r ~/.aliasrc.sh ]]; then
+    source ~/.aliasrc.sh
+fi
+
+
+
+########################
+### ZSH Line Editor ###
+######################
+
+# Set the $VISUAL parameter
+if command -v nvim &> /dev/null; then
+    VISUAL=nvim
+    bindkey -v
+elif command -v emacs &> /dev/null; then
+    VISUAL=emacs
+    bindkey -e
+elif command -v vim &> /dev/null; then
+    VISUAL=vim
+    bindkey -v
+elif command -v vi &> /dev/null; then
+    VISUAL=vi
+    bindkey -v
+fi
+
+## Keybindings and keymaps
+# Useful for quickly using fzf with another command
+bindkey -s '^f' '$(fzf)'
+
+# Don't use ksh-like syntax for defining prompts [DEFAULT]
+#setopt PROMPT_PERCENT
+#setopt NO_PROMPT_SUBST
+
+# Main prompt
+#PS1='%m%# '    # (DEFAULT)
+
+# Main prompt at the right of the screen
+# Displays time in a 24 hour format, but with seconds
+#RPS1='%(?..(%?%)) %w, %*'
+
+# Prompt shown when the shell is waiting for some more input
+#PS2='%_> '      # (DEFAULT)
+
+# Prompt displayed within a loop, started by the shell's 'select' mechanism
+#PS3='?# '      # (DEFAULT)
+
+# Prompt useful for debugging
+#PS4='+%N:%i> ' # (DEFAULT)
+
+
+
 #####################
 ### Miscellanous ###
 ###################
@@ -194,57 +252,3 @@ fi
 
 # zsh beeps when it doesn't like something by default, and that I find annoying
 setopt NO_BEEP
-
-
-
-################
-### Aliases ###
-##############
-
-# It is best practice to put your aliases into a separate file, to keep them
-# neatly ordered. The following automatically loads the file .aliasrc.sh if it
-# exists:
-if [[ -r ~/.aliasrc.sh ]]; then
-    source ~/.aliasrc.sh
-fi
-
-
-
-########################
-### ZSH Line Editor ###
-######################
-
-# Set the $VISUAL parameter
-if command -v nvim &> /dev/null; then
-    VISUAL=nvim
-    bindkey -v
-elif command -v emacs &> /dev/null; then
-    VISUAL=emacs
-    bindkey -e
-elif command -v vim &> /dev/null; then
-    VISUAL=vim
-    bindkey -v
-elif command -v vi &> /dev/null; then
-    VISUAL=vi
-    bindkey -v
-fi
-
-# Don't use ksh-like syntax for defining prompts [DEFAULT]
-#setopt PROMPT_PERCENT
-#setopt NO_PROMPT_SUBST
-
-# Main prompt
-#PS1='%m%# '    # (DEFAULT)
-
-# Main prompt at the right of the screen
-# Displays time in a 24 hour format, but with seconds
-#RPS1='%(?..(%?%)) %w, %*'
-
-# Prompt shown when the shell is waiting for some more input
-#PS2='%_> '      # (DEFAULT)
-
-# Prompt displayed within a loop, started by the shell's 'select' mechanism
-#PS3='?# '      # (DEFAULT)
-
-# Prompt useful for debugging
-#PS4='+%N:%i> ' # (DEFAULT)
