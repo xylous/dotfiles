@@ -8,13 +8,13 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 "" BASIC VIM OPTIONS
 " Be iMproved, required (nvim is always nocompatible)
-"set nocompatible
-
-" Gives visual feedback; highlight syntax
-syntax enable
+set nocompatible
 
 " Loads filetype specific plugins and filetype specific indentation
 filetype plugin indent on
+
+" Gives visual feedback; highlight syntax
+syntax on 
 
 " Each tab is 4 spaces wide 
 set tabstop=4
@@ -65,6 +65,9 @@ set updatetime=100
 " Allows more space at the bottom for displaying messages
 set cmdheight=2
 
+" Don't change default cursor
+set guicursor=
+
 
 
 "" PLUGINS
@@ -83,15 +86,15 @@ Plugin 'preservim/nerdtree'
 " Quickly comment out multile lines:
 Plugin 'preservim/nerdcommenter'
 " Syntax checking and semantic errors in code:
-Plugin 'dense-analysis/ale'
+"Plugin 'dense-analysis/ale'
 " Code autocompletion
 Plugin 'neoclide/coc.nvim'
 " Insert or delete brackets, parens, quotes in pair:
 Plugin 'jiangmiao/auto-pairs'
 " Adds git functionality to vim:
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 " Easy mappings to delete and change surroundings in pairs:
-Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-surround'
 " Find files, and find them fast:
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -104,6 +107,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'pangloss/vim-javascript'
 " Syntax highlighting for C++:
 Plugin 'octol/vim-cpp-enhanced-highlight'
+" Syntax highlighting for Haskell:
+Plugin 'neovimhaskell/haskell-vim'
 
 " add plugins only above this line
 call vundle#end()           " required
@@ -119,30 +124,16 @@ let g:fzf_buffers_jump = 1
 nnoremap <C-f> :FZF<cr>
 
 " ALE config
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\}
+"let g:ale_fixers = {
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\   'javascript': ['eslint'],
+"\}
+
 " Fixes the file everytime it is saved
 "let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
+"let g:ale_completion_enabled = 1
 
 "" coc.nvim config
-" Use tab for trigger completion, completion confirm, snippet expand and jump
-" requires coc-snippets extension
-"inoremap <silent><expr> <TAB>
-	  "\ pumvisible() ? coc#_select_confirm() :
-	  "\ coc#expandableOrJumpable() ?
-	  "\ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-	  "\ <SID>check_back_space() ? "\<TAB>" :
-	  "\ coc#refresh()
-
-"function! s:check_back_space() abort
-	"let col = col('.') - 1
-	"return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-"let g:coc_snippet_next = '<tab>'
-
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -185,10 +176,18 @@ let g:cpp_concepts_highlight = 1
 let c_no_curly_error=1
 
 " Javascript highlighting configuration
-"let g:javascript_plugin_jsdoc = 1
-"let g:javascript_plugin_ngdoc = 1
-"let g:javascript_plugin_flow = 1
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
 
+" Haskell.vim config
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
 
 
