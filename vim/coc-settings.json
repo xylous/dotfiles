@@ -1,0 +1,13 @@
+{
+    "eslint.filetypes": [
+        "javascript",
+        "typescript",
+        "typescriptreact",
+        "javascriptreact"
+    ],
+    "eslint.options" : {
+        "env": {
+            "node": true
+        }
+    }
+}
