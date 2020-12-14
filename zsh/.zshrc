@@ -63,7 +63,7 @@ export ARCHFLAGS="-arch x86_64"
 #setopt NO_SH_WORD_SPLIT
 
 # Enable error messages when searching (DEFAULT)
-#setopt NOMATCH
+#setopt MATCH
 #setopt BAD_PATTERN
 
 # Any patterns that don't match the search are removed; if there is none, print
@@ -193,9 +193,6 @@ elif command -v vi &> /dev/null; then
 fi
 
 ## Keybindings and keymaps
-# Useful for quickly using fzf with another command
-bindkey -s '^f' '$(fzf)'
-
 # Don't use ksh-like syntax for defining prompts [DEFAULT]
 #setopt PROMPT_PERCENT
 #setopt NO_PROMPT_SUBST
@@ -249,6 +246,11 @@ if [[ -d "$HOME/bin" ]]; then
     typeset -U path
     path=($HOME/bin $path)
 fi
+
+#if [[ -d "$HOME/.local/bin" ]]; then
+#    typeset -U path
+#    path = ($HOME/.local/bin $path)
+#fi
 
 # zsh beeps when it doesn't like something by default, and that I find annoying
 setopt NO_BEEP

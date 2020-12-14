@@ -9,10 +9,11 @@ alias v='\nvim'
 
 # Quick access to config files
 alias cfz='nvim ~/.zshrc'
-alias cfza='nvim ~/.aliasrc.sh'
+alias cfsa='nvim ~/.aliasrc.sh'
 alias cfv='nvim ~/.config/nvim/init.vim'
 alias cfi='nvim ~/.config/i3/config'
 alias cfpi='nvim ~/.config/picom.conf'
+alias cfa='nvim ~/.config/alacritty/alacritty.yml'
 
 # Package manager
 alias p='pacman'
