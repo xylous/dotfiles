@@ -12,35 +12,24 @@ elif command -v vim &> /dev/null; then
 fi
 
 ## Quick access to config files
-# "configure shell aliases"
-alias cfsa='nvim ~/.aliasrc.sh'
-
-# "configure git aliases"
-alias cfga='nvim ~/.gitaliases.sh'
-
 # "configure z-shell"
 alias cfzs='nvim ~/.zshrc'
-
 # "configure bash"
 alias cfbs='nvim ~/.bashrc'
-
+# "configure shell aliases"
+alias cfsa='nvim ~/.aliasrc.sh'
 # "configure neovim"
 alias cfnv='nvim ~/.config/nvim/init.vim'
-
 # "configure i3wm"
 alias cfi3='nvim ~/.config/i3/config'
-
 # "configure picom"
 alias cfpic='nvim ~/.config/picom.conf'
-
 # "configure alacritty"
 alias cfal='nvim ~/.config/alacritty/alacritty.yml'
-
 # "configure polybar"
 alias cfpy='nvim ~/.config/polybar/config'
 
-
-## Package manager
+# Package manager
 alias p='pacman'
 alias sp='sudo pacman'
 alias y='yay'
