@@ -2,44 +2,61 @@
 ### Oh-my-zsh ###
 ################
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# Automatically execute GUI if in tty1
+if [[ $TERM == "linux" && $(who | awk '{print $2}') == "tty1" ]]; then
+    exec startx; exit
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/icnh/.oh-my-zsh"
+if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
+    # Terminal is capable of handling at least 256 colours
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+    # Initialization code that may require console input (password prompts, [y/n]
+    # confirmations, etc.) must go above this block; everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+        source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
 
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-            git
-            zsh-autosuggestions
-            vi-mode
-            zsh-syntax-highlighting
-        )
+    # Path to your oh-my-zsh installation.
+    export ZSH="/home/icnh/.oh-my-zsh"
 
-# Load oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+    # Set theme to powerlevel10k
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+    
+    # Standard plugins can be found in $ZSH/plugins/
+    # Custom plugins may be added to $ZSH_CUSTOM/plugins/
+    # Example format: plugins=(rails git textmate ruby lighthouse)
+    # Add wisely, as too many plugins slow down shell startup.
+    plugins=(
+        #git
+        zsh-autosuggestions
+        vi-mode
+        zsh-syntax-highlighting
+    )
+    
+    # Load oh-my-zsh
+    source $ZSH/oh-my-zsh.sh
 
-# You may need to manually set your language environment
+    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+else
+    # Terminal may be TTY or something not very capable
+
+    # Load some random PS1, aka do not load p10k (because it does not work in a
+    # tty, at least for me)
+    export PS1="%F{green}%m %F{white}%# "
+
+    # Also, notice this does not load oh-my-zsh
+fi
+
+# Manually set language environment
 export LANG=en_US.UTF-8
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Autoupdate oh-my-zsh without prompts
+DISABLE_UPDATE_PROMPT=true
 
 
 
@@ -228,7 +245,7 @@ fi
 
 # Don't emulate ksh function autoloading (basically, when a function is
 # autoloaded, the corresponding file is merely executed, and must define the
-# function itself)
+# function itself) (DEFAULT)
 #setopt NO_KSH_AUTOLOAD
 
 # If zsh detects an asterisk on the command line when the command is 'rm', it
@@ -248,9 +265,12 @@ if [[ -d "$HOME/bin" ]]; then
 fi
 
 #if [[ -d "$HOME/.local/bin" ]]; then
-#    typeset -U path
-#    path = ($HOME/.local/bin $path)
+    #typeset -U path
+    #path = ($HOME/.local/bin $path)
 #fi
 
 # zsh beeps when it doesn't like something by default, and that I find annoying
 setopt NO_BEEP
+
+# Set XDG_DATA_DIRS variable
+export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:/home/icnh/.local/share/flatpak/exports/share:/usr/share
