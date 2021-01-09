@@ -1,13 +1,18 @@
 # Time savers
+alias g="git"
+
 alias ga="git add"
-
-alias gpl="git pull"
-
-alias gpsh="git push"
+alias gaa="git add --all"
 
 alias gs="git status"
 alias gss="git status --short"
 
-alias gcm="git commit"
-alias gcmm="git commit -m"
+alias gc="git commit"
+alias gcm="git commit -m"
 alias gcma="git commit --all" 
+
+alias gpll="git pull"
+
+alias gcl="git clone"
+
+alias gpsh="git push"
