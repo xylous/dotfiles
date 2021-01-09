@@ -188,6 +188,10 @@ if [[ -r ~/.aliasrc.sh ]]; then
     source ~/.aliasrc.sh
 fi
 
+if [[ -r ~/.gitaliases.sh ]]; then
+    source ~/.gitaliases.sh
+fi
+
 
 
 ########################
