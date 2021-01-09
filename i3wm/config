@@ -46,7 +46,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
-exec_always --no-startup-id light -S 30
+# Have a brightness of 30 on initial startup
+exec --no-startup-id light -S 30
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -237,9 +238,9 @@ client.background       #ffffff
 
 # feh for wallpaper + picom as compositer
 exec --no-startup-id feh --no-fehbg --bg-scale ~/.wallpaper.png
-exec --no-startup-id picom
+exec --no-startup-id picom --config $HOME/.config/picom.conf
 
-# Screen capture
+# Printscreen schenanigans 
 bindsym Print exec flameshot gui
 
 # Be easier on the eyes
