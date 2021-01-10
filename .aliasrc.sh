@@ -1,8 +1,6 @@
-################
-### Aliases ###
-##############
-
+#!/usr/bin/sh
 alias ls='ls --color=auto'
+alias s='source $ZDOTDIR/.zshrc'
 
 # Saves a lot of time
 if command -v nvim &> /dev/null; then
@@ -12,24 +10,44 @@ elif command -v vim &> /dev/null; then
 fi
 
 ## Quick access to config files
-# "configure z-shell"
-alias cfzs='nvim ~/.zshrc'
-# "configure bash"
-alias cfbs='nvim ~/.bashrc'
 # "configure shell aliases"
-alias cfsa='nvim ~/.aliasrc.sh'
-# "configure neovim"
-alias cfnv='nvim ~/.config/nvim/init.vim'
-# "configure i3wm"
-alias cfi3='nvim ~/.config/i3/config'
-# "configure picom"
-alias cfpic='nvim ~/.config/picom.conf'
-# "configure alacritty"
-alias cfal='nvim ~/.config/alacritty/alacritty.yml'
-# "configure polybar"
-alias cfpy='nvim ~/.config/polybar/config'
+alias cfsa='$VISUAL $XDG_CONFIG_HOME/.aliasrc.sh'
 
-# Package manager
+# "configure git aliases"
+alias cfga='$VISUAL $XDG_CONFIG_HOME/.gitaliases.sh'
+
+# "configure intractive z-shell"
+alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
+
+# "configure login z-shell"
+alias cfizs='$VISUAL $ZDOTDIR/.zlogin'
+
+# "configure global zshenv"
+alias scfgze='sudo $VISUAL /etc/zsh/zshenv'
+
+# "configure bash"
+alias cfbs='$VISUAL $HOME/.bashrc'
+
+# "configure neovim"
+alias cfnv='$VISUAL $XDG_CONFIG_HOME/nvim/init.vim'
+
+# "configuree vim"
+alias cfv='$VISUAL $MYVIMRC'
+
+# "configure i3wm"
+alias cfi3='$VISUAL $XDG_CONFIG_HOME/i3/config'
+
+# "configure picom"
+alias cfpic='$VISUAL $XDG_CONFIG_HOME/picom.conf'
+
+# "configure alacritty"
+alias cfal='$VISUAL $XDG_CONFIG_HOME/alacritty/alacritty.yml'
+
+# "configure polybar"
+alias cfpy='$VISUAL $XDG_CONFIG_HOME/polybar/config'
+
+
+## Package manager
 alias p='pacman'
 alias sp='sudo pacman'
 alias y='yay'

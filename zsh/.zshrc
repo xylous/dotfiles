@@ -4,7 +4,7 @@
 
 # Automatically execute GUI if in tty1
 if [[ $TERM == "linux" && $(who | awk '{print $2}') == "tty1" ]]; then
-    exec startx; exit
+    exec startx
 fi
 
 if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
@@ -18,7 +18,7 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     fi
 
     # Path to your oh-my-zsh installation.
-    export ZSH="/home/icnh/.oh-my-zsh"
+    export ZSH="$HOME/.oh-my-zsh"
 
     # Set theme to powerlevel10k
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -38,7 +38,7 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     source $ZSH/oh-my-zsh.sh
 
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
 else
     # Terminal may be TTY or something not very capable
 
@@ -120,7 +120,7 @@ setopt NO_MULTIOS
 setopt HIST_VERIFY
 
 # Save history of commands to ~/.zsh_history
-HISTFILE=~/.zsh_history
+HISTFILE=$ZDOTDIR/.zsh_history
 
 # Save 1000 lines within one session
 HISTSIZE=1000
@@ -184,12 +184,14 @@ setopt NO_HIST_BEEP
 # It is best practice to put your aliases into a separate file, to keep them
 # neatly ordered. The following automatically loads the file .aliasrc.sh if it
 # exists:
-if [[ -r ~/.aliasrc.sh ]]; then
-    source ~/.aliasrc.sh
+declare aliasrc="$HOME/.config/.aliasrc.sh"
+if [[ -r $aliasrc ]]; then
+    source $aliasrc
 fi
 
-if [[ -r ~/.gitaliases.sh ]]; then
-    source ~/.gitaliases.sh
+declare gitalias="$HOME/.config/.gitaliases.sh"
+if [[ -r $gitalias ]]; then
+    source $gitalias
 fi
 
 
@@ -197,21 +199,6 @@ fi
 ########################
 ### ZSH Line Editor ###
 ######################
-
-# Set the $VISUAL parameter
-if command -v nvim &> /dev/null; then
-    VISUAL=nvim
-    bindkey -v
-elif command -v emacs &> /dev/null; then
-    VISUAL=emacs
-    bindkey -e
-elif command -v vim &> /dev/null; then
-    VISUAL=vim
-    bindkey -v
-elif command -v vi &> /dev/null; then
-    VISUAL=vi
-    bindkey -v
-fi
 
 ## Keybindings and keymaps
 # Don't use ksh-like syntax for defining prompts [DEFAULT]
@@ -277,4 +264,10 @@ fi
 setopt NO_BEEP
 
 # Set XDG_DATA_DIRS variable
-export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:/home/icnh/.local/share/flatpak/exports/share:/usr/share
+#export XDG_DATA_DIRS=$HOME/.local/share:/usr/share
+# flatpak:
+#export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:/home/icnh/.local/share/flatpak/exports/share:/usr/share
+
+# I don't like it when the program less saves history to a file, so this
+# disables it:
+export LESSHISTFILE="-"
