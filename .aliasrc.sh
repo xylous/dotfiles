@@ -20,7 +20,7 @@ alias cfga='$VISUAL $XDG_CONFIG_HOME/.gitaliases.sh'
 alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
 
 # "configure login z-shell"
-alias cfizs='$VISUAL $ZDOTDIR/.zlogin'
+alias cflzs='$VISUAL $ZDOTDIR/.zlogin'
 
 # "configure global zshenv"
 alias scfgze='sudo $VISUAL /etc/zsh/zshenv'
