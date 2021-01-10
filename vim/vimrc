@@ -64,10 +64,8 @@ set guicursor=
 
 "" PLUGINS
 " Set runtime path to include Vundle and initialize
-set rtp +=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" Alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here'
+set rtp+=$XDG_CONFIG_HOME/vim/bundle/Vundle.vim
+call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
 
 " NOTE: Be careful, as too many plugins will slow vim down!
 
@@ -302,10 +300,9 @@ inoreab #d #define
 
 
 
-
 " Set custom path for viminfo 
-set viminfo='50,<1000,s100,:0,n~/.vim/viminfo
-
 if has("nvim")
-    set shada='50,<1000,s100,:0,n~/.vim/viminfo.nvim
+    set shada='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/viminfo.nvim
+else
+    set viminfo='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/viminfo.vim
 endif
