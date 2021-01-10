@@ -18,7 +18,7 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     fi
 
     # Path to your oh-my-zsh installation.
-    export ZSH="$HOME/.oh-my-zsh"
+    export ZSH="$ZDOTDIR/oh-my-zsh"
 
     # Set theme to powerlevel10k
     ZSH_THEME="powerlevel10k/powerlevel10k"
