@@ -2,23 +2,17 @@
 ### Oh-my-zsh ###
 ################
 
-# Automatically execute GUI if in tty1
-if [[ $TERM == "linux" && $(who | awk '{print $2}') == "tty1" ]]; then
-    exec startx
-fi
-
 if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     # Terminal is capable of handling at least 256 colours
 
-    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-    # Initialization code that may require console input (password prompts, [y/n]
+    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.  Initialization code that may require console input (password prompts, [y/n]
     # confirmations, etc.) must go above this block; everything else may go below.
     if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
         source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
     fi
 
     # Path to your oh-my-zsh installation.
-    export ZSH="$ZDOTDIR/oh-my-zsh"
+    export ZSH="$ZDOTDIR/.oh-my-zsh"
 
     # Set theme to powerlevel10k
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -182,44 +176,10 @@ setopt NO_HIST_BEEP
 ##############
 
 # It is best practice to put your aliases into a separate file, to keep them
-# neatly ordered. The following automatically loads the file .aliasrc.sh if it
-# exists:
-declare aliasrc="$HOME/.config/.aliasrc.sh"
-if [[ -r $aliasrc ]]; then
-    source $aliasrc
-fi
-
-declare gitalias="$HOME/.config/.gitaliases.sh"
-if [[ -r $gitalias ]]; then
-    source $gitalias
-fi
-
-
-
-########################
-### ZSH Line Editor ###
-######################
-
-## Keybindings and keymaps
-# Don't use ksh-like syntax for defining prompts [DEFAULT]
-#setopt PROMPT_PERCENT
-#setopt NO_PROMPT_SUBST
-
-# Main prompt
-#PS1='%m%# '    # (DEFAULT)
-
-# Main prompt at the right of the screen
-# Displays time in a 24 hour format, but with seconds
-#RPS1='%(?..(%?%)) %w, %*'
-
-# Prompt shown when the shell is waiting for some more input
-#PS2='%_> '      # (DEFAULT)
-
-# Prompt displayed within a loop, started by the shell's 'select' mechanism
-#PS3='?# '      # (DEFAULT)
-
-# Prompt useful for debugging
-#PS4='+%N:%i> ' # (DEFAULT)
+# neatly ordered. The following automatically loads files with useful aliases,
+# granted they exist, with the proper namee
+[[ -r $ZDOTDIR/.aliases.sh ]] && source $ZDOTDIR/.aliases.sh
+[[ -r $ZDOTDIR/.gitaliases.sh ]] && source $ZDOTDIR/.gitaliases.sh
 
 
 
@@ -249,25 +209,12 @@ fi
 # Use zsh-like syntax for loops instead of csh-like syntax (DEFAULT)
 #setopt NO_CSH_JUNKIE_LOOPS
 
-# Add the ~/bin directory to path if it exists, but no duplicates:
-if [[ -d "$HOME/bin" ]]; then
-    typeset -U path
-    path=($HOME/bin $path)
-fi
-
-#if [[ -d "$HOME/.local/bin" ]]; then
-    #typeset -U path
-    #path = ($HOME/.local/bin $path)
-#fi
-
 # zsh beeps when it doesn't like something by default, and that I find annoying
 setopt NO_BEEP
-
-# Set XDG_DATA_DIRS variable
-#export XDG_DATA_DIRS=$HOME/.local/share:/usr/share
-# flatpak:
-#export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:/home/icnh/.local/share/flatpak/exports/share:/usr/share
 
 # I don't like it when the program less saves history to a file, so this
 # disables it:
 export LESSHISTFILE="-"
+
+# Set custom zcompdump file
+compinit -d $ZDOTDIR/".zcompdump-archlinux-5.8"
