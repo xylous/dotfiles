@@ -1,6 +1,7 @@
 #!/usr/bin/sh
 alias ls='ls --color=auto'
-alias s='source $ZDOTDIR/.zshrc'
+alias szsh='source $ZDOTDIR/.zshrc'
+alias s='sudo'
 
 # Saves a lot of time
 if command -v nvim &> /dev/null; then
@@ -25,6 +26,9 @@ alias cflzs='$VISUAL $ZDOTDIR/.zlogin'
 # "configure global zshenv"
 alias scfgze='sudo $VISUAL /etc/zsh/zshenv'
 
+# "edit z-shell history"
+alias ezhist='$VISUAL $ZDOTDIR/.zsh_history'
+
 # "configure bash"
 alias cfbs='$VISUAL $HOME/.bashrc'
 
@@ -45,7 +49,6 @@ alias cfal='$VISUAL $XDG_CONFIG_HOME/alacritty/alacritty.yml'
 
 # "configure polybar"
 alias cfpy='$VISUAL $XDG_CONFIG_HOME/polybar/config'
-
 
 ## Package manager
 alias p='pacman'
