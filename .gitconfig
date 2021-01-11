@@ -1,9 +1,0 @@
-[user]
-	name = Insert-Creative-Name-Here
-	email = insertcreativenamehereee@gmail.com
-[core]
-	editor = nvim
-[credential]
-	helper = cache
-[github]
-	user = Insert-Creative-Name-Here
