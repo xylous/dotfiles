@@ -217,9 +217,15 @@ bar {
     workspace_buttons yes
 }
 
-# Personal preferences
+# Don't change focus just because the mouse moves
 focus_follows_mouse no
+
+# If on workspace 1, pressing $mod+2 sends you to workspace 2. If this option is
+# enabled, then pressing $mod+2 and $mod+2 again will send you to your last
+# workspace
 workspace_auto_back_and_forth no
+
+# Be smart with focusing on new pop-ups
 focus_on_window_activation smart
 
 # Enable i3-gaps functionality
@@ -236,5 +242,5 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-# Printscreen schenanigans 
-bindsym Print exec flameshot gui
+# Printscreen schenanigans, with scrot
+bindsym Print exec sleep 0.2 && scrot ~/pictures/%Y-%m-%d-%T-screenshot.png -sf
