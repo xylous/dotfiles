@@ -4,18 +4,17 @@ alias szsh='source $ZDOTDIR/.zshrc'
 alias s='sudo'
 
 # Saves a lot of time
-if command -v nvim &> /dev/null; then
-    alias v='\nvim'
-elif command -v vim &> /dev/null; then
-    alias v='\vim'
-fi
+alias v='$EDITOR'
 
 ## Quick access to config files
 # "configure shell aliases"
-alias cfsa='$VISUAL $XDG_CONFIG_HOME/.aliasrc.sh'
+alias cfsa='$VISUAL $ZDOTDIR/.aliases.sh'
 
 # "configure git aliases"
-alias cfga='$VISUAL $XDG_CONFIG_HOME/.gitaliases.sh'
+alias cfga='$VISUAL $ZDOTDIR/.gitaliases.sh'
+
+# "configure git"
+alias cfgit='git config --global -e'
 
 # "configure intractive z-shell"
 alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
@@ -23,8 +22,11 @@ alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
 # "configure login z-shell"
 alias cflzs='$VISUAL $ZDOTDIR/.zlogin'
 
-# "configure global zshenv"
-alias scfgze='sudo $VISUAL /etc/zsh/zshenv'
+# "sudo configure global zshenv"
+alias scfgzenv='sudo $VISUAL /etc/zsh/zshenv'
+
+# "configure zshenv"
+alias cfzenv='$VISUAL $ZDOTDIR/.zshenv'
 
 # "edit z-shell history"
 alias ezhist='$VISUAL $ZDOTDIR/.zsh_history'
@@ -53,4 +55,7 @@ alias cfpy='$VISUAL $XDG_CONFIG_HOME/polybar/config'
 ## Package manager
 alias p='pacman'
 alias sp='sudo pacman'
-alias y='yay'
+alias pacman-browse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+alias p-b="pacman-browse"
+alias a="aurpkger"
+alias ast="archstat"

@@ -1,6 +1,14 @@
 # Time savers
 alias g="git"
 
+alias gi="git init"
+
+alias gd="git diff"
+
+alias gl="git log"
+alias glo="git log --oneline"
+alias gsl="git shortlog"
+
 alias ga="git add"
 alias gaa="git add --all"
 
