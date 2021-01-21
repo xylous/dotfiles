@@ -29,7 +29,7 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     )
     
     # Load oh-my-zsh
-    source ${OH_MY_ZSH}/oh-my-zsh.sh
+    source ${ZSH}/oh-my-zsh.sh
 
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
     [[ ! -f ${ZDOTDIR:-$HOME}/.p10k.zsh ]] || source ${ZDOTDIR:-$HOME}/.p10k.zsh
