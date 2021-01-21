@@ -12,7 +12,7 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     fi
 
     # Path to your oh-my-zsh installation.
-    export ZSH="$ZDOTDIR/.oh-my-zsh"
+    export ZSH="${ZDOTDIR}/.oh-my-zsh"
 
     # Set theme to powerlevel10k
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -29,10 +29,10 @@ if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
     )
     
     # Load oh-my-zsh
-    source $ZSH/oh-my-zsh.sh
+    source ${OH_MY_ZSH}/oh-my-zsh.sh
 
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
+    [[ ! -f ${ZDOTDIR:-$HOME}/.p10k.zsh ]] || source ${ZDOTDIR:-$HOME}/.p10k.zsh
 else
     # Terminal may be TTY or something not very capable
 
@@ -216,5 +216,8 @@ setopt NO_BEEP
 # disables it:
 export LESSHISTFILE="-"
 
+# Load all stock functions
+autoload -U compaudit compinit
+
 # Set custom zcompdump file
-compinit -d $ZDOTDIR/".zcompdump-archlinux-5.8"
+compinit -d ${ZDOTDIR:-$HOME}/".zcompdump-archlinux-${ZSH_VERSION}"
