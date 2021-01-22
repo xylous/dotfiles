@@ -374,10 +374,14 @@ cursor:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
-#  args:
-#    - --login
+shell:
+  program: /usr/bin/zsh
+  args:
+    - -l
+    - -c
+      # Attach to unused sessions if possible. Otherwise, start a new one
+    - "tmux attach-session -t $(tmux ls | grep --max-count=1 --invert-match
+      \"attached\" | cut -d \" \" -f1 | sed 's/://') || tmux new-session"
 
 # Startup directory
 #
