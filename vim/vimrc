@@ -1,68 +1,87 @@
-"" BASIC VIM OPTIONS
-" Be iMproved, required (nvim is always nocompatible)
+" Enable folding
+" vim:fdm=marker
+
+"" BASIC OPTIONS {{{
+
+" Be in the 21st century already
 set nocompatible
-
-" Loads filetype specific plugins and filetype specific indentation
 filetype plugin indent on
-
-" Gives visual feedback; highlight syntax
-syntax on
-
-" Each tab is 4 spaces wide 
-set tabstop=4
-
-" Uses 4 spaces for each step of (auto)indent
-set shiftwidth=4
-
-" Sets the maximum number of columns to 80
-set textwidth=80
-
-" Tabs become spaces
-set expandtab
-
-" When in front of a line, a <Tab> inserts blanks according to 'shiftwidth'
-set smarttab
-
-" Enables automatic indenting for C-like programs
-set cindent
-
-" Does smart autoindenting when starting a new line
-set smartindent
-
-" Searches incrementally; searches case-sensitively only when there is an uppercase
-" character in the pattern to search for
-set incsearch
-set smartcase
-
-" When a buffer is abandoned, it becomes hidden, not unloaded
-set hidden
-
-" Displays the number of the line on the left
-set number
-
-" Tells Vim not to beep whenever there is an error, but to use visual bells
-set visualbell
-
-" Doesn't make backups of any kind
-set noswapfile
-set nobackup
-
-" Always encodes in UTF-8
+syntax enable
 set encoding=utf-8
+set noerrorbells 
+
+" Don't change default (terminal) cursor
+set guicursor=
+
+" Count lines relative to the current one
+set number
+set relativenumber
+
+" Start scrolling before you reach the margins
+set scrolloff=8
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=100
 
-" Allows more space at the bottom for displaying messages
+" Dedicate one more line to displaying messages
 set cmdheight=2
 
-" Don't change default cursor
-set guicursor=
+" Indentation {{{
 
+" Don't bother me with manual indentation
+set autoindent
+set smartindent
+set cindent
 
+" Tabs shall be spaces
+set expandtab
 
-"" PLUGINS
+" 4 space indent should do
+set tabstop=4
+set shiftwidth=4
+
+" Split lines longer than 80 characters
+set wrap
+set textwidth=80
+set linebreak
+
+" More convenience with tabs
+set smarttab
+
+" }}}
+
+" Searching {{{
+
+" Highlight text during search
+set incsearch
+
+" ...but remove the highlight after you're done
+set nohlsearch
+
+" Don't do case-sensitive searching, unless there are capital letters
+set ignorecase
+set smartcase
+
+" }}}
+
+" Buffers {{{ 
+
+" Keep any buffers around in the background
+set hidden
+
+" No backups, of any kind, whatsoever
+set noswapfile
+set nobackup
+
+" }}}
+
+" }}}
+
+"" PLUGINS {{{
+
+" Plugins (with Vundle) {{{
+
 " Set runtime path to include Vundle and initialize
 set rtp+=$XDG_CONFIG_HOME/vim/bundle/Vundle.vim
 call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
@@ -73,52 +92,53 @@ call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 " Bright theme with pastel colors:
 Plugin 'morhetz/gruvbox'
+" Lean status/tabline for vim:
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " File system explorer:
 Plugin 'preservim/nerdtree'
 " Quickly comment out multile lines:
 Plugin 'preservim/nerdcommenter'
-" Syntax checking and semantic errors in code:
-"Plugin 'dense-analysis/ale'
-" Code autocompletion
+" Code autocompletion:
 Plugin 'neoclide/coc.nvim'
-" Insert or delete brackets, parens, quotes in pair:
-Plugin 'jiangmiao/auto-pairs'
-" Adds git functionality to vim:
-"Plugin 'tpope/vim-fugitive'
-" Easy mappings to delete and change surroundings in pairs:
-"Plugin 'tpope/vim-surround'
-" Find files, and find them fast:
+" Find files quickly:
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-" Lean status/tabline for vim:
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 " Syntax highlighting for Javascript:
 Plugin 'pangloss/vim-javascript'
 " Syntax highlighting for C++:
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Syntax highlighting for Haskell:
 Plugin 'neovimhaskell/haskell-vim'
-" Plugin for visually displaying indent levels
+" Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
 
 " add plugins only above this line
 call vundle#end()
+
+" }}}
+
+" NERDTree {{{
+
 " Close vim if the only window left open is a NERDTree:
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " When Ctrl-t is pressed, toggle NERDTree:
 noremap <C-t> :NERDTreeToggle<CR>
 
-" fzf configuration
-" [Buffers] Jump to the existing window if possible
+" }}}
+
+" fzf {{{
+
+" Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
-" Use CTRL-f to open FZF search quickly
+" Use CTRL-f to open FZF quickly
 nnoremap <C-f> :FZF<cr>
 
+" }}}
 
-"" coc.nvim config
+" coc.nvim {{{
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -153,20 +173,28 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
 
+" }}}
 
-" C++ highlighting configuration
+" C++ syntax highlighting {{{
+
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let g:cpp_concepts_highlight = 1
 let c_no_curly_error = 1
 
-" Javascript highlighting configuration
+" }}}
+
+" Javascript highlighting {{{
+
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
 let g:javascript_plugin_flow = 1
 
-" Haskell.vim config
+" }}}
+
+" haskell-vim {{{
+
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
 let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
@@ -176,82 +204,61 @@ let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 let g:haskell_classic_highlighting = 0
 
-" Indent Guides config
-" Start Indent Guides automatically on startup
+" }}}
+
+" Indent Guides {{{
+
 let g:indent_guides_enable_on_vim_startup = 1
-" Indent guide size equals 1
+
+" Only one character long
 let g:indent_guides_guide_size = 1
 
+" }}}
 
+" }}}
 
-"" LOOK AND FEEL
-" Enables 24-bit RGB colors
-if has("nvim")
-    set termguicolors
-endif
+"" LOOK AND FEEL {{{
 
-" Dark mode for life
+" Enable true colour in the terminal
+set termguicolors
+
+" Statusline takes care of displaying the mode already
+set noshowmode
+
+" Remove the visual delay when switching between modes
+set ttimeoutlen=10
+
+" Theme (Gruvbox) options {{{
+
 set background=dark
 let g:gruvbox_italic=1
 let g:gruvbox_bold=1
-
-" I personally like the soft contrast, but you can change it to 'medium' or
-" 'hard' if you want to do so
 let g:gruvbox_contrast_dark = 'soft'
-"let g:gruvbox_contrast_light = 'soft'
 
-" Note: the line below always needs to come after all options of gruvbox you
-" have added
+" At last, invoke Gruvbox
 colorscheme gruvbox
 
-" Don't show current mode in plain text at the bottom of the page, as the
-" statusline takes care of that
-set noshowmode
+" }}}
 
-" Let there be no visual delay when switching between modes
-set ttimeoutlen=10
+" Airline options {{{
 
-" I personally like the base16 airline theme. You could however find a list of
-" all possible themes at https://github.com/vim-airline/vim-airline/wiki/Screenshots
 let g:airline_theme = 'base16'
 
-" Makes it so that it does not draw separators for empty sections
+" Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
 
-" Show tabs at the top, even if there is just one buffer open
+" Always show tabs, no matter what
 let g:airline#extensions#tabline#enabled = 1
 
-" The following lines are for configuring the statusline. They can be set with
-" the default statusline formatting, e.g. '%f' to display the path to the file
-" relative to the current directory on the bar. See :help 'statusline'
-"let g:airline_section_a = ''
-"let g:airline_section_b = ''
-"let g:airline_section_c = ''
-let g:airline_section_x = '%Y'
-"let g:airline_section_y = ''
-"let g:airline_section_z = ''
-
-" Cache the changes to the highlighting groups, should therefore be faster.
-" Set this to one, if you experiene a sluggish Vim
-let g:airline_highlighting_cache = 0
-
-" If set to one, displays statusline in the tabline (first top line).
-" If set to zero, displays the statusline at the bottom
-let g:airline_statusline_ontop = 0
-
-" Make airline use powerline fonts. This requires them to be installed on your
-" machine, see: https://github.com/powerline/fonts
+" Sweet, sweet powerline fonts
 let g:airline_powerline_fonts = 1
 
-" By default, the tab bars at the top are going to have vertical borders. I
-" like the separators to be angled, so I added the following lines, as is
-" recommended by :help airline-configuration
-" If there isn't a dictionary of symbols already, define it
+" Symbols {{{
+" Define custom symbols
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" Add the following symbols to the dictionary:
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
@@ -262,43 +269,57 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
 
+" }}}
 
+" Statusline {{{
 
+" Put statuslinea at the bottom
+let g:airline_statusline_ontop = 0
 
-"" KEY BINDINGS
+" Define statusline. Uses vim's inbuilt statusline syntax
+"let g:airline_section_a = ''
+"let g:airline_section_b = ''
+"let g:airline_section_c = ''
+let g:airline_section_x = '%Y'
+"let g:airline_section_y = ''
+"let g:airline_section_z = ''
+
+" }}}
+
+" }}}
+
+" }}}
+
+"" KEY BINDINGS {{{
+
 let mapleader = " "
-inoremap <c-x> <Esc>ddi
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <C-s> :source $MYVIMRC<cr>
+" Quick access to vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <C-s> :source $MYVIMRC<CR>
 
 " Disable arrow keys
 noremap <up> <NOP>
 noremap <down> <NOP>
 noremap <left> <NOP>
 noremap <right> <NOP>
-inoremap <up> <NOP>
-inoremap <down> <NOP>
-inoremap <left> <NOP>
-inoremap <right> <NOP>
 
+" Quickly switch between windows
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
 
+" Quickly browse files with netrw
+noremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 
-"" ABBREVIATIONS
+" }}}
+
+"" ABBREVIATIONS {{{
+
 inoreab #i #include
 inoreab #d #define
 
-
-
-"" AUTOCOMMANDS
-" Template
-"augroup foo
-"   autocmd!
-"   autocmd foo
-"augroup END
-" You absolutely need to define autocomands in groups, otherwise Vim will
-" double the amount of commands it executes every time you open it!
-
-
+" }}}
 
 " Set custom path for viminfo 
 if has("nvim")
