@@ -32,7 +32,7 @@ sanitize() {
 parse_git_status() {
     local modified_files=0 staged_files=0 untracked_files=0 deleted_files=0
     GIT_HAS_CHANGES=0
-    GIT_BRANCH=" $(git branch --show-current)"
+    GIT_BRANCH="$(git branch --show-current)"
 
     git status --porcelain=v1 | while IFS= read -r status_line; do
         case "$status_line" in
@@ -64,29 +64,29 @@ parse_git_status() {
     local ahead_behind_status commits_behind commits_ahead
     if [[ ! -z ${GIT_REMOTE_BRANCH} ]]; then
         ahead_behind_status=$(git rev-list --left-right --count ${GIT_BRANCH}...${GIT_REMOTE_BRANCH})
-        commits_behind=$(echo -n "$ahead_behind_status" | awk '{print $1}')
-        commits_ahead=$(echo -n "$ahead_behind_status" | awk '{print $2}')
+        commits_ahead=$(echo -n "$ahead_behind_status" | awk '{print $1}')
+        commits_behind=$(echo -n "$ahead_behind_status" | awk '{print $2}')
         
         (( ${commits_behind} > 0))  \
-            && GIT_COMMITS_BEHIND="↓${commits_behind}" \
+            && GIT_COMMITS_BEHIND="↓${commits_behind} " \
             || GIT_COMMITS_BEHIND=""
         (( ${commits_ahead} > 0))  \
-            && GIT_COMMITS_AHEAD="↑${commits_ahead}" \
+            && GIT_COMMITS_AHEAD="↑${commits_ahead} " \
             || GIT_COMMITS_AHEAD=""
     fi
 
     (( ${staged_files} > 0 )) \
-        && GIT_STAGED="${GREEN}${staged_files}+${CLR}" \
+        && GIT_STAGED="${staged_files}+ " \
         || GIT_STAGED=""
     (( ${modified_files} > 0 )) \
-        && GIT_MODIFIED="${RED}!${modified_files}${CLR}" \
-        || GIT_MODIFIED=""
+        && GIT_MODIFIED="!${modified_files} " \
+        || GIT_MODIFIED=" "
+    (( ${deleted_files} > 0 )) \
+        && GIT_DELETED="${deleted_files}- " \
+        || GIT_DELETED=" "
     (( ${untracked_files} > 0 )) \
         && GIT_UNTRACKED="?${untracked_files}" \
-        || GIT_UNTRACKED=""
-    (( ${deleted_files} > 0 )) \
-        && GIT_DELETED="${RED}${deleted_files}-${CLR}" \
-        || GIT_DELETED=""
+        || GIT_UNTRACKED=" "
     
     if (( GIT_HAS_CHANGES == 1 )); then
         FG_SPECIAL_COLOR="${FG_YELLOW}"
@@ -95,12 +95,12 @@ parse_git_status() {
     fi
 
     GIT_COMMITS_STATUS="${GIT_COMMITS_AHEAD}${GIT_COMMITS_BEHIND}"
-
+    
     GIT_STATUS="| ${FG_SPECIAL_COLOR}"
-    GIT_STATUS+="${GIT_BRANCH} "
+    GIT_STATUS+=" ${GIT_BRANCH} "
     GIT_STATUS+="${GIT_COMMITS_STATUS}"
-    GIT_STATUS+="${GIT_STAGED} ${GIT_MODIFIED} "
-    GIT_STATUS+="${GIT_DELETED} ${GIT_UNTRACKED}"
+    GIT_STATUS+="${GIT_STAGED}${GIT_MODIFIED}"
+    GIT_STATUS+="${GIT_DELETED}${GIT_UNTRACKED}"
     GIT_STATUS+="${FG_CLR}"
 }
 
