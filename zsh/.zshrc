@@ -66,5 +66,8 @@ alias help='run-help'
 [[ -f ${aliases_file} ]] && source ${aliases_file}
 [[ -f ${gitaliases_file} ]] && source ${gitaliases_file}
 
+## Define custom colours
+source ${ZDOTDIR}/plugins/colours.zsh
+
 ## Prompt is handled in another file as well
 source ${ZDOTDIR}/config/prompt.zsh
