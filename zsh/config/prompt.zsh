@@ -1,19 +1,5 @@
 #!/usr/bin/zsh
 
-# Because who doesn't love 'em
-set_colours() {
-    FG_GREEN='%F{34}'
-    FG_YELLOW='%F{220}'
-    FG_RED='%F{9}'
-    FG_LIGHT_RED='%F{red}'
-    FG_BLUE='%F{68}'
-    FG_ORANGE='%F{214}'
-    FG_CLR='%F{white}'
-
-    return 0
-}
-set_colours
-
 set_prompt() {
     # The structure of the prompt basically looks something like:
     # ┌─SECTION-A1 | SECTION-B1                        SECTION-C1
@@ -44,9 +30,7 @@ for i in 1 2 3; do
     clear
 done
 
-# ZSH calls this function before drawing the PS1 prompt. By some reason, putting
-# the code I put in the previous function does not run here, so the workaround
-# is to put it somewhere else, aka 'draw_first_line_of_prompt'
+# Always update git status for the prompt and print prompt
 precmd() {
     source ${ZDOTDIR}/plugins/gitstatus.zsh
     LFT_PROMPT=$(print -nP "┌─${SECTION_A1} | ${SECTION_B1}")
