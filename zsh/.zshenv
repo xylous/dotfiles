@@ -10,8 +10,3 @@ typeset -U path PATH
 export path=($HOME/bin $path)
 # Enforce $PATH to child processes
 export PATH
-
-# Same as before, but with function definitions
-typeset -U fpath FPATH
-export fpath=(${ZDOTDIR}/custom-functions $fpath)
-export FPATH
