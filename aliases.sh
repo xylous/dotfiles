@@ -1,61 +1,60 @@
-#!/usr/bin/sh
+# Some ls aliases
 alias ls='ls --color=auto'
-alias szsh='source $ZDOTDIR/.zshrc'
-alias s='sudo'
+alias la='ls -lAh'
+alias l='ls -l'
+alias ll='ls -la'
 
-# Saves a lot of time
-alias v='$EDITOR'
+# Aand some grep aliases
+alias grep='grep --colour=auto'
+
+alias szsh='source $ZDOTDIR/.zshrc'
+alias _='sudo'
+
+alias v='$VISUAL'
+
+# Before, it would've been aliased to 'man'
+unalias run-help
+autoload -Uz run-help
+alias h='run-help'
 
 ## Quick access to config files
 # "configure shell aliases"
-alias cfsa='$VISUAL $ZDOTDIR/.aliases.sh'
+alias cfsa='$VISUAL $ZDOTDIR/config/aliases.sh'
 
 # "configure git aliases"
-alias cfga='$VISUAL $ZDOTDIR/.gitaliases.sh'
-
-# "configure git"
-alias cfgit='git config --global -e'
+alias cfga='$VISUAL $ZDOTDIR/config/gitaliases.sh'
 
 # "configure intractive z-shell"
 alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
 
+# Configure zsh plugin manager
+alias cfzplg='$VISUAL $MZPM/mzpm.zsh'
+
+# "Configure zsh prompt"
+alias cfzspr='$VISUAL $ZDOTDIR/config/prompt.zsh'
+
 # "configure login z-shell"
 alias cflzs='$VISUAL $ZDOTDIR/.zlogin'
-
-# "sudo configure global zshenv"
-alias scfgzenv='sudo $VISUAL /etc/zsh/zshenv'
 
 # "configure zshenv"
 alias cfzenv='$VISUAL $ZDOTDIR/.zshenv'
 
-# "edit z-shell history"
-alias ezhist='$VISUAL $ZDOTDIR/.zsh_history'
-
-# "configure bash"
-alias cfbs='$VISUAL $HOME/.bashrc'
-
 # "configure neovim"
 alias cfnv='$VISUAL $XDG_CONFIG_HOME/nvim/init.vim'
-
-# "configuree vim"
 alias cfv='$VISUAL $MYVIMRC'
 
 # "configure i3wm"
 alias cfi3='$VISUAL $XDG_CONFIG_HOME/i3/config'
 
-# "configure picom"
-alias cfpic='$VISUAL $XDG_CONFIG_HOME/picom.conf'
-
 # "configure alacritty"
 alias cfal='$VISUAL $XDG_CONFIG_HOME/alacritty/alacritty.yml'
 
-# "configure polybar"
-alias cfpy='$VISUAL $XDG_CONFIG_HOME/polybar/config'
+# "configure tmux"
+alias cftmux='$VISUAL $XDG_CONFIG_HOME/tmux/tmux.conf'
 
 ## Package manager
 alias p='pacman'
 alias sp='sudo pacman'
 alias pacman-browse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias p-b="pacman-browse"
-alias a="aurpkger"
 alias ast="archstat"
