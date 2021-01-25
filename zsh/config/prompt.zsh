@@ -7,19 +7,19 @@ set_prompt() {
 
     ## Top line
     # Username and hostname
-    SECTION_A1='(${FG_ORANGE}%n${FG_CLR}@${FG_BLUE}%m${FG_CLR})'
+    SECTION_A1="(${FG_ORANGE}%n${FG_CLR}@${FG_BLUE}%m${FG_CLR})"
 
-    # Current path
-    SECTION_B1='${FG_LIGHT_RED}%~${FG_CLR} ${GIT_STATUS}'
+    # Section B1 is sourced in precmd, as it always needs to be updated (it
+    # contains git status of current directory, which is dynamic)
 
-    SECTION_C1=''
+    SECTION_C1=""
 
     ## Bottom line, aka what you actually use
-    SECTION_A2=''
+    SECTION_A2=""
     
     # If the last exit code is > 0, the integer between brackets will be coloured
     # red, otherwise green (indicating success)
-    SECTION_C2='[%(?.${FG_GREEN}%?${FG_CLR}.${FG_RED}%?${FG_CLR})]'
+    SECTION_C2="[%(?.${FG_GREEN}%?${FG_CLR}.${FG_RED}%?${FG_CLR})]"
 }
 set_prompt
 
@@ -32,10 +32,11 @@ done
 
 # Always update git status for the prompt and print prompt
 precmd() {
-    source ${ZDOTDIR}/plugins/gitstatus.zsh
-    LFT_PROMPT=$(print -nP "┌─${SECTION_A1} | ${SECTION_B1}")
+    source ${PLUGIN_DIR}/gitstatus/gitstatus.plugin.zsh
+    SECTION_B1="${FG_LIGHT_RED}%~${FG_CLR} ${GIT_STATUS}"
+    LFT_PROMPT=$(print -nrP "┌─${SECTION_A1} | ${SECTION_B1}")
     RGT_PROMPT="${SECTION_C1}"
-    RGT_LEN=$(($COLUMNS-${#LFT_PROMPT})) print -P ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
+    RGT_LEN=$(($COLUMNS-${#LFT_PROMPT})) print -rP ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
 }
 
 set_actual_prompts() {

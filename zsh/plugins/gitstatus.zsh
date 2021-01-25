@@ -80,13 +80,13 @@ parse_git_status() {
         || GIT_STAGED=""
     (( ${modified_files} > 0 )) \
         && GIT_MODIFIED="!${modified_files} " \
-        || GIT_MODIFIED=" "
+        || GIT_MODIFIED=""
     (( ${deleted_files} > 0 )) \
         && GIT_DELETED="${deleted_files}- " \
-        || GIT_DELETED=" "
+        || GIT_DELETED=""
     (( ${untracked_files} > 0 )) \
         && GIT_UNTRACKED="?${untracked_files}" \
-        || GIT_UNTRACKED=" "
+        || GIT_UNTRACKED=""
     
     if (( GIT_HAS_CHANGES == 1 )); then
         FG_SPECIAL_COLOR="${FG_YELLOW}"

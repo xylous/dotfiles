@@ -8,7 +8,7 @@ FG_RED='%F{9}'
 FG_LIGHT_RED='%F{red}'
 FG_BLUE='%F{68}'
 FG_ORANGE='%F{214}'
-FG_CLR='%F{white}'
+FG_CLR='%F{default}'
 
 # BG = BackGround
-BG_CLR='%K{black}'
+BG_CLR='%K{default}'

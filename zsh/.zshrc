@@ -1,27 +1,16 @@
-## Oh-my-zsh
-# Path to your oh-my-zsh installation
-export ZSH="${ZDOTDIR}/.oh-my-zsh"
+## mzp
+export MZPM="${ZDOTDIR}/mzpm"
+export PLUGIN_DIR="${MZPM}/plugins"
 
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    zsh-autosuggestions
-    vi-mode zsh-syntax-highlighting
+    'zsh-users/zsh-autosuggestions'
+    'zsh-users/zsh-syntax-highlighting'
+    'vi-mode'
+    'colours'
 )
 
-# Load oh-my-zsh
-source ${ZSH}/oh-my-zsh.sh
-
-# Manually set language environment
-export LANG=en_US.UTF-8
-
-# Set compilation flags
-export ARCHFLAGS="-arch x86_64"
-
-# Autoupdate oh-my-zsh without prompts
-DISABLE_UPDATE_PROMPT=true
+# Load in plugin manager
+source ${MZPM}/mzpm.zsh
 
 ## Basic options
 # Any patterns that don't match the search are removed; if there is none, print
@@ -47,12 +36,6 @@ autoload -U compaudit compinit
 # Set custom zcompdump file
 compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
 
-# Unalias 'run-help' (set by oh-my-zsh to 'man') because it provides help on
-# zsh builtins, and seeing the manual instead of shell-builtins is frustrating
-unalias run-help &> /dev/null
-autoload run-help
-alias help='run-help'
-
 ## History options are kept in a separate file
 [[ -z $HIST_OPTIONS_FILE ]] \
     && readonly HIST_OPTIONS_FILE="${ZDOTDIR}/config/history.zsh"
@@ -66,8 +49,5 @@ alias help='run-help'
 [[ -f ${aliases_file} ]] && source ${aliases_file}
 [[ -f ${gitaliases_file} ]] && source ${gitaliases_file}
 
-## Define custom colours
-source ${ZDOTDIR}/plugins/colours.zsh
-
-## Prompt is handled in another file as well
+## Prompt is handled by another file as well
 source ${ZDOTDIR}/config/prompt.zsh
