@@ -40,7 +40,7 @@ parse_git_status() {
                 ((modified_files++))
                 GIT_HAS_CHANGES=1
                 ;;
-            'A  '*)
+            'A  '*|'M '*)
                 ((staged_files++))
                 GIT_HAS_CHANGES=1
                 ;;
@@ -68,9 +68,11 @@ parse_git_status() {
         commits_behind=$(echo -n "$ahead_behind_status" | awk '{print $2}')
         
         (( ${commits_behind} > 0))  \
+            && GIT_HAS_CHANGES=1 \
             && GIT_COMMITS_BEHIND="↓${commits_behind} " \
             || GIT_COMMITS_BEHIND=""
         (( ${commits_ahead} > 0))  \
+            && GIT_HAS_CHANGES=1 \
             && GIT_COMMITS_AHEAD="↑${commits_ahead} " \
             || GIT_COMMITS_AHEAD=""
     fi
@@ -99,7 +101,7 @@ parse_git_status() {
     GIT_STATUS="| ${FG_SPECIAL_COLOR}"
     GIT_STATUS+=" ${GIT_BRANCH} "
     GIT_STATUS+="${GIT_COMMITS_STATUS}"
-    GIT_STATUS+="${GIT_STAGED}${GIT_MODIFIED}"
+    GIT_STATUS+="${GIT_MODIFIED}${GIT_STAGED}"
     GIT_STATUS+="${GIT_DELETED}${GIT_UNTRACKED}"
     GIT_STATUS+="${FG_CLR}"
 }

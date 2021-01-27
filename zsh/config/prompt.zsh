@@ -1,5 +1,14 @@
 #!/usr/bin/zsh
 
+# Mmm, colours
+source ${PLUGIN_DIR}/colours/colours.plugin.zsh
+
+# Highlight current entry in the tab completion menu
+zstyle ':completion:*' menu select
+
+# Use LS_COLORS when completing filenames
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 set_prompt() {
     # The structure of the prompt basically looks something like:
     # ┌─SECTION-A1 | SECTION-B1                        SECTION-C1
@@ -34,9 +43,12 @@ done
 precmd() {
     source ${PLUGIN_DIR}/gitstatus/gitstatus.plugin.zsh
     SECTION_B1="${FG_LIGHT_RED}%~${FG_CLR} ${GIT_STATUS}"
-    LFT_PROMPT=$(print -nrP "┌─${SECTION_A1} | ${SECTION_B1}")
+
+    LFT_PROMPT=$(print -nP "┌─${SECTION_A1} | ${SECTION_B1}")
     RGT_PROMPT="${SECTION_C1}"
-    RGT_LEN=$(($COLUMNS-${#LFT_PROMPT})) print -rP ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
+    RGT_LEN=$(($COLUMNS-${#LFT_PROMPT}))
+
+    print -P ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
 }
 
 set_actual_prompts() {
