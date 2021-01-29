@@ -39,8 +39,9 @@ export GTK2_RC_FILES=~/.config/gtk-2.0/gtkrc-2.0
 exec redshift -l geoclue2 -t 4600:2300 -g 0.8 -m randr &
 
 # feh for wallpaper + picom as compositer
-exec feh --no-fehbg --bg-scale $XDG_CONFIG_HOME/i3/wallpaper.png &
-exec picom --config $XDG_CONFIG_HOME/picom.conf &
+WALLPAPER="${XDG_CONFIG_HOME}/i3/wallpaper.png"
+exec feh --no-fehbg --bg-scale ${WALLPAPER} &
+exec picom --config ${XDG_CONFIG_HOME}/picom.conf &
 
 # Finally, execute the graphical environment
 exec i3
