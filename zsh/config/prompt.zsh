@@ -76,3 +76,19 @@ clear-screen() {
 
 # Update function
 zle -N clear-screen
+
+# Pressing UP and DOWN keys will go up and down in the entries in hitory that
+# start with what has already been typed in
+search_history_with_text_already_inputted() {
+    # If not using zsh-history-substring-search plugin, use:
+    #autoload -U history-search-end
+    #zle -N history-beginning-search-backward-end history-search-end
+    #zle -N history-beginning-search-forward-end history-search-end
+    #bindkey "${terminfo[kcuu1]}" history-beginning-search-backward-end
+    #bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
+
+    # Otherwise, use this:
+    bindkey "${terminfo[kcuu1]}" history-substring-search-up
+    bindkey "${terminfo[kcud1]}" history-substring-search-down
+}
+search_history_with_text_already_inputted
