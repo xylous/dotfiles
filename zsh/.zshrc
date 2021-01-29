@@ -3,18 +3,26 @@ export MZPM="${ZDOTDIR}/mzpm"
 export PLUGIN_DIR="${MZPM}/plugins"
 
 plugins=(
+    'vi-mode'
+    'zsh-users/zsh-history-substring-search'
     'zsh-users/zsh-autosuggestions'
     'zsh-users/zsh-syntax-highlighting'
-    'vi-mode'
 )
 
 # Load in plugin manager
 source ${MZPM}/mzpm.zsh
 
 ## Basic options
+# Only you, the user, should have access to your files
+umask 077
+
 # Any patterns that don't match the search are removed; if there is none, print
 # a blank line
 setopt NO_NULL_GLOB
+
+# Perform case-insensitive filename matching
+setopt NO_CASE_GLOB
+setopt EXTENDED_GLOB
 
 # Check if the command typed is actually a directory; if it is, cd into it
 setopt AUTO_CD
@@ -34,6 +42,12 @@ autoload -U compaudit compinit
 
 # Set custom zcompdump file
 compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+
+# Vim stuffs
+export EDITOR="nvim"
+export VISUAL="nvim"
+export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
+export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 
 # Manually set language environment
 export LANG="en_US.UTF-8"
