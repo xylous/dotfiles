@@ -1,7 +1,7 @@
 " Enable folding
 " vim:fdm=marker
 
-"" BASIC OPTIONS {{{
+" BASIC OPTIONS {{{
 
 " Be in the 21st century already
 set nocompatible
@@ -78,7 +78,7 @@ set nobackup
 
 " }}}
 
-"" PLUGINS {{{
+" PLUGINS {{{
 
 " Plugins (with Vundle) {{{
 
@@ -95,10 +95,10 @@ Plugin 'morhetz/gruvbox'
 " Lean status/tabline for vim:
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-" File system explorer:
-Plugin 'preservim/nerdtree'
 " Quickly comment out multile lines:
 Plugin 'preservim/nerdcommenter'
+" File browser
+Plugin 'preservim/nerdtree'
 " Code autocompletion:
 Plugin 'neoclide/coc.nvim'
 " Find files quickly:
@@ -108,10 +108,10 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'pangloss/vim-javascript'
 " Syntax highlighting for C++:
 Plugin 'octol/vim-cpp-enhanced-highlight'
-" Syntax highlighting for Haskell:
-Plugin 'neovimhaskell/haskell-vim'
 " Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
+" Basically, a more conservative version of vim auto-pairs
+Plugin 'rstacruz/vim-closer'
 
 " add plugins only above this line
 call vundle#end()
@@ -120,11 +120,7 @@ call vundle#end()
 
 " NERDTree {{{
 
-" Close vim if the only window left open is a NERDTree:
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" When Ctrl-t is pressed, toggle NERDTree:
-noremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
 
 " }}}
 
@@ -134,7 +130,7 @@ noremap <C-t> :NERDTreeToggle<CR>
 let g:fzf_buffers_jump = 1
 
 " Use CTRL-f to open FZF quickly
-nnoremap <C-f> :FZF<cr>
+nnoremap <C-f> :FZF ~<cr>
 
 " }}}
 
@@ -193,19 +189,6 @@ let g:javascript_plugin_flow = 1
 
 " }}}
 
-" haskell-vim {{{
-
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-let g:haskell_classic_highlighting = 0
-
-" }}}
-
 " Indent Guides {{{
 
 let g:indent_guides_enable_on_vim_startup = 1
@@ -217,7 +200,7 @@ let g:indent_guides_guide_size = 1
 
 " }}}
 
-"" LOOK AND FEEL {{{
+" LOOK AND FEEL {{{
 
 " Enable true colour in the terminal
 set termguicolors
@@ -290,7 +273,7 @@ let g:airline_section_x = '%Y'
 
 " }}}
 
-"" KEY BINDINGS {{{
+" KEY BINDINGS {{{
 
 let mapleader = " "
 " Quick access to vimrc
@@ -298,10 +281,14 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <C-s> :source $MYVIMRC<CR>
 
 " Disable arrow keys
-noremap <up> <NOP>
-noremap <down> <NOP>
-noremap <left> <NOP>
-noremap <right> <NOP>
+inoremap <up> <NOP>
+inoremap <down> <NOP>
+inoremap <left> <NOP>
+inoremap <right> <NOP>
+nnoremap <up> <NOP>
+nnoremap <down> <NOP>
+nnoremap <left> <NOP>
+nnoremap <right> <NOP>
 
 " Quickly switch between windows
 nnoremap <leader>h :wincmd h<CR>
@@ -309,12 +296,9 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 
-" Quickly browse files with netrw
-noremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
-
 " }}}
 
-"" ABBREVIATIONS {{{
+" ABBREVIATIONS {{{
 
 inoreab #i #include
 inoreab #d #define
@@ -323,7 +307,7 @@ inoreab #d #define
 
 " Set custom path for viminfo 
 if has("nvim")
-    set shada='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/viminfo.nvim
+    set shada='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/nviminfo
 else
     set viminfo='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/viminfo.vim
 endif
