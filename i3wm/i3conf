@@ -168,54 +168,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-    status_command i3status
-
-    # Font (you may set it to whatever you want, but I like this one)
-    font pango:MesloLGS NF 8
-
-    # Bar position (top in this case, alternatively bottom)
-    position top
-
-    # Height in pixels
-    height 15
-
-    # Set a modifier key
-    Modifier Mod4
-
-    # Hide the bar most of the time, unless the modifier key is pressed
-    # Alternatively, you can put 'dock', to always show, or 'invisible', to
-    # always hide it
-    mode hide
-
-    #
-    hidden_state hide # alternatively, 'show'
-
-    # Separate different sectors with a vertical line
-    separator_symbol "|"
-
-    # Disable clicking on buttons
-    bindsym button1 nop
-
-    # List of mouse buttons
-    #bindsym button2 # right mouse button
-    #bindsym button3 # middle mouse button
-    #bindsym button4 # scroll wheel up
-    #bindsym button5 # scroll wheel down
-    #bindsym button6 # scroll wheel right
-    #bindsym button7 # scroll wheel left
-
-    # Display only the name of the workspace, not the number
-    strip_workspace_numbers yes
-
-    # Don't put any icons on the bar
-    tray_output none
-
-    # Display workspace buttons on the bar
-    workspace_buttons yes
-}
+# Use polybar to handle the bar
+exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
 
 # Don't change focus just because the mouse moves
 focus_follows_mouse no
