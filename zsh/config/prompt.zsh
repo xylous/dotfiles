@@ -3,13 +3,10 @@
 # Mmm, colours
 source ${PLUGIN_DIR}/colours/colours.plugin.zsh
 
-# Highlight current entry in the tab completion menu
-zstyle ':completion:*' menu select
-
 # Use LS_COLORS when completing filenames
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-set_prompt() {
+function set_prompt() {
     # The structure of the prompt basically looks something like:
     # ┌─SECTION-A1 | SECTION-B1                        SECTION-C1
     # └ SECTION-A2                                   SECTION-C2
@@ -39,8 +36,8 @@ for i in 1 2 3; do
     clear
 done
 
-# Always update git status for the prompt and print prompt
-precmd() {
+# Always update git status for the prompt and draw upper part of prompt
+function precmd() {
     source ${PLUGIN_DIR}/gitstatus/gitstatus.plugin.zsh
     SECTION_B1="${FG_LIGHT_RED}%~${FG_CLR} ${GIT_STATUS}"
 
@@ -51,7 +48,7 @@ precmd() {
     print -P ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
 }
 
-set_actual_prompts() {
+function set_actual_prompts() {
     # Prompt used interactively (so, most of the time)
     export PS1="└ ${SECTION_A2}"
     export RPS1="${SECTION_C2}  "
@@ -68,18 +65,25 @@ set_actual_prompts() {
 set_actual_prompts
 
 # Redefine zle builtin to not clean precmd output
-clear-screen() {
+function clear-screen() {
     echoti clear
     precmd
     zle redisplay
 }
 
-# Update function
+# Update zle to use previously defined function
 zle -N clear-screen
+
+# Dunno what this does, but apparently it does something essential for the
+# previous function to work correctly.
+function zle-line-init() {
+    (( ! ${+terminfo[smkx]} )) || echoti smkx
+}
+zle -N zle-line-init
 
 # Pressing UP and DOWN keys will go up and down in the entries in hitory that
 # start with what has already been typed in
-search_history_with_text_already_inputted() {
+function search_history_with_text_already_inputted() {
     # If not using zsh-history-substring-search plugin, use:
     #autoload -U history-search-end
     #zle -N history-beginning-search-backward-end history-search-end
@@ -91,4 +95,37 @@ search_history_with_text_already_inputted() {
     bindkey "${terminfo[kcuu1]}" history-substring-search-up
     bindkey "${terminfo[kcud1]}" history-substring-search-down
 }
-search_history_with_text_already_inputted
+
+function set_tab_completion_menu_bindings() {
+    # Highlight current entry in the tab completion menu
+    zstyle ':completion:*' menu select
+    zmodload zsh/complist
+
+    # Use hjkl to navigate tab completion menu
+    bindkey -M menuselect "h" vi-backward-char
+    bindkey -M menuselect "j" vi-down-line-or-history
+    bindkey -M menuselect "k" vi-up-line-or-history
+    bindkey -M menuselect "l" vi-forward-char
+
+    # Use Ctrl-[N|P] to navigate tab completion menu
+    bindkey '^N' expand-or-complete
+    bindkey '^P' reverse-menu-complete
+}
+
+function set_key_bindings() {
+    # Enable vim mode
+    bindkey -v
+
+    # Remove character under cursor when the <Delete> key is pressed
+    bindkey "^[[3~" vi-delete-char
+    bindkey -a "^[[3~" vi-delete-char
+
+    # Move just a character when Ctrl-[LEFT|RIGHT] is pressed
+    bindkey "^[[1;5D" backward-char
+    bindkey "^[[1;5C" forward-char
+
+    search_history_with_text_already_inputted
+
+    set_tab_completion_menu_bindings
+}
+set_key_bindings
