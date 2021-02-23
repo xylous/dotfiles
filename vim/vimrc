@@ -101,6 +101,8 @@ Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 " Code autocompletion:
 Plugin 'neoclide/coc.nvim'
+" Snippets for coc-snippets
+Plugin 'honza/vim-snippets'
 " Find files quickly:
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -110,7 +112,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
-" Basically, a more conservative version of vim auto-pairs
+" Basically, a more conservative version of vim-auto-pairs
 Plugin 'rstacruz/vim-closer'
 
 " add plugins only above this line
@@ -129,7 +131,7 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 " Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
-" Use CTRL-f to open FZF quickly
+" Use CTRL-f to open FZF quickly, in the home directory
 nnoremap <C-f> :FZF ~<cr>
 
 " }}}
@@ -168,6 +170,28 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
+
+" }}}
+
+" coc-snippets {{{
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
 
 " }}}
 
@@ -307,7 +331,7 @@ inoreab #d #define
 
 " Set custom path for viminfo 
 if has("nvim")
-    set shada='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/nviminfo
+    set shada='50,<1000,s100,:0,n$XDG_CACHE_HOME/vim/nviminfo
 else
-    set viminfo='50,<1000,s100,:0,n$XDG_CONFIG_HOME/vim/viminfo.vim
+    set viminfo='50,<1000,s100,:0,n$XDG_CACHE_HOME/vim/viminfo.vim
 endif
