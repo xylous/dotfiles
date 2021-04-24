@@ -36,7 +36,7 @@ fi
 export GTK2_RC_FILES=~/.config/gtk-2.0/gtkrc-2.0
 
 # Be easier on the eyes
-exec redshift -l geoclue2 -t 4600:2300 -g 0.8 -m randr &
+exec redshift -t 4600:2300 -g 0.8 -m randr &
 
 # feh for wallpaper + picom as compositer
 WALLPAPER="${XDG_CONFIG_HOME}/i3/wallpaper.png"

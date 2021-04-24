@@ -24,3 +24,5 @@ alias gpll="git pull"
 alias gcl="git clone"
 
 alias gpsh="git push"
+
+alias gcfg="git config"

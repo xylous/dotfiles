@@ -1,7 +1,22 @@
 #!/usr/bin/zsh
 
-# Mmm, colours
-source ${PLUGIN_DIR}/colours/colours.plugin.zsh
+function set_colours() {
+    # FG = ForeGround
+    FG_CLR='%F{default}'
+
+    FG_YELLOW='%F{11}'
+    FG_GREEN='%F{34}'
+    FG_RED='%F{9}'
+    FG_BLUE='%F{68}'
+
+    FG_USERNAME='%F{167}'
+    FG_HOSTNAME='%F{67}'
+    FG_PATH="%F{43}"
+
+    # BG = BackGround
+    BG_CLR='%K{default}'
+}
+set_colours
 
 # Use LS_COLORS when completing filenames
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -13,7 +28,7 @@ function set_prompt() {
 
     ## Top line
     # Username and hostname
-    SECTION_A1="(${FG_ORANGE}%n${FG_CLR}@${FG_BLUE}%m${FG_CLR})"
+    SECTION_A1="(${FG_USERNAME}%n${FG_CLR}@${FG_HOSTNAME}%m${FG_CLR})"
 
     # Section B1 is sourced in precmd, as it always needs to be updated (it
     # contains git status of current directory, which is dynamic)
@@ -29,17 +44,10 @@ function set_prompt() {
 }
 set_prompt
 
-# Somewhat of an instant prompt?
-for i in 1 2 3; do
-    print -P "┌─${SECTION_A1} | ${SECTION_B1}"
-    print -nrP "$PS1"
-    clear
-done
-
 # Always update git status for the prompt and draw upper part of prompt
 function precmd() {
     source ${PLUGIN_DIR}/gitstatus/gitstatus.plugin.zsh
-    SECTION_B1="${FG_LIGHT_RED}%~${FG_CLR} ${GIT_STATUS}"
+    SECTION_B1="${FG_PATH}%~${FG_CLR} ${GIT_STATUS}"
 
     LFT_PROMPT=$(print -nP "┌─${SECTION_A1} | ${SECTION_B1}")
     RGT_PROMPT="${SECTION_C1}"

@@ -76,3 +76,4 @@ export PAGER='less'
 
 ## Prompt is handled by another file as well
 source ${ZDOTDIR}/config/prompt.zsh
+unset I3SOCK

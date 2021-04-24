@@ -9,7 +9,14 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# Modifier key: WinKey
 set $mod Mod4
+
+# Keys used for moving between or resizing windows
+set $left h
+set $down j
+set $up k
+set $right l
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -18,9 +25,6 @@ font pango:monospace 8
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -66,16 +70,16 @@ bindsym $mod+d exec dmenu_run
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 # split in horizontal orientation
 bindsym $mod+c split h
@@ -149,21 +153,21 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window's width.
-        # Pressing right will grow the window's width.
-        # Pressing up will shrink the window's height.
-        # Pressing down will grow the window's height.
-        bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym l resize grow width 5 px or 5 ppt
+    # Pressing $right will shrink the window's width.
+    # Pressing $down will grow the window's width.
+    # Pressing $up will shrink the window's height.
+    # Pressing $left will grow the window's height.
+    bindsym $right resize shrink width 5 px or 5 ppt
+    bindsym $down resize grow height 5 px or 5 ppt
+    bindsym $up resize shrink height 5 px or 5 ppt
+    bindsym $left resize grow width 5 px or 5 ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    # back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -197,5 +201,9 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 # Printscreen schenanigans, with scrot
-bindsym Print exec sleep 0.2 && scrot $HOME/pictures/%Y-%m-%d-%T-screenshot.png \
-            --select --freeze --silent
+bindsym Print exec sleep 0.2 \
+&& scrot $HOME/pictures/%Y-%m-%d-%T-screenshot.png --select --freeze --silent
+
+# Special rules for Anki "Add" window
+for_window [class="(?i)anki" title="(?i)add"] floating enable
+

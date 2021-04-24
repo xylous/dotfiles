@@ -1,8 +1,8 @@
 # Some ls aliases
 alias ls='ls --color=auto'
 alias la='ls -lAh'
-alias l='ls -l'
-alias ll='ls -la'
+alias l='ls -la'
+alias ll='ls -l'
 
 # Aand some grep aliases
 alias grep='grep --colour=auto'
@@ -15,15 +15,16 @@ alias hg='history | grep'
 
 # Aaaand the most useful cd aliases, maybe ever
 alias -- -='cd -'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+alias -- ..='cd ..'
+alias -- ...='cd ../..'
+alias -- ....='cd ../../..'
 
 alias szsh='source $ZDOTDIR/.zshrc'
 alias _='sudo'
 
 alias v='$VISUAL'
 
-# Before, it would've been aliased to 'man'
+# By default, it would've been aliased to 'man'
 alias run-help &>/dev/null && unalias run-help
 autoload -Uz run-help
 alias h='run-help'
@@ -75,3 +76,10 @@ alias sp='sudo pacman'
 alias pacman-browse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias p-b="pacman-browse"
 alias ast="archstat"
+alias a="aurpkger"
+
+## Misc
+alias drive="node ~/projects/drive"
+alias colortrans="python2 ~/bin/colortrans.py"
+command -v bmake &>/dev/null && alias make="bmake"
+alias sv="sudo nvim"
