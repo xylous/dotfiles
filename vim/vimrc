@@ -1,8 +1,7 @@
-" Enable folding
+" Enable folding in vimrc
 " vim:fdm=marker
 
 " BASIC OPTIONS {{{
-
 " Be in the 21st century already
 set nocompatible
 filetype plugin indent on
@@ -27,8 +26,11 @@ set updatetime=100
 " Dedicate one more line to displaying messages
 set cmdheight=2
 
-" Indentation {{{
+" Always display a vertical bar on the left; if there are any errors deteced by
+" language servers, they'll show there
+set signcolumn=yes
 
+" INDENTATION {{{
 " Don't bother me with manual indentation
 set autoindent
 set smartindent
@@ -40,6 +42,7 @@ set expandtab
 " 4 space indent should do
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 
 " Split lines longer than 80 characters
 set wrap
@@ -48,11 +51,8 @@ set linebreak
 
 " More convenience with tabs
 set smarttab
-
 " }}}
-
-" Searching {{{
-
+" SEARCHING {{{
 " Highlight text during search
 set incsearch
 
@@ -62,54 +62,39 @@ set nohlsearch
 " Don't do case-sensitive searching, unless there are capital letters
 set ignorecase
 set smartcase
-
 " }}}
-
-" Buffers {{{ 
-
+" BUFFERS {{{ 
 " Keep any buffers around in the background
 set hidden
 
 " No backups, of any kind, whatsoever
 set noswapfile
 set nobackup
-
 " }}}
-
 " }}}
-
 " PLUGINS {{{
-
 " Plugins (with Vundle) {{{
-
 " Set runtime path to include Vundle and initialize
 set rtp+=$XDG_CONFIG_HOME/vim/bundle/Vundle.vim
 call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
-
 " NOTE: Be careful, as too many plugins will slow vim down!
-
 " let Vundle manage Vundle, required:
 Plugin 'VundleVim/Vundle.vim'
 " Bright theme with pastel colors:
-Plugin 'morhetz/gruvbox'
+Plugin 'joshdick/onedark.vim'
 " Lean status/tabline for vim:
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " Quickly comment out multile lines:
 Plugin 'preservim/nerdcommenter'
-" File browser
-Plugin 'preservim/nerdtree'
 " Code autocompletion:
 Plugin 'neoclide/coc.nvim'
 " Snippets for coc-snippets
 Plugin 'honza/vim-snippets'
 " Find files quickly:
-Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-" Syntax highlighting for Javascript:
-Plugin 'pangloss/vim-javascript'
-" Syntax highlighting for C++:
-Plugin 'octol/vim-cpp-enhanced-highlight'
+" Syntax highlighting for a lot of languages
+Plugin 'sheerun/vim-polyglot'
 " Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
 " Basically, a more conservative version of vim-auto-pairs
@@ -117,38 +102,25 @@ Plugin 'rstacruz/vim-closer'
 
 " add plugins only above this line
 call vundle#end()
-
 " }}}
-
-" NERDTree {{{
-
-nnoremap <C-t> :NERDTreeToggle<CR>
-
-" }}}
-
 " fzf {{{
-
 " Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
 " Use CTRL-f to open FZF quickly, in the home directory
 nnoremap <C-f> :FZF ~<cr>
-
 " }}}
-
 " coc.nvim {{{
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+" Use <tab> for trigger completion, completion confirm, snippet expand
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use `[g` and `]g` to navigate diagnostics
@@ -168,66 +140,36 @@ command! -nargs=0 Format :call CocAction('format')
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
+" List of extensions
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh']
+
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
 
-" }}}
-
-" coc-snippets {{{
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
+" Use CTRL-J and CTRL-K to navigate up and down the list of snippets
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-
 " }}}
-
-" C++ syntax highlighting {{{
-
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_concepts_highlight = 1
-let c_no_curly_error = 1
-
-" }}}
-
-" Javascript highlighting {{{
-
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
-
-" }}}
-
 " Indent Guides {{{
-
 let g:indent_guides_enable_on_vim_startup = 1
 
 " Only one character long
 let g:indent_guides_guide_size = 1
-
 " }}}
-
 " }}}
-
 " LOOK AND FEEL {{{
+" Assume a 256-colour-capable terminal, always
+"set t_Co=256
 
-" Enable true colour in the terminal
-set termguicolors
+" Enable 24-bit true colour for nvim (vim doesn't seem to support it for me)
+if has("nvim")
+    set termguicolors
+endif
 
 " Statusline takes care of displaying the mode already
 set noshowmode
@@ -235,21 +177,17 @@ set noshowmode
 " Remove the visual delay when switching between modes
 set ttimeoutlen=10
 
-" Theme (Gruvbox) options {{{
-
+" ONEDARK {{{
 set background=dark
 let g:gruvbox_italic=1
 let g:gruvbox_bold=1
 let g:gruvbox_contrast_dark = 'soft'
 
 " At last, invoke Gruvbox
-colorscheme gruvbox
-
+colorscheme onedark 
 " }}}
-
-" Airline options {{{
-
-let g:airline_theme = 'base16'
+" AIRLINE {{{
+let g:airline_theme = 'onedark'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
@@ -260,7 +198,6 @@ let g:airline#extensions#tabline#enabled = 1
 " Sweet, sweet powerline fonts
 let g:airline_powerline_fonts = 1
 
-" Symbols {{{
 " Define custom symbols
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -276,11 +213,7 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
 
-" }}}
-
-" Statusline {{{
-
-" Put statuslinea at the bottom
+" Put statusline at the bottom
 let g:airline_statusline_ontop = 0
 
 " Define statusline. Uses vim's inbuilt statusline syntax
@@ -290,15 +223,9 @@ let g:airline_statusline_ontop = 0
 let g:airline_section_x = '%Y'
 "let g:airline_section_y = ''
 "let g:airline_section_z = ''
-
 " }}}
-
 " }}}
-
-" }}}
-
 " KEY BINDINGS {{{
-
 let mapleader = " "
 " Quick access to vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -319,14 +246,13 @@ nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
-
 " }}}
-
-" ABBREVIATIONS {{{
-
-inoreab #i #include
-inoreab #d #define
-
+" FILETYPE-SPECIFIC OPTIONS {{{
+augroup MARKDOWN_OPTIONS
+    autocmd BufWinEnter *.md setlocal foldmethod=manual
+    autocmd BufWinLeave *.md mkview
+    autocmd BufWinEnter *.md silent! loadview
+augroup END
 " }}}
 
 " Set custom path for viminfo 
