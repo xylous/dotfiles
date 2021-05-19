@@ -21,45 +21,82 @@ set_colours
 # Use LS_COLORS when completing filenames
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-function set_prompt() {
+function define_prompt_structure() {
     # The structure of the prompt basically looks something like:
-    # ┌─SECTION-A1 | SECTION-B1                        SECTION-C1
-    # └ SECTION-A2                                   SECTION-C2
+    # ┌─SECTION-A | SECTION-B | SECTION-C
+    # └                                                SECTION-D
 
     ## Top line
     # Username and hostname
-    SECTION_A1="(${FG_USERNAME}%n${FG_CLR}@${FG_HOSTNAME}%m${FG_CLR})"
+    SECTION_A="(${FG_USERNAME}%n${FG_CLR}@${FG_HOSTNAME}%m${FG_CLR})"
 
-    # Section B1 is sourced in precmd, as it always needs to be updated (it
-    # contains git status of current directory, which is dynamic)
+    # Path
+    SECTION_B="${FG_PATH}%~${FG_CLR}"
 
-    SECTION_C1=""
+    # Git status, coming from a custom script. Defined in the precmd() function
 
-    ## Bottom line, aka what you actually use
-    SECTION_A2=""
-    
     # If the last exit code is > 0, the integer between brackets will be coloured
     # red, otherwise green (indicating success)
-    SECTION_C2="[%(?.${FG_GREEN}%?${FG_CLR}.${FG_RED}%?${FG_CLR})]"
+    SECTION_D="[%(?.${FG_GREEN}%?${FG_CLR}.${FG_RED}%?${FG_CLR})]"
 }
-set_prompt
+define_prompt_structure
+
+### 
+# Usage: fill_line LEFT RIGHT
+# Sets REPLY to LEFT<spaces>RIGHT with enough spaces in the middle to fill a
+# terminal line.
+###
+function fill_line() {
+    emulate -L zsh
+    prompt_length $1
+    local -i left_len=$REPLY
+    prompt_length $2 9999
+    local -i right_len=$REPLY
+    local -i pad_len=$((COLUMNS - left_len - right_len - ${ZLE_RPROMPT_INDENT:-1}))
+    if (( pad_len < 1 )); then
+        # Not enough space for the right part. Drop it.
+        typeset -g REPLY=$1
+    else
+        local pad=${(pl.$pad_len.. .)}  # pad_len spaces
+        typeset -g REPLY="${1}${pad}${2}"
+    fi
+}
+
+###
+# Usage: prompt_length PROMPT
+# Determines the length of the outputted text of a string with zsh prompt syntax
+###
+function prompt_length() {
+    emulate -L zsh
+    local -i COLUMNS=${2:-COLUMNS}
+    local -i x y=${#1} m
+    if (( y )); then
+        while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+            x=y
+            (( y *= 2 ))
+        done
+        while (( y > x + 1 )); do
+            (( m = x + (y - x) / 2 ))
+            (( ${${(%):-$1%$m(l.x.y)}[-1]} = m ))
+        done
+    fi
+    typeset -g REPLY=$x
+}
 
 # Always update git status for the prompt and draw upper part of prompt
 function precmd() {
-    source ${PLUGIN_DIR}/gitstatus/gitstatus.plugin.zsh
-    SECTION_B1="${FG_PATH}%~${FG_CLR} ${GIT_STATUS}"
+    source $PLUGIN_DIR/gitstatus/gitstatus.plugin.zsh
+    SECTION_C="$GIT_STATUS"
 
-    LFT_PROMPT=$(print -nP "┌─${SECTION_A1} | ${SECTION_B1}")
-    RGT_PROMPT="${SECTION_C1}"
-    RGT_LEN=$(($COLUMNS-${#LFT_PROMPT}))
-
-    print -P ${LFT_PROMPT}${(l:$RGT_LEN:)RGT_PROMPT}
+    local top_left="┌─${SECTION_A} | ${SECTION_B}"
+    local top_right="${SECTION_C}"
+    local bottom_left="└ "
+    fill_line "$top_left" "$top_right"
+    export PS1=$REPLY$'\n'$bottom_left
 }
 
-function set_actual_prompts() {
-    # Prompt used interactively (so, most of the time)
-    export PS1="└ ${SECTION_A2}"
-    export RPS1="${SECTION_C2}  "
+function set_prompts() {
+    export RPS1="${SECTION_D}"
 
     # Continuation line prompt
     export PS2="(inp)> "
@@ -70,7 +107,7 @@ function set_actual_prompts() {
     # Prompt used by "set -x" option, prefixing each line of traced input
     export PS4="%N:%i>"
 }
-set_actual_prompts
+set_prompts
 
 # Redefine zle builtin to not clean precmd output
 function clear-screen() {

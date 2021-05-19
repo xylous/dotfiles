@@ -76,4 +76,7 @@ export PAGER='less'
 
 ## Prompt is handled by another file as well
 source ${ZDOTDIR}/config/prompt.zsh
+
+# Misc
 unset I3SOCK
+TRAPUSR1() { rehash } # Pacman rehash post-transaction hook
