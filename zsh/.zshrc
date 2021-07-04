@@ -8,8 +8,8 @@ plugins=(
     'zsh-users/zsh-syntax-highlighting'
 )
 
-# Load in plugin manager
-source ${MZPM}/mzpm.zsh
+# Load plugin manager
+source "${MZPM}/mzpm.zsh"
 
 ## Basic options
 # Only you, the user, should have access to your files
@@ -30,7 +30,7 @@ setopt AUTO_CD
 # 'echo foo >file1 >file2'
 setopt NO_MULTIOS
 
-# This is pretty self-explanatory
+# Self-explanatory
 setopt NO_BEEP
 
 # Disable the program 'less' from saving history to a file
@@ -75,8 +75,10 @@ export PAGER='less'
 [[ -f ${gitaliases_file} ]] && source ${gitaliases_file}
 
 ## Prompt is handled by another file as well
-source ${ZDOTDIR}/config/prompt.zsh
+source "$ZDOTDIR/config/prompt.zsh"
 
 # Misc
 unset I3SOCK
 TRAPUSR1() { rehash } # Pacman rehash post-transaction hook
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"

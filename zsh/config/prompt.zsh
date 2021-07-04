@@ -85,14 +85,14 @@ function prompt_length() {
 
 # Always update git status for the prompt and draw upper part of prompt
 function precmd() {
-    source $PLUGIN_DIR/gitstatus/gitstatus.plugin.zsh
-    SECTION_C="$GIT_STATUS"
+    SECTION_C="$($PLUGIN_DIR/gitstatus/gitstatus.plugin.zsh)"
 
     local top_left="┌─${SECTION_A} | ${SECTION_B}"
     local top_right="${SECTION_C}"
     local bottom_left="└ "
     fill_line "$top_left" "$top_right"
     export PS1=$REPLY$'\n'$bottom_left
+    unset REPLY
 }
 
 function set_prompts() {

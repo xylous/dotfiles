@@ -15,9 +15,9 @@ alias gaa="git add --all"
 alias gs="git status"
 alias gss="git status --short"
 
-alias gc="git commit"
-alias gcm="git commit -m"
-alias gcma="git commit --all" 
+alias gci="git commit"
+alias gcim="git commit -m"
+alias gcima="git commit --all" 
 
 alias gpll="git pull"
 
@@ -26,3 +26,9 @@ alias gcl="git clone"
 alias gpsh="git push"
 
 alias gcfg="git config"
+
+alias gbr="git branch"
+
+alias gco="git checkout"
+
+alias gmr="git merge"

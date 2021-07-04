@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+
+# Attach to unused tmux sessions if possible. Otherwise, start a new one
+
+# Failsafe: be able to use the tty in case something goes horribly wrong
+[[ $TERM == "linux" ]] && return
+
+declare unused_tmux_session="$(tmux ls | grep -m1 -v "\(attached\)" | cut -d ":" -f1)"
+
+[[ -z "${unused_tmux_session}" ]] \
+    && tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf" new-session \
+    || tmux attach-session -t "${unused_tmux_session}"
+
+unset unused_tmux_session

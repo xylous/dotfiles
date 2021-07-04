@@ -39,8 +39,11 @@ export GTK2_RC_FILES="~/.config/gtk-2.0/gtkrc-2.0"
 # counted multiple times
 xset r off
 
+# Swap escape and caps keys
+setxkbmap -option caps:swapescape
+
 # Be easier on the eyes
-exec redshift -t 4600:2300 -g 0.8 -m randr &
+exec redshift -t 4200:2000 -g 0.8 -m randr &
 
 # feh for wallpaper + picom as compositer
 WALLPAPER="${XDG_CONFIG_HOME}/i3/wallpaper.png"

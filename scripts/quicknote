@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+
+# Create a temporary note in the Zettelkasten inbox
+
+cd "$HOME/zettel/inbox"
+
+declare quick_note_file="${HOME}/zettel/inbox/note-$(date +%m-%d).md"
+
+if [[ -f "$quick_note_file" ]]; then
+    nvim -c "normal G2o" \
+        -c "startinsert" "${quick_note_file}"
+else
+    nvim -c "normal Gi# Note" \
+        -c "normal G2o" \
+        -c "startinsert" "${quick_note_file}"
+fi

@@ -17,28 +17,27 @@
 ;==========================================================
 
 [colors]
-background = #222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+background = #fa1e2137 
+foreground = #e3eaf3
+primary = #02c084
+secondary = #65a2d9
+tertiary = #d07ef2
+fourth = #e5c246
+alert = #ed404c
 
 [bar/i3bar]
-;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
-height = 21
-;offset-x = 1%
-;offset-y = 1%
+width = 100%:-48
+height = 36
+offset-x = 24
+offset-y = 24
 
-; Don't use round corners
+; don't use round corners
 radius = 0.0
 
 ; Put bar at top
 bottom = false
 
-; Don't use separator
+; Don't use separators
 separator =
 
 fixed-center = true
@@ -54,30 +53,29 @@ border-size = 0
 border-color = #00000000
 
 ; A little padding of the tray icons is fine, but not on the workspace buttons
-padding-left = 0
+padding-left = 1
 padding-right = 2
-
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
-font-0 = fixed:pixelsize=10;1
-font-1 = MesloLGS NF:style=Regular
-font-2 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-3 = siji:pixelsize=10;1
+font-0 = MesloLGS NF:style=Regular:size=14
+font-1 = unifont:fontformat=truetype:size=20:antialias=false;0
+font-2 = siji:pixelsize=20;1
 
 modules-left = i3
 modules-center = 
-modules-right = pulseaudio memory cpu wlan battery temperature date
+modules-right = pulseaudio wlan battery temperature date
 
 ; Ah, tray icons.
 tray-position = right
 tray-padding = 2
-;tray-background = #0063ff
 tray-maxsize = 16
+tray-offset-x = -4
+
 
 wm-restack = i3
 
-;override-redirect = true
+override-redirect = true
 
 [module/xwindow]
 type = internal/xwindow
@@ -97,28 +95,46 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %icon%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
+label-unfocused = %icon%
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%
+label-visible = %icon%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %icon%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
 ; Separator in between workspaces
 label-separator = |
+
+; Split workspace name on ':'
+strip-wsnumbers = true
+
+fuzzy-match = true
+
+ws-icon-0 = web;
+ws-icon-1 = discord;ﭮ
+ws-icon-2 = dev;
+ws-icon-3 = anki;יּ
+ws-icon-4 = misc;
+ws-icon-5 = games;
+ws-icon-6 = spotify;
+ws-icon-7 = reading;龎
+
+; Disable mouse
+enable-click = false
+enable-scroll = false
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -142,43 +158,19 @@ inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = " "
-#format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage:2%%
-
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix = " "
-#format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
-label = %percentage_used%%
-
 [module/wlan]
 type = internal/network
 interface = wlp2s0
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
+format-connected = <ramp-signal>
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected = <label-disconnected>
+label-disconnected = 睊
+label-disconnected-foreground = #d91e1e
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-#ramp-signal-foreground = ${colors.foreground-alt}
+ramp-signal-0 = 直
+ramp-signal-foreground = #2ab00c
 
 [module/date]
 type = internal/date
@@ -190,38 +182,25 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
-#format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+format-volume = <ramp-volume>
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
-label-muted-foreground = #666
+format-muted = <label-muted>
+label-muted = 婢
+label-muted-foreground = #fa0000
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+ramp-volume-0 = 
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+
+ramp-volume-0-foreground = #6a8dde
+ramp-volume-1-foreground = #5fe8d4
+ramp-volume-2-foreground = #8a0000
 
 [module/battery]
 type = internal/battery
@@ -229,25 +208,24 @@ battery = BAT0
 adapter = ADP0
 full-at = 98
 
-format-charging = <ramp-capacity> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = <ramp-capacity>
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging = <ramp-capacity>
+format-full = <ramp-capacity>
 
-; Show time until battery charges/discharges
-time-format = %H:%M
-label-charging = %percentage%%, %time%
-label-discharging = %percentage%%, %time%
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
 
-format-full-prefix = " "
-format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-0-foreground = #ff0000
+ramp-capacity-1-foreground = #f58414
+ramp-capacity-2-foreground = #e8be33
+ramp-capacity-3-foreground = #d0e322
+ramp-capacity-4-foreground = #4eb531
+ramp-capacity-5-foreground = #a3ff5c
 
 [module/temperature]
 type = internal/temperature
@@ -277,7 +255,6 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-bottom = 20
 
 ; vim:ft=dosini

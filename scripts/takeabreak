@@ -1,0 +1,43 @@
+#!/usr/bin/sh
+
+# Execute at (hh:mm modulo <interval>)
+# For example, if the interval is 30, execute at hh:30 and hh:00
+#              if the interval is 50, execute only at hh:50
+# If the interval is larger than 30, execute only once per hour, at hh:<interval>
+let interval=30
+
+function interval_action()
+{
+    if pgrep steam &>/dev/null; then
+        notify-send -u critical "You need to take a break from gaming" \
+            "Get up and stretch, maybe?"
+    else
+        notify-send -u critical "Get up and exercise" "Suspending system in 1 minute"
+        (sleep 60 && systemctl suspend) &
+    fi
+
+    return 0
+}
+
+function sleep_action()
+{
+    notify-send -u critical "Go sleep" "System shutting down in 5 minutes"
+    shutdown -P 5 min
+
+    return 0
+}
+
+while true; do
+    let minute="$(date +%M)"
+    (( $minute == 0 )) && minute=60
+    let hour="$(date +%H)"
+
+    if (( ${minute} % ${interval} == 0 )); then
+        interval_action
+    fi
+    
+    if (( ${hour} >= 22 )) && (( ${minute} % 15 == 0 )); then
+        sleep_action
+    fi
+    sleep 60
+done

@@ -80,8 +80,6 @@ call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
 " NOTE: Be careful, as too many plugins will slow vim down!
 " let Vundle manage Vundle, required:
 Plugin 'VundleVim/Vundle.vim'
-" Bright theme with pastel colors:
-Plugin 'joshdick/onedark.vim'
 " Lean status/tabline for vim:
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -89,26 +87,30 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'preservim/nerdcommenter'
 " Code autocompletion:
 Plugin 'neoclide/coc.nvim'
-" Snippets for coc-snippets
+" Snippets for coc-snippets:
 Plugin 'honza/vim-snippets'
 " Find files quickly:
 Plugin 'junegunn/fzf.vim'
-" Syntax highlighting for a lot of languages
+" Syntax highlighting for a lot of languages:
 Plugin 'sheerun/vim-polyglot'
 " Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
-" Basically, a more conservative version of vim-auto-pairs
+" Basically, a more conservative version of vim-auto-pairs:
 Plugin 'rstacruz/vim-closer'
-
+" Display a git diff in the sign column on the left:
+Plugin 'airblade/vim-gitgutter'
+" Colorscheme
+Plugin 'ayu-theme/ayu-vim'
 " add plugins only above this line
 call vundle#end()
 " }}}
 " fzf {{{
 " Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+let g:fzf_command_prefix = "FZF"
 
 " Use CTRL-f to open FZF quickly, in the home directory
-nnoremap <C-f> :FZF ~<cr>
+nnoremap <C-f> :FZFFiles ~<cr>
 " }}}
 " coc.nvim {{{
 " Use <tab> for trigger completion, completion confirm, snippet expand
@@ -161,10 +163,13 @@ let g:indent_guides_enable_on_vim_startup = 1
 " Only one character long
 let g:indent_guides_guide_size = 1
 " }}}
+" GitGutter {{{
+let g:gitgutter_map_keys = 0
+" }}}
 " }}}
 " LOOK AND FEEL {{{
-" Assume a 256-colour-capable terminal, always
-"set t_Co=256
+" Assume this is a 256-colour-capable terminal
+set t_Co=256
 
 " Enable 24-bit true colour for nvim (vim doesn't seem to support it for me)
 if has("nvim")
@@ -177,17 +182,14 @@ set noshowmode
 " Remove the visual delay when switching between modes
 set ttimeoutlen=10
 
-" ONEDARK {{{
 set background=dark
-let g:gruvbox_italic=1
-let g:gruvbox_bold=1
-let g:gruvbox_contrast_dark = 'soft'
+let ayucolor="dark"
 
-" At last, invoke Gruvbox
-colorscheme onedark 
-" }}}
+" At last, set the theme
+colorscheme ayu
+
 " AIRLINE {{{
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'ayu_dark'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
@@ -226,7 +228,8 @@ let g:airline_section_x = '%Y'
 " }}}
 " }}}
 " KEY BINDINGS {{{
-let mapleader = " "
+" Use space as leader key
+let mapleader = ' '
 " Quick access to vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <C-s> :source $MYVIMRC<CR>
@@ -246,6 +249,16 @@ nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
+
+inoremap <C-c> <NOP>
+vnoremap <C-c> <NOP>
+
+" If the filename under cursor doesn't exist, create it and then go to it
+nnoremap <leader>gf :e <cfile><cr>
+
+" Unbind backspace in insert mode and delete key. Use dw or db or x in normal mode
+inoremap <BS> <NOP>
+noremap <DEL> <NOP>
 " }}}
 " FILETYPE-SPECIFIC OPTIONS {{{
 augroup MARKDOWN_OPTIONS

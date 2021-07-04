@@ -27,9 +27,12 @@ alias v='$VISUAL'
 # By default, it would've been aliased to 'man'
 alias run-help &>/dev/null && unalias run-help
 autoload -Uz run-help
+alias help='run-help'
 alias h='run-help'
 
 ## Quick access to config files
+alias sv='sudo $VISUAL'
+
 # "configure shell aliases"
 alias cfsa='$VISUAL $ZDOTDIR/config/aliases.sh'
 
@@ -75,11 +78,9 @@ alias p='pacman'
 alias sp='sudo pacman'
 alias pacman-browse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias p-b="pacman-browse"
-alias ast="archstat"
 alias a="aurpkger"
 
 ## Misc
 alias drive="node ~/projects/drive"
-alias colortrans="python2 ~/bin/colortrans.py"
-command -v bmake &>/dev/null && alias make="bmake"
-alias sv="sudo nvim"
+alias wikirefs="node ~/projects/wikirefs/wikirefs.js"
+alias ixl="node ~/projects/ixl/ixl.js"
