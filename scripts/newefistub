@@ -1,0 +1,17 @@
+#!/bin/bash
+
+readonly disk="/dev/nvme0n1"
+readonly part="1"
+readonly label="Arch Linux"
+readonly kernel_parameters="'root=${disk}p2 rw quiet acpi_backlight=vendor vga=current loglevel=3 udev.log_level=3 vt.global_cursor_default=0 initrd=initramfs-linux.img initrd=amd-ucode.img'"
+
+efibootmgr \
+    --disk "${disk}" \
+    --part "${part}" \
+    --create \
+    --label "${label}" \
+    --loader vmlinuz-linux \
+    --unicode "${kernel_parameters}" \
+    --verbose
+
+unset disk part label kernel_parameters

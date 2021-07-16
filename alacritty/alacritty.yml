@@ -49,19 +49,19 @@ scrolling:
 # Font configuration
 font:
   normal:
-    family: MesloLGS NF
+    family: Source Code Pro
     style: Regular
 
   bold:
-    family: MesloLGS NF 
+    family: Source Code Pro
     style: Bold
 
   italic:
-    family: MesloLGS NF
+    family: Source Code Pro
     style: Italic
 
   bold_italic:
-    family: MesloLGS NF
+    family: Source Code Pro
     style: Bold Italic
 
   # Point size

@@ -7,7 +7,7 @@ set nocompatible
 filetype plugin indent on
 syntax enable
 set encoding=utf-8
-set noerrorbells 
+set noerrorbells
 
 " Don't change default (terminal) cursor
 set guicursor=
@@ -63,7 +63,7 @@ set nohlsearch
 set ignorecase
 set smartcase
 " }}}
-" BUFFERS {{{ 
+" BUFFERS {{{
 " Keep any buffers around in the background
 set hidden
 
@@ -250,6 +250,11 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 
+nnoremap <leader>H :wincmd H<CR>
+nnoremap <leader>J :wincmd J<CR>
+nnoremap <leader>K :wincmd K<CR>
+nnoremap <leader>L :wincmd L<CR>
+
 inoremap <C-c> <NOP>
 vnoremap <C-c> <NOP>
 
@@ -260,15 +265,21 @@ nnoremap <leader>gf :e <cfile><cr>
 inoremap <BS> <NOP>
 noremap <DEL> <NOP>
 " }}}
-" FILETYPE-SPECIFIC OPTIONS {{{
+" AUTOOCOMMANDS {{{
 augroup MARKDOWN_OPTIONS
+    autocmd!
     autocmd BufWinEnter *.md setlocal foldmethod=manual
     autocmd BufWinLeave *.md mkview
     autocmd BufWinEnter *.md silent! loadview
 augroup END
+
+augroup BUFFER_WRITE
+    autocmd!
+    autocmd BufWritePre * :%s/\s\+$//ge
+augroup END
 " }}}
 
-" Set custom path for viminfo 
+" Set custom path for viminfo
 if has("nvim")
     set shada='50,<1000,s100,:0,n$XDG_CACHE_HOME/vim/nviminfo
 else

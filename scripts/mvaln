@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## Move and soft link back to initial location
+
+if (($# != 2)); then
+    echo "mvaln: expected only 2 arguments"
+    exit 1
+fi
+
+mv "$1" "$2"
+ln -s $(realpath "$2") $(realpath "$1")

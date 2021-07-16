@@ -14,6 +14,9 @@ function interval_action()
     else
         notify-send -u critical "Get up and exercise" "Suspending system in 1 minute"
         (sleep 60 && systemctl suspend) &
+        (sleep 20 && light -U 10)
+        (sleep 20 && light -U 10)
+        (sleep 30 && light -A 20)
     fi
 
     return 0
@@ -35,7 +38,7 @@ while true; do
     if (( ${minute} % ${interval} == 0 )); then
         interval_action
     fi
-    
+
     if (( ${hour} >= 22 )) && (( ${minute} % 15 == 0 )); then
         sleep_action
     fi
