@@ -1,0 +1,15 @@
+[user]
+	name = Insert-Creative-Name-Here
+	email = 70799954+Insert-Creative-Name-Here@users.noreply.github.com
+
+[core]
+	editor = nvim
+
+[init]
+	defaultBranch = master
+
+[commit]
+	template = ~/.config/git/gitmsg_template
+
+[color]
+	ui = true

@@ -91,8 +91,8 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'honza/vim-snippets'
 " Find files quickly:
 Plugin 'junegunn/fzf.vim'
-" Syntax highlighting for a lot of languages:
-Plugin 'sheerun/vim-polyglot'
+" Provides syntax highlighting and other good stuff
+Plugin 'nvim-treesitter/nvim-treesitter'
 " Plugin for visually displaying indent levels:
 Plugin 'nathanaelkane/vim-indent-guides'
 " Basically, a more conservative version of vim-auto-pairs:
@@ -100,7 +100,7 @@ Plugin 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plugin 'airblade/vim-gitgutter'
 " Colorscheme
-Plugin 'ayu-theme/ayu-vim'
+Plugin 'morhetz/gruvbox'
 " add plugins only above this line
 call vundle#end()
 " }}}
@@ -127,14 +127,14 @@ endfunction
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -143,25 +143,48 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " List of extensions
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
 
-" Use CTRL-J and CTRL-K to navigate up and down the list of snippets
+" Use C syntax highlighting in header files
+let g:c_syntax_for_h = 1
+
+" Use <C-j> to jump to next placeholder, <C-k> to jump to previous placeholder;
+" it's default of coc.nvim
 let g:coc_snippet_next = '<C-j>'
 let g:coc_snippet_prev = '<C-k>'
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
 " }}}
 " Indent Guides {{{
 let g:indent_guides_enable_on_vim_startup = 1
 
 " Only one character long
 let g:indent_guides_guide_size = 1
+" }}}
+" nvim-treesitter {{{
+if has("nvim")
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    indent = {
+        enable = true,
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+        },
+    },
+}
+EOF
+endif
 " }}}
 " GitGutter {{{
 let g:gitgutter_map_keys = 0
@@ -183,13 +206,15 @@ set noshowmode
 set ttimeoutlen=10
 
 set background=dark
-let ayucolor="dark"
 
 " At last, set the theme
-colorscheme ayu
+let g:gruvbox_italic = 1
+let g:gruvbox_bold = 1
+let g:gruvbox_contrast_dark = 'medium'
+colorscheme gruvbox
 
 " AIRLINE {{{
-let g:airline_theme = 'ayu_dark'
+let g:airline_theme = 'gruvbox'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
@@ -261,7 +286,7 @@ vnoremap <C-c> <NOP>
 " If the filename under cursor doesn't exist, create it and then go to it
 nnoremap <leader>gf :e <cfile><cr>
 
-" Unbind backspace in insert mode and delete key. Use dw or db or x in normal mode
+" Unbind backspace in insert mode and delete key. Use `dw` or `db` or `x` in normal mode
 inoremap <BS> <NOP>
 noremap <DEL> <NOP>
 " }}}
@@ -275,7 +300,11 @@ augroup END
 
 augroup BUFFER_WRITE
     autocmd!
+    " Remove trailing whitespace from every line
+    autocmd BufWritePre * :mark p
     autocmd BufWritePre * :%s/\s\+$//ge
+    autocmd BufWritePre * :'p
+    autocmd BufWritePre * :delmarks p
 augroup END
 " }}}
 
