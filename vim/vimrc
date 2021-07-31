@@ -73,36 +73,33 @@ set nobackup
 " }}}
 " }}}
 " PLUGINS {{{
-" Plugins (with Vundle) {{{
-" Set runtime path to include Vundle and initialize
-set rtp+=$XDG_CONFIG_HOME/vim/bundle/Vundle.vim
-call vundle#begin('$XDG_CONFIG_HOME/vim/bundle')
+" Plugins (with vim-plug) {{{
+" Set runtime path to include vim-plug and initialize
+call plug#begin('$XDG_CONFIG_HOME/vim/plugged')
 " NOTE: Be careful, as too many plugins will slow vim down!
-" let Vundle manage Vundle, required:
-Plugin 'VundleVim/Vundle.vim'
 " Lean status/tabline for vim:
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Quickly comment out multile lines:
-Plugin 'preservim/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 " Code autocompletion:
-Plugin 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Snippets for coc-snippets:
-Plugin 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 " Find files quickly:
-Plugin 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim'
 " Provides syntax highlighting and other good stuff
-Plugin 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
 " Plugin for visually displaying indent levels:
-Plugin 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 " Basically, a more conservative version of vim-auto-pairs:
-Plugin 'rstacruz/vim-closer'
+Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " add plugins only above this line
-call vundle#end()
+call plug#end()
 " }}}
 " fzf {{{
 " Jump to the existing window if possible
@@ -143,7 +140,7 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " List of extensions
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
+let g:coc_global_extensions = ['coc-json', 'coc-deno', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1

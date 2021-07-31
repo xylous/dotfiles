@@ -10,7 +10,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # zsh should show all of history by default in my opinion
-alias history='history 0'
+alias history='history'
 alias hg='history | grep'
 
 # Aaaand the most useful cd aliases, maybe ever

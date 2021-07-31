@@ -73,7 +73,6 @@ tray-padding = 2
 tray-maxsize = 16
 tray-offset-x = -4
 
-
 wm-restack = i3
 
 override-redirect = true
@@ -124,14 +123,14 @@ strip-wsnumbers = true
 
 fuzzy-match = true
 
-ws-icon-0 = web;
-ws-icon-1 = discord;ﭮ
-ws-icon-2 = dev;
-ws-icon-3 = anki;יּ
-ws-icon-4 = misc;
-ws-icon-5 = games;
-ws-icon-6 = spotify;
-ws-icon-7 = reading;龎
+ws-icon-0 = web;%{F#ff6611}%{F-}
+ws-icon-1 = discord;%{F#7289DA}ﭮ%{F-}
+ws-icon-2 = dev;%{F#4ad453}%{F-}
+ws-icon-3 = anki;%{F#4ec6d4}טּ%{F-}
+ws-icon-4 = misc;%{F#c9a338}%{F-}
+ws-icon-5 = games;%{F#ffffff}%{F-}
+ws-icon-6 = spotify;%{F#1DB954}%{F-}
+ws-icon-7 = reading;%{F#c5cc62}龎%{F-}
 
 ; Disable mouse
 enable-click = false

@@ -1,8 +1,8 @@
 ########50 characters############################
 Subject
 
-# Remember to update README.md, changelog, tests and documentation!
-# Also, remember to bump version numbers
+# Remember to update Makefile, README.md, changelog, tests and documentation!
+# And bump version numbers
 
 # Favour "why & what" over "how", since the "how" is covered by the code
 # Problem, Task, Reason for Commit
