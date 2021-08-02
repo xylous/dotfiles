@@ -74,6 +74,20 @@ set nobackup
 " }}}
 " PLUGINS {{{
 " Plugins (with vim-plug) {{{
+" Install vim-plug if not already installed
+let plug_install_path = $HOME . "/.local/share/nvim/site/autoload/plug.vim"
+let plug_install_now = 0
+if ! filereadable(plug_install_path)
+    echon 'Installing junegunn/vim-plug...'
+    let curloutput = system('curl -fLo '
+        \ . plug_install_path
+        \ . ' --create-dirs'
+        \ . ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    echon ' done'
+    let plug_install_now = 1
+endif
+unlet plug_install_path
+
 " Set runtime path to include vim-plug and initialize
 call plug#begin('$XDG_CONFIG_HOME/vim/plugged')
 " NOTE: Be careful, as too many plugins will slow vim down!
@@ -100,6 +114,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
 " add plugins only above this line
 call plug#end()
+
+if plug_install_now
+    execute 'PlugInstall'
+    unlet plug_install_now
+endif
 " }}}
 " fzf {{{
 " Jump to the existing window if possible
