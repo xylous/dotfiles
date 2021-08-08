@@ -89,7 +89,7 @@ endif
 unlet plug_install_path
 
 " Set runtime path to include vim-plug and initialize
-call plug#begin('$XDG_CONFIG_HOME/vim/plugged')
+call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
 " NOTE: Be careful, as too many plugins will slow vim down!
 " Lean status/tabline for vim:
 Plug 'vim-airline/vim-airline'
@@ -126,7 +126,8 @@ let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = "FZF"
 
 " Use CTRL-f to open FZF quickly, in the home directory
-nnoremap <C-f> :FZFFiles ~<cr>
+nnoremap <C-f> :FZFFiles .<cr>
+nnoremap <leader><C-f> :FZFFiles ~<cr>
 " }}}
 " coc.nvim {{{
 " Use <tab> for trigger completion, completion confirm, snippet expand
@@ -179,9 +180,16 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 " }}}
 " nvim-treesitter {{{
-if has("nvim")
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+    ensure_installed = {
+        "c",
+        "rust",
+        "bash",
+        "typescript",
+        "json",
+        "toml",
+    },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -200,7 +208,6 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 EOF
-endif
 " }}}
 " GitGutter {{{
 let g:gitgutter_map_keys = 0
@@ -210,10 +217,8 @@ let g:gitgutter_map_keys = 0
 " Assume this is a 256-colour-capable terminal
 set t_Co=256
 
-" Enable 24-bit true colour for nvim (vim doesn't seem to support it for me)
-if has("nvim")
-    set termguicolors
-endif
+" Enable 24-bit colour (truecolour)
+set termguicolors
 
 " Statusline takes care of displaying the mode already
 set noshowmode
@@ -228,7 +233,6 @@ let g:gruvbox_italic = 1
 let g:gruvbox_bold = 1
 let g:gruvbox_contrast_dark = 'medium'
 colorscheme gruvbox
-
 " AIRLINE {{{
 let g:airline_theme = 'gruvbox'
 
@@ -325,8 +329,4 @@ augroup END
 " }}}
 
 " Set custom path for viminfo
-if has("nvim")
-    set shada='50,<1000,s100,:0,n$XDG_CACHE_HOME/vim/nviminfo
-else
-    set viminfo='50,<1000,s100,:0,n$XDG_CACHE_HOME/vim/viminfo.vim
-endif
+set shada='50,<1000,s100,:0,n$XDG_CACHE_HOME/nvim/nviminfo

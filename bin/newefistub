@@ -19,6 +19,6 @@ efibootmgr \
     --part "${part}" \
     --create \
     --label "${label}" \
-    --loader /vmlinuz-linux-lts \
+    --loader /vmlinuz-linux${lts} \
     --unicode "${kernel_parameters}" \
     --verbose

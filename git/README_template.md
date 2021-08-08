@@ -2,6 +2,10 @@
 
 PROJECT-DESCRIPTION
 
+## Motivation behind project
+
+USEFUL-ASPECTS-OF-PROJECT
+
 ## Getting started
 
 ### Reguirements

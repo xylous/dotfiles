@@ -17,7 +17,7 @@ alias gss="git status --short"
 
 alias gci="git commit"
 alias gcim="git commit -m"
-alias gcima="git commit --all" 
+alias gcima="git commit --all"
 
 alias gpll="git pull"
 
@@ -32,3 +32,7 @@ alias gbr="git branch"
 alias gco="git checkout"
 
 alias gmr="git merge"
+
+alias gmv="git mv"
+
+alias grm="git rm"

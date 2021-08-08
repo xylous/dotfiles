@@ -38,6 +38,7 @@ exec redshift -t 4200:2000 -g 0.8 -m randr &
 WALLPAPER="${XDG_CONFIG_HOME}/i3/wallpaper.png"
 exec feh --no-fehbg --bg-scale ${WALLPAPER} &
 exec picom &
+exec xrandr --output eDP --set TearFree on &
 
 # Execute a custom script that reminds you to get up and exercise
 [[ -f "$HOME/bin/takeabreak" ]] && exec "$HOME/bin/takeabreak" &

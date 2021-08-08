@@ -54,8 +54,7 @@ alias cflzs='$VISUAL $ZDOTDIR/.zlogin'
 # "configure zshenv"
 alias cfzenv='$VISUAL $ZDOTDIR/.zshenv'
 
-# "configure neovim"
-alias cfnv='$VISUAL $XDG_CONFIG_HOME/nvim/init.vim'
+# "configure vim"
 alias cfv='$VISUAL $MYVIMRC'
 
 # "configure i3wm"

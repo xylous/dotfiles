@@ -4,7 +4,7 @@
 # For example, if the interval is 30, execute at hh:30 and hh:00
 #              if the interval is 50, execute only at hh:50
 # If the interval is larger than 30, execute only once per hour, at hh:<interval>
-let interval=30
+let interval=50
 
 function interval_action()
 {
@@ -17,7 +17,7 @@ function interval_action()
         (sleep 10 && systemctl suspend) &
         (sleep 0 && light -U 10) &
         (sleep 5 && light -U 10) &
-        (sleep 9 && playerctl play-pause) &
+        (sleep 9 && playerctl pause) &
         (sleep 10 && light -A 20) &
     fi
 
@@ -35,7 +35,7 @@ function sleep_action()
 while true; do
     let minute="$(date +%M)"
     (( $minute == 0 )) && minute=60
-    let hour="$(date +%H)"
+    let hour="$(date +%k)"
 
     if (( ${minute} % ${interval} == 0 )); then
         interval_action

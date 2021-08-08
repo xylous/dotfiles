@@ -41,7 +41,7 @@ function define_prompt_structure() {
 }
 define_prompt_structure
 
-### 
+###
 # Usage: fill_line LEFT RIGHT
 # Sets REPLY to LEFT<spaces>RIGHT with enough spaces in the middle to fill a
 # terminal line.
@@ -85,7 +85,7 @@ function prompt_length() {
 
 # Always update git status for the prompt and draw upper part of prompt
 function precmd() {
-    SECTION_C="$($PLUGIN_DIR/gitstatus/gitstatus.plugin.zsh)"
+    SECTION_C="$(gitstatus)"
 
     local top_left="┌─${SECTION_A} | ${SECTION_B}"
     local top_right="${SECTION_C}"
