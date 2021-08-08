@@ -53,14 +53,6 @@ export PAGER='less'
     && readonly HIST_OPTIONS_FILE="${ZDOTDIR}/config/history.zsh"
 [[ -f ${HIST_OPTIONS_FILE} ]] && source ${HIST_OPTIONS_FILE}
 
-## Load aliases from other files
-[[ -z $aliases_file ]] \
-    && readonly aliases_file="${ZDOTDIR}/config/aliases.sh"
-[[ -z $gitaliases_file ]] \
-    && readonly gitaliases_file="${ZDOTDIR}/config/gitaliases.sh"
-[[ -f ${aliases_file} ]] && source ${aliases_file}
-[[ -f ${gitaliases_file} ]] && source ${gitaliases_file}
-
 ## Prompt is handled by another file as well
 source "$ZDOTDIR/config/prompt.zsh"
 
@@ -69,6 +61,11 @@ source "$ZDOTDIR/mzpm.zsh"
 mzpm 'zsh-users/zsh-history-substring-search'
 mzpm 'zsh-users/zsh-autosuggestions'
 mzpm 'zsh-users/zsh-syntax-highlighting'
+mzpm 'xylous/gitstatus'
+mzpm 'xylous/alias-zsh'
+
+alias-zsh use "$HOME/.cache/mzpm/alias-zsh/aliases"
+alias-zsh load all
 
 # Misc
 unset I3SOCK
