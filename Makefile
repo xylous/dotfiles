@@ -1,8 +1,8 @@
-# Everything not ./Makefile or ./bin/ is assumed to be a directory containing
-# dotfiles that shall be moved to ~/.config
+# Everything not ./Makefile or ./bin/ or ./README.md is assumed to be a
+# directory containing dotfiles that needs to be moved to ~/.config/
 # There's a trick here: if you want to add another folder to be tracked, this
 # rule handles it for you automatically
-DOTFILES = $(shell ls -I 'bin' -I 'Makefile')
+DOTFILES = $(shell ls -I 'README.md' -I 'bin' -I 'Makefile')
 
 .PHONY: all $(DOTFILES) bin
 all: $(DOTFILES) bin
