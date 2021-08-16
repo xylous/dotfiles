@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+
+# Remove all broken symbolic or hard links in specified directory
+
+exec find ${1:-.} -maxdepth 1 -xtype l -delete

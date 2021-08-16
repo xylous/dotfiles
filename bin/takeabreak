@@ -33,9 +33,9 @@ function sleep_action()
 }
 
 while true; do
-    let minute="$(date +%M)"
-    (( $minute == 0 )) && minute=60
+    let minute="$(date +%-M)"
     let hour="$(date +%k)"
+    (( $minute == 0 )) && minute=60
 
     if (( ${minute} % ${interval} == 0 )); then
         interval_action

@@ -2,10 +2,22 @@
 
 ## Move and soft link back to initial location
 
-if (($# != 2)); then
-    echo "mvaln: expected only 2 arguments"
-    exit 1
-fi
+function main()
+{
+    if (($# != 2)); then
+        echo "mvaln: expected only 2 arguments"
+        exit 1
+    fi
 
-mv "$1" "$2"
-ln -s $(realpath "$2") $(realpath "$1")
+    local src="$(realpath "$1")"
+    local dest="$(realpath "$2")"
+
+    if [[ -d "${dest}" ]]; then
+        dest+="/$(basename "$1")"
+    fi
+
+    mv "${src}" "${dest}"
+    ln -s "${dest}" "${src}"
+}
+
+main "$@"

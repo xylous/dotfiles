@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+
+# Create a new executable in `$HOME/bin` with a template if it doesn't exist
+# already
+
+function main()
+{
+    local dest_script="$HOME/bin/$1"
+
+    if [[ -f "${dest_script}" ]]; then
+        return 0
+    fi
+
+    new_script_with_template "${dest_script}"
+    chmod +x "${dest_script}"
+
+    "${EDITOR}" "${dest_script}"
+}
+
+function new_script_with_template()
+{
+    local dest_script="$1"
+
+cat <<EOF >"${dest_script}"
+#!/usr/bin/sh
+
+# [What does this script do?]
+
+
+EOF
+}
+
+main "$@"
