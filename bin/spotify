@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+# Spotify kept creating a "~/Downloads" folder, but I use "~/download", and I
+# don't like it when Spotify creates an empty folder it's never going to use
+
+(sleep 2 && rmdir "${HOME}/Downloads/" 2>/dev/null) &
+
+exec /usr/bin/spotify "$@"
+let stat="$?"
+
+exit $stat

@@ -5,6 +5,10 @@
 
 function main()
 {
+    if [[ -z "$1" ]]; then
+        echo "error: expected argument: name of script"
+        return 1
+    fi
     local dest_script="$HOME/bin/$1"
 
     if [[ -f "${dest_script}" ]]; then

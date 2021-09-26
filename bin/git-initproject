@@ -23,6 +23,7 @@ function main()
     if (( ${numfiles} > 0 )); then
         echoerr "creating a new repository where there's already existing files" \
                 "is unsupported with this subcommand"
+        return 1
     fi
 
     local license="$1"

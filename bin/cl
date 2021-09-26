@@ -1,5 +1,15 @@
 #!/usr/bin/sh
 
-# Remove all broken symbolic or hard links in specified directory
+# cl - Clear (broken) Links
 
-exec find ${1:-.} -maxdepth 1 -xtype l -delete
+# Remove all broken symbolic or hard links in specified directory
+declare maxdepth="-maxdepth 1";
+
+if [[ "$1" == "-r" ]]; then
+    maxdepth=""
+    shift
+fi
+
+declare num="$(find ${1:-.} ${maxdepth} -xtype l -print -delete | wc -l)"
+
+echo "found ${num} broken link(s) and removed them"

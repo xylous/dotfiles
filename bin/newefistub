@@ -1,18 +1,25 @@
-#!/bin/bash
-
-declare lts=''
-declare label="Arch Linux"
-if [[ $1 == 'lts' ]]; then
-    lts='-lts'
-    label="Arch Linux LTS"
-fi
+#!/usr/bin/bash
 
 readonly disk="/dev/nvme0n1"
 readonly part="1"
-declare kernel_parameters="root=${disk}p2 rw "
-kernel_parameters+='quiet acpi_backlight=vendor vga=current loglevel=3 '
-kernel_parameters+='udev.log_level=3 vt.global_cursor_default=0 '
-kernel_parameters+="initrd=\amd-ucode.img initrd=\initramfs-linux${lts}.img"
+
+declare label="Arch Linux"
+declare lts=''
+if [[ $1 == 'lts' ]]; then
+    lts='-lts'
+    label+=" LTS"
+fi
+
+kernel_parameters=''
+kernel_parameters+="root=${disk}p2 rw "
+kernel_parameters+='quiet '
+kernel_parameters+='vga=current '
+kernel_parameters+='loglevel=2 '
+kernel_parameters+='acpi_backlight=vendor '
+kernel_parameters+='udev.log_level=2 '
+kernel_parameters+='vt.global_cursor_default=0 '
+kernel_parameters+='initrd=\amd-ucode.img '
+kernel_parameters+="initrd=\initramfs-linux${lts}.img "
 
 efibootmgr \
     --disk "${disk}" \
