@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+### written by xylous (xylous.e@gmail.com)
+## requires `feh`
+# Change wallpaper (with `feh`) on the spot, until next change
+
+WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
+
+# Print arguments to stderr, prefixed with `error: `
+function echoerr()
+{
+    cat <<< "error: $@" 1>&2
+}
+
+function main()
+{
+    local new_wallpaper="$1"
+    if [[ ! -f "${new_wallpaper}" ]]; then
+        echoerr "couldn't find file '$1'"
+        return 1
+    fi
+
+    ln -sf $(realpath "${new_wallpaper}") $(realpath --no-symlinks "${WALLPAPER}")
+    feh --no-fehbg --bg-scale ${WALLPAPER}
+}
+
+main "$@"

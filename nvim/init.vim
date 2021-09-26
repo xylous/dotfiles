@@ -309,6 +309,11 @@ nnoremap <leader>gf :e <cfile><cr>
 " Unbind backspace in insert mode and delete key. Use `dw` or `db` or `x` in normal mode
 inoremap <BS> <NOP>
 noremap <DEL> <NOP>
+
+" Copy the entire file to clipboard
+" Create a mark `p`, jump to the beginning of the file, yank until the end in
+" the `+` register, go to mark `p`
+nnoremap <leader>p :% y+<CR>
 " }}}
 " AUTOOCOMMANDS {{{
 augroup MARKDOWN_OPTIONS

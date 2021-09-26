@@ -25,13 +25,16 @@ tertiary = #d07ef2
 fourth = #e5c246
 alert = #ed404c
 
+[global/wm]
+margin-bottom = 20
+
 [bar/i3bar]
-width = 100%:-48
+width = 100%:-19
 height = 36
-offset-x = 24
+offset-x = 10
 offset-y = 24
 
-; don't use round corners
+; don't use round corners; compositor handles that
 radius = 0.0
 
 ; Put bar at top
@@ -58,14 +61,15 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Source Code Pro:style=Regular:size=16
-font-1 = unifont:fontformat=truetype:size=20:antialias=false;0
-font-2 = siji:pixelsize=20;1
-font-3 = MesloLGS NF:style=Regular:size=16
+; note to future self; the number after ';' is vertical offset from the top
+font-0 = Source Code Pro:style=Regular:size=15;2
+font-1 = unifont:fontformat=truetype:size=20:antialias=true;0
+font-2 = siji:pixelsize=20;0
+font-3 = MesloLGS NF:style=Regular:size=16;2
 
 modules-left = i3
 modules-center =
-modules-right = pulseaudio wlan battery temperature date
+modules-right = pulseaudio wlan battery date
 
 ; Ah, tray icons.
 tray-position = right
@@ -74,7 +78,6 @@ tray-maxsize = 16
 tray-offset-x = -4
 
 wm-restack = i3
-
 override-redirect = true
 
 [module/xwindow]
@@ -131,6 +134,7 @@ ws-icon-4 = misc;%{F#c9a338}%{F-}
 ws-icon-5 = games;%{F#ffffff}%{F-}
 ws-icon-6 = spotify;%{F#1DB954}%{F-}
 ws-icon-7 = reading;%{F#c5cc62}龎%{F-}
+ws-icon-8 = notes;%{F#E0C9A6}%{F-}
 
 ; Disable mouse
 enable-click = false
@@ -213,38 +217,17 @@ format-charging = <ramp-capacity>
 format-discharging = <ramp-capacity>
 format-full = <ramp-capacity>
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-ramp-capacity-5 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 
 ramp-capacity-0-foreground = #ff0000
 ramp-capacity-1-foreground = #f58414
 ramp-capacity-2-foreground = #e8be33
 ramp-capacity-3-foreground = #d0e322
-ramp-capacity-4-foreground = #4eb531
-ramp-capacity-5-foreground = #a3ff5c
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
+ramp-capacity-4-foreground = #a3ff5c
 
 [settings]
 screenchange-reload = true
@@ -253,8 +236,5 @@ screenchange-reload = true
 ;compositing-foreground = source
 ;compositing-border = over
 ;pseudo-transparency = false
-
-[global/wm]
-margin-bottom = 20
 
 ; vim:ft=dosini
