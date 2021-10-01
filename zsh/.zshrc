@@ -53,9 +53,6 @@ export PAGER='less'
     && readonly HIST_OPTIONS_FILE="${ZDOTDIR}/config/history.zsh"
 [[ -f ${HIST_OPTIONS_FILE} ]] && source ${HIST_OPTIONS_FILE}
 
-## Prompt is handled by another file as well
-source "$ZDOTDIR/config/prompt.zsh"
-
 ## mzpm
 source "$ZDOTDIR/mzpm.zsh"
 mzpm 'zsh-users/zsh-history-substring-search'
@@ -63,6 +60,7 @@ mzpm 'zsh-users/zsh-autosuggestions'
 mzpm 'zsh-users/zsh-syntax-highlighting'
 mzpm 'xylous/gitstatus'
 mzpm 'xylous/alias-zsh'
+mzpm 'xylous/hydrogen'
 
 alias-zsh use "$HOME/.cache/mzpm/alias-zsh/aliases"
 alias-zsh load all

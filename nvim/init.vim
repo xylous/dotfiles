@@ -316,11 +316,24 @@ noremap <DEL> <NOP>
 nnoremap <leader>p :% y+<CR>
 " }}}
 " AUTOOCOMMANDS {{{
+" Follow wikistyle links, such as `[[test]]`
+function! LinkForward()
+    let g:fromFile=expand('%:p')
+    let fn= substitute(getline('.'),'^.*\[\[\([^\]]*\)\].*$',"\\1",'g') . '.md'
+    execute "e ".fn
+endfunction
+
+function! LinkBackward()
+    execute "e ".g:fromFile
+endf
+
 augroup MARKDOWN_OPTIONS
     autocmd!
     autocmd BufWinEnter *.md setlocal foldmethod=manual
     autocmd BufWinLeave *.md mkview
     autocmd BufWinEnter *.md silent! loadview
+    autocmd BufWinEnter *.md nnoremap <bs> :call LinkBackward()<cr>
+    autocmd BufWinEnter *.md nnoremap <cr> :call LinkForward()<cr>
 augroup END
 
 augroup BUFFER_WRITE
