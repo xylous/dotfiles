@@ -40,9 +40,6 @@ exec feh --no-fehbg --bg-scale ${WALLPAPER} &
 exec picom &
 exec xrandr --output eDP --set TearFree on &
 
-# Execute a custom script that reminds you to get up and exercise
-[[ -f "$HOME/bin/takeabreak" ]] && exec "$HOME/bin/takeabreak" &
-
 # Start notification manager
 exec dunst &
 

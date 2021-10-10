@@ -62,7 +62,7 @@ mzpm 'xylous/gitstatus'
 mzpm 'xylous/alias-zsh'
 mzpm 'xylous/hydrogen'
 
-alias-zsh use "$HOME/.cache/mzpm/alias-zsh/aliases"
+alias-zsh use "${ZDOTDIR}/aliases"
 alias-zsh load all
 
 # Misc

@@ -160,7 +160,7 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " List of extensions
-let g:coc_global_extensions = ['coc-json', 'coc-deno', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
