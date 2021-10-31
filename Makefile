@@ -1,8 +1,8 @@
-# Everything not ./Makefile or ./bin/ or ./README.md ./etc is assumed to be a
-# directory containing dotfiles that needs to be moved to ~/.config/
-# There's a trick here: if you want to add another folder to be tracked, this
-# rule handles it for you automatically
-DOTFILES = $(shell ls -I 'README.md' -I 'bin' -I 'Makefile' -I 'etc')
+# Everything not ./Makefile or ./bin/ or ./README.md or ./etc or ./LICENSE is
+# assumed to be a directory containing dotfiles that needs to be moved to
+# ~/.config/ There's a trick here: if you want to add another folder to be
+# tracked, this rule handles it for you automatically
+DOTFILES = $(shell ls -I 'README.md' -I 'bin' -I 'Makefile' -I 'etc' -I 'LICENSE')
 SYSTEM_DOTFILES = $(shell find etc -type d)
 
 .PHONY: all $(DOTFILES) $(SYSTEM_DOTFILES) bin system
