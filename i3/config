@@ -214,11 +214,8 @@ for_window [window_type="menu"] floating enable
 
 # Special rules for Anki "Add" window
 for_window [class="(?i)anki" title="(?i)add"] floating enable
+for_window [class="(?i)anki" title="(?i)ajouter"] floating enable
 
 # dunst keybindings
 bindsym $mod+Shift+o exec dunstctl close-all
 bindsym $mod+Shift+p exec dunstctl history-pop
-
-# Quick note taking
-bindsym $mod+n exec alacritty --title "quicknote_window" -e "$HOME/bin/quicknote"
-for_window [title="quicknote_window"] floating enable, move absolute position center

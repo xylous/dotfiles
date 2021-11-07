@@ -1,5 +1,6 @@
 " Enable folding in vimrc
 " vim:fdm=marker
+autocmd!
 
 " BASIC OPTIONS {{{
 " Be in the 21st century already
@@ -112,6 +113,7 @@ Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
 Plug 'morhetz/gruvbox'
+Plug 'xylous/wikilinks.vim'
 " add plugins only above this line
 call plug#end()
 
@@ -128,6 +130,9 @@ let g:fzf_command_prefix = "FZF"
 " Use CTRL-f to open FZF quickly, in the home directory
 nnoremap <C-f> :FZFFiles .<cr>
 nnoremap <leader><C-f> :FZFFiles ~<cr>
+" }}}
+" Wikilinks.vim {{{
+let g:wikilinks_map_key = '<CR>'
 " }}}
 " coc.nvim {{{
 " Use <tab> for trigger completion, completion confirm, snippet expand
@@ -315,25 +320,12 @@ noremap <DEL> <NOP>
 " the `+` register, go to mark `p`
 nnoremap <leader>p :% y+<CR>
 " }}}
-" AUTOOCOMMANDS {{{
-" Follow wikistyle links, such as `[[test]]`
-function! LinkForward()
-    let g:fromFile=expand('%:p')
-    let fn= substitute(getline('.'),'^.*\[\[\([^\]]*\)\].*$',"\\1",'g') . '.md'
-    execute "e ".fn
-endfunction
-
-function! LinkBackward()
-    execute "e ".g:fromFile
-endf
-
+" AUTOCOMMANDS {{{
 augroup MARKDOWN_OPTIONS
     autocmd!
     autocmd BufWinEnter *.md setlocal foldmethod=manual
     autocmd BufWinLeave *.md mkview
     autocmd BufWinEnter *.md silent! loadview
-    autocmd BufWinEnter *.md nnoremap <bs> :call LinkBackward()<cr>
-    autocmd BufWinEnter *.md nnoremap <cr> :call LinkForward()<cr>
 augroup END
 
 augroup BUFFER_WRITE
