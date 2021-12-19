@@ -1,6 +1,7 @@
 [user]
 	name = xylous
 	email = xylous.e@gmail.com
+	signingkey = A9E6DA43F5E78D24
 
 [core]
 	editor = nvim
@@ -10,6 +11,7 @@
 
 [commit]
 	template = ~/.config/git/gitmsg_template
+	gpgsign = true
 
 [color]
 	ui = true

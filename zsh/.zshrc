@@ -117,3 +117,7 @@ function mkcdir()
     mkdir "$1" && cd "$1"
 }
 alias mcd="mkcdir"
+
+# GPG stuff. I dunno.
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent

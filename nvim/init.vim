@@ -112,7 +112,9 @@ Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+" For Zettelkasten purposes
 Plug 'xylous/wikilinks.vim'
 " add plugins only above this line
 call plug#end()
@@ -190,6 +192,7 @@ require'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "c",
         "rust",
+        "haskell",
         "bash",
         "typescript",
         "json",
@@ -198,9 +201,6 @@ require'nvim-treesitter.configs'.setup {
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
-    },
-    indent = {
-        enable = true,
     },
     incremental_selection = {
         enable = true,
@@ -234,12 +234,9 @@ set ttimeoutlen=10
 set background=dark
 
 " At last, set the theme
-let g:gruvbox_italic = 1
-let g:gruvbox_bold = 1
-let g:gruvbox_contrast_dark = 'medium'
-colorscheme gruvbox
+colorscheme molokai
 " AIRLINE {{{
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'molokai'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
