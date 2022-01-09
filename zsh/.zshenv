@@ -4,5 +4,9 @@ typeset -U path PATH
 export path=($HOME/bin $HOME/.local/bin $path)
 # Enforce $PATH to child processes
 export PATH
+# Add $ZDOTDIR/completion to fpath, for user defined completions
+export fpath=("${ZDOTDIR}/completion" ${fpath})
+# Enforce $PATH to child processes
+export FPATH
 # Just Haskell things
 export STACK_ROOT="${XDG_DATA_HOME}/stack"

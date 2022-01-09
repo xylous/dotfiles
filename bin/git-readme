@@ -65,7 +65,7 @@ function edit_readme_template()
 {
     local -a editors=("${EDITOR}" "${VISUAL}" "nvim" "vim" "vi" "emacs")
     for editor in "${editors[@]}"; do
-        if [[ ! -z "${editor}" ]]; then
+        if command -v "${editor}"; then
             "${editor}" "${README_DEST}"
             break
         fi

@@ -112,10 +112,10 @@ Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'tomasr/molokai'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'dracula/vim'
 " For Zettelkasten purposes
 Plug 'xylous/wikilinks.vim'
+Plug 'xylous/settle.vim'
 " add plugins only above this line
 call plug#end()
 
@@ -234,9 +234,9 @@ set ttimeoutlen=10
 set background=dark
 
 " At last, set the theme
-colorscheme molokai
+colorscheme dracula
 " AIRLINE {{{
-let g:airline_theme = 'molokai'
+let g:airline_theme = 'dracula'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
