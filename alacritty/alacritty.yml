@@ -49,23 +49,23 @@ scrolling:
 # Font configuration
 font:
   normal:
-    family: Source Code Pro
+    family: MxPlus IBM VGA 9x16
     style: Regular
 
   bold:
-    family: Source Code Pro
+    family: MxPlus IBM VGA 9x16
     style: Bold
 
   italic:
-    family: Source Code Pro
+    family: MxPlus IBM VGA 9x16
     style: Italic
 
   bold_italic:
-    family: Source Code Pro
+    family: MxPlus IBM VGA 9x16
     style: Bold Italic
 
   # Point size
-  size: 7.0
+  size: 8.5
 
 # Colors (Ayu Dark)
 colors:
@@ -117,7 +117,7 @@ cursor:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
-  style: 
+  style:
     shape: Beam
     blinking: Always
   blink_interval: 450 # time in milliseconds
@@ -132,7 +132,7 @@ cursor:
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
-  unfocused_hollow: false 
+  unfocused_hollow: false
 
   # Thickness of the cursor relative to the cell width as floating point number
   # from `0.0` to `1.0`.
