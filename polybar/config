@@ -62,7 +62,7 @@ module-margin-left = 1
 module-margin-right = 1
 
 ; note to future self; the number after ';' is vertical offset from the top
-font-0 = Source Code Pro:style=Regular:size=15;2
+font-0 = MXPlus IBM VGA 9x16:style=Regular:size=15;2
 font-1 = unifont:fontformat=truetype:size=20:antialias=true;0
 font-2 = siji:pixelsize=20;0
 font-3 = MesloLGS NF:style=Regular:size=16;2

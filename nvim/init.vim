@@ -193,7 +193,6 @@ require'nvim-treesitter.configs'.setup {
         "rust",
         "haskell",
         "bash",
-        "typescript",
         "json",
         "toml",
     },

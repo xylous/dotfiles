@@ -121,3 +121,10 @@ alias mcd="mkcdir"
 # GPG stuff. I dunno.
 export GPG_TTY=$(tty)
 gpgconf --launch gpg-agent
+
+# open the given filename with Zathura and then exit the shell
+function book()
+{
+    exec zathura "$1" &!
+    exit
+}
