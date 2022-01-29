@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-### git-root by xylous (xylous.e@gmail.com)
-
-# Display the root directory of a git project
-
-git rev-parse --show-toplevel
