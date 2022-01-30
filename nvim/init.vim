@@ -274,7 +274,7 @@ let g:airline_section_x = '%Y'
 " }}}
 " KEY BINDINGS {{{
 " Use space as leader key
-let mapleader = ' '
+let mapleader = '\'
 " Quick access to vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <C-s> :source $MYVIMRC<CR>
