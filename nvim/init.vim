@@ -131,6 +131,7 @@ let g:fzf_command_prefix = "FZF"
 " Use CTRL-f to open FZF quickly, in the home directory
 nnoremap <C-f> :FZFFiles .<cr>
 nnoremap <leader><C-f> :FZFFiles ~<cr>
+nnoremap <leader>z :FZFFiles ~/zettelkasten<cr>
 " }}}
 " Wikilinks.vim {{{
 let g:wikilinks_map_key = '<CR>'
