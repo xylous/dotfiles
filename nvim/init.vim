@@ -111,10 +111,12 @@ Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'dracula/vim'
+Plug 'ayu-theme/ayu-vim'
 " For Zettelkasten purposes
 Plug 'xylous/wikilinks.vim'
 Plug 'xylous/settle.vim'
+" For writing markdown. vim is a general purpose editor, you can't blame me.
+Plug 'preservim/vim-markdown'
 " add plugins only above this line
 call plug#end()
 
@@ -129,9 +131,13 @@ let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = "FZF"
 
 " Use CTRL-f to open FZF quickly, in the home directory
-nnoremap <C-f> :FZFFiles .<cr>
-nnoremap <leader><C-f> :FZFFiles ~<cr>
-nnoremap <leader>z :FZFFiles ~/zettelkasten<cr>
+nnoremap f :FZFFiles .<cr>
+nnoremap <leader>f :FZFFiles ~<cr>
+" }}}
+" settle.vim {{{
+nnoremap <leader>o :SettleEdit<cr>
+nnoremap <leader>n :SettleNewUnderLink<cr>
+nnoremap <leader>w :SettleNewInteractive<cr>
 " }}}
 " Wikilinks.vim {{{
 let g:wikilinks_map_key = '<CR>'
@@ -216,6 +222,10 @@ EOF
 " GitGutter {{{
 let g:gitgutter_map_keys = 0
 " }}}
+" vim-markdown {{{
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_folding_disabled = 1
+" }}}
 " }}}
 " LOOK AND FEEL {{{
 " Assume this is a 256-colour-capable terminal
@@ -233,9 +243,10 @@ set ttimeoutlen=10
 set background=dark
 
 " At last, set the theme
-colorscheme dracula
+colorscheme ayu
+let ayucolor="dark"
 " AIRLINE {{{
-let g:airline_theme = 'dracula'
+let g:airline_theme = 'ayu'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1

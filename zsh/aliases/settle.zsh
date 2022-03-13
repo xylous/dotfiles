@@ -8,11 +8,18 @@ alias stf="settle find"
 alias sts="settle search"
 alias stnc="settle not-created"
 
-alias stn="settle new"
-alias stnp="settle new --project"
-alias stni="settle new --project 'inbox'"
-alias stnl="settle new --project 'literature'"
+function vstn() {
+    nvim -c "SettleNew '','$1'"
+}
+
+function vstnp() {
+    nvim -c "SettleNew '$1','$2'"
+}
+
+function vstni() {
+    nvim -c "SettleNew 'inbox','$1'"
+}
 
 function vste() {
-    nvim -c "FZF $(settle zk)"
+    nvim -c "SettleEdit"
 }
