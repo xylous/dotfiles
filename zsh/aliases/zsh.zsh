@@ -17,3 +17,5 @@ alias v='$VISUAL'
 alias sv='sudo $VISUAL'
 
 alias of="onefetch"
+
+alias drivejs="node ~/projects/programming/drive/index.js"
