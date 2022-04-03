@@ -113,7 +113,6 @@ Plug 'airblade/vim-gitgutter'
 " Colorscheme
 Plug 'NLKNguyen/papercolor-theme'
 " For Zettelkasten purposes
-Plug 'xylous/wikilinks.vim'
 Plug 'xylous/settle.vim'
 " For writing markdown. vim is a general purpose editor, you can't blame me.
 Plug 'preservim/vim-markdown'
@@ -138,9 +137,7 @@ nnoremap <leader>f :FZFFiles ~<cr>
 nnoremap <leader>o :SettleEdit<cr>
 nnoremap <leader>n :SettleNewUnderLink<cr>
 nnoremap <leader>w :SettleNewInteractive<cr>
-" }}}
-" Wikilinks.vim {{{
-let g:wikilinks_map_key = '<CR>'
+au FileType markdown nnoremap <buffer> <cr> :SettleFollow<cr>
 " }}}
 " coc.nvim {{{
 " Use <tab> for trigger completion, completion confirm, snippet expand
@@ -322,9 +319,11 @@ inoremap <BS> <NOP>
 noremap <DEL> <NOP>
 
 " Copy the entire file to clipboard
-" Create a mark `p`, jump to the beginning of the file, yank until the end in
-" the `+` register, go to mark `p`
 nnoremap <leader>p :% y+<CR>
+
+" Faster movement with buffers
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bn :bn<CR>
 " }}}
 " AUTOCOMMANDS {{{
 augroup MARKDOWN_OPTIONS
