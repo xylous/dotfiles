@@ -1,0 +1,25 @@
+#!/usr/bin/sh
+
+### journal, written by xylous <xylous.e@gmail.com>
+## Create a file in "${JOURNAL_DIR}" with the current date as name
+
+[[ -z "${JOURNAL_DIR}" ]] \
+    && readonly JOURNAL_DIR="${HOME}/docs/journal"
+
+function journal()
+{
+    local date="$(date +%y-%m-%d)"
+
+    mkdir -p "${JOURNAL_DIR}"
+    local entry="${JOURNAL_DIR}/${date}.md"
+    if [[ ! -f "${entry}" ]]; then
+cat <<EOF > "${entry}"
+# ${date}: ?
+
+
+EOF
+    fi
+    ${EDITOR} "${entry}"
+}
+
+journal
