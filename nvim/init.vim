@@ -221,7 +221,6 @@ let g:gitgutter_map_keys = 0
 " }}}
 " vim-markdown {{{
 let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_disabled = 1
 " }}}
 " }}}
 " LOOK AND FEEL {{{
@@ -324,6 +323,8 @@ nnoremap <leader>p :% y+<CR>
 " Faster movement with buffers
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
+" Quit a buffer without closing the window it was on
+nnoremap <leadeR>bq :bp<bar>sp<bar>bp<bar>bd<cr>
 " }}}
 " AUTOCOMMANDS {{{
 augroup MARKDOWN_OPTIONS
