@@ -6,12 +6,7 @@
 declare zk_path="$(settle zk)"
 
 if [[ "$1" == "backup" ]]; then
-    declare workdir="$(mktemp --directory)"
-
-    tar --exclude=*.sql \
-        -czf "${workdir}/zettelkasten.tar.gz" -C "${zk_path}/.." zettelkasten
-    drivejs up "${workdir}/zettelkasten.tar.gz"
-    rm -rf "${workdir}"
+    drupar "${zk_path}" --exclude sql
 elif [[ "$1" == "restore" ]]; then
     if [[ -z "$2" ]]; then
         echo "no archive to restore from specified"
