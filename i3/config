@@ -200,12 +200,8 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-# Printscreen and copy to clipboard, while also saving it to a folder
-bindsym Print exec sleep 0.2 \
-&& screenshot="$HOME/screenshots/$(date +%Y%m%d%H%M%S)-screenshot.png" \
-&& scrot --select --freeze --silent "$screenshot" \
-&& xclip -selection clipboard -t image/png -i "$screenshot" \
-&& unset screenshot
+# Printscreen runs a custom script which is supposed to run scrot
+bindsym Print exec sleep 0.2 && screenshot
 
 # Make all popups float by default
 for_window [window_role="pop-up"] floating enable

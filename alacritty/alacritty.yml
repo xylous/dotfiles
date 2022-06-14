@@ -152,7 +152,7 @@ shell:
   args:
     - -l
     - -c
-    - "exec ~/bin/attach_to_unused_session"
+    - "exec ~/bin/tmux-unused-session"
 
 key_bindings:
   - { key: Paste,                                action: Paste          }

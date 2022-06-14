@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+
+# Take a screenshot and put it into "${SCREENSHOTS_PATH}"
+
+SCREENSHOTS_PATH="${HOME}/screenshots"
+
+function main() {
+    local screenshot_title="$(date +%Y%m%d%H%M%S)-screenshot"
+    local screenshot="${SCREENSHOTS_PATH}/${screenshot_title}.png"
+    scrot --select --freeze --silent "${screenshot}"
+    xclip -selection clipboard -t image/png -i "${screenshot}"
+}
+
+main

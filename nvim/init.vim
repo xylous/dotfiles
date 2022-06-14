@@ -111,7 +111,7 @@ Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'ayu-theme/ayu-vim'
 " For Zettelkasten purposes
 Plug 'xylous/settle.vim'
 " For writing markdown. vim is a general purpose editor, you can't blame me.
@@ -238,10 +238,12 @@ set ttimeoutlen=10
 
 set background=dark
 
+let ayucolor="mirage"
+
 " At last, set the theme
-colorscheme PaperColor
+colorscheme ayu
 " AIRLINE {{{
-let g:airline_theme = 'papercolor'
+let g:airline_theme = 'ayu'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
