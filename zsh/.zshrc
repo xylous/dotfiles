@@ -128,3 +128,12 @@ function book()
     exec zathura "$1" &!
     exit
 }
+
+SSH_AGENT_FILE="${HOME}/.ssh/.agent"
+. "${SSH_AGENT_FILE}" >/dev/null
+# If the agent PIDs (the one stored in the file and the one running on the
+# system) differ, rewrite the file
+if ! ps -p "${SSH_AGENT_PID}" | grep ssh-agent >/dev/null; then
+    ssh-agent >"${SSH_AGENT_FILE}"
+    . "${SSH_AGENT_FILE}" >/dev/null
+fi
