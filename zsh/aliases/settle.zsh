@@ -9,15 +9,15 @@ alias sts="settle search"
 alias stnc="settle not-created"
 
 function vstn() {
-    nvim -c "SettleNew '','$1'"
+    nvim -c "SettleNew '',\"$1\""
 }
 
 function vstnp() {
-    nvim -c "SettleNew '$1','$2'"
+    nvim -c "SettleNew '$1',\"$2\""
 }
 
 function vstni() {
-    nvim -c "SettleNew 'inbox','$1'"
+    nvim -c "SettleNew 'inbox',\"$1\""
 }
 
 function vste() {
