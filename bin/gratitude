@@ -1,0 +1,34 @@
+#!/usr/bin/sh
+
+### gratitude, written by xylous <xylous.e@gmail.com>
+## Create a file in "${JOURNAL_DIR}/gratitude" with the current date as name
+
+[[ -z "${JOURNAL_DIR}" ]] \
+    && readonly JOURNAL_DIR="${HOME}/docs/journal"
+
+function gratitude()
+{
+    local date="$(date +%y-%m-%d)"
+
+    mkdir -p "${JOURNAL_DIR}/gratitude"
+    local entry="${JOURNAL_DIR}/gratitude/${date}.md"
+    if [[ ! -f "${entry}" ]]; then
+cat <<EOF > "${entry}"
+# ${date}
+
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+EOF
+    fi
+    ${EDITOR} "${entry}"
+}
+
+gratitude
