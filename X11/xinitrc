@@ -32,7 +32,7 @@ xset r off
 setxkbmap -option caps:escape
 
 # Be easier on the eyes
-exec redshift -t 4200:2000 -m randr -l 44:26 &
+exec redshift -t 4200:1500 -m randr -l 44:26 &
 
 # feh for wallpaper + picom as compositer
 WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
