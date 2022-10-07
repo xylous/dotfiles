@@ -1,0 +1,12 @@
+#!/usr/bin/sh
+
+### git-cslv, written by xylous <xylous.e@gmail.com>
+## "git commits since last version"
+
+function main()
+{
+    local last_version="$(git describe --tags --abbrev=0)"
+    git log --oneline "${last_version}..HEAD" | wc -l
+}
+
+main

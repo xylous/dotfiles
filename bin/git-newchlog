@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+### git-newchlog, by xylous (xylous.e@gmail.com)
+## requires git-root, by xylous <xylous.e@gmail.com>
+
+# Dump a template Changelog into the root directory of the git project
+
+# The directory containing the `.git` folder (project's root directory)
+readonly GIT_PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+# Print arguments to stderr, prefixed with `error: `
+function echoerr()
+{
+    cat <<< "error: $@" 1>&2
+}
+
+if [[ -z ${GIT_PROJECT_ROOT} ]]; then
+    echoerr "not in a git repository"
+fi
+
+cat <<EOF >"${GIT_PROJECT_ROOT}/Changelog.md"
+# Changelog
+
+## v0.0.0 - $(date +%Y-%m-%d)
+
+- initialise project (README, LICENSE, Changelog)
+EOF
