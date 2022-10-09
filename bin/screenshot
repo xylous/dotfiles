@@ -1,14 +1,20 @@
 #!/usr/bin/sh
 
 # Take a screenshot and put it into "${SCREENSHOTS_PATH}"
+# default is to select the area you want to screenshot
+# -a or --all to capture the entire screen
 
-SCREENSHOTS_PATH="${HOME}/screenshots"
+readonly SCREENSHOTS_PATH="${HOME}/screenshots"
 
 function main() {
     local screenshot_title="$(date +%Y%m%d%H%M%S)-screenshot"
     local screenshot="${SCREENSHOTS_PATH}/${screenshot_title}.png"
-    scrot --select --freeze --silent "${screenshot}"
+    if [[ "$1" == "-a" ]] || [[ "$1" == "--all" ]]; then
+        scrot "${screenshot}"
+    else
+        scrot --select --freeze --silent "${screenshot}"
+    fi
     xclip -selection clipboard -t image/png -i "${screenshot}"
 }
 
-main
+main "$@"

@@ -1,0 +1,28 @@
+#!/usr/bin/sh
+
+### barckup, written by xylous <xylous.e@gmail.com>
+## just. create a backup of my essentials.
+
+ZETTELKASTEN_DIR="$(settle zk)"
+JOURNAL_DIR="${HOME}/docs/journal"
+
+function main()
+{
+    local inputpath="$1"
+
+    declare date="$(date +%Y-%m-%d)"
+    declare workdir="${HOME}/docs/backup/${date}"
+    declare archivename="$(basename "${inputpath}")"
+    declare archivepath="${workdir}/${archivename}.tar.gz"
+
+    mkdir -p "${workdir}"
+
+    echo -n "Creating ${archivepath} archive..."
+    tar -czf "${archivepath}" -C "${inputpath}/.." "${archivename}"
+    if [[ -f "${archivepath}" ]]; then
+        echo " done"
+    fi
+}
+
+main "${ZETTELKASTEN_DIR}"
+main "${JOURNAL_DIR}"
