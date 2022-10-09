@@ -119,7 +119,7 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style:
-    shape: Beam
+    shape: Block
     blinking: Always
   blink_interval: 450 # time in milliseconds
 

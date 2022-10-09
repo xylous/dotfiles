@@ -111,7 +111,7 @@ Plug 'rstacruz/vim-closer'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'ayu-theme/ayu-vim'
+Plug 'sainnhe/gruvbox-material'
 " For Zettelkasten purposes
 Plug 'xylous/settle.vim'
 " For writing markdown. vim is a general purpose editor, you can't blame me.
@@ -130,7 +130,7 @@ let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = "FZF"
 
 " Use CTRL-f to open FZF quickly, in the home directory
-nnoremap f :FZFFiles .<cr>
+nnoremap <C-f> :FZFFiles .<cr>
 nnoremap <leader>f :FZFFiles ~<cr>
 " }}}
 " settle.vim {{{
@@ -140,14 +140,15 @@ nnoremap <leader>w :SettleNewInteractive<cr>
 au FileType markdown nnoremap <buffer> <cr> :SettleFollow<cr>
 " }}}
 " coc.nvim {{{
-" Use <tab> for trigger completion, completion confirm, snippet expand
+" Use <TAB> to navigate the completions list
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
+" Use <S-TAB> to navigate the completions list in reverse
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -177,6 +178,9 @@ let g:airline#exxtensions#coc#enabled = 1
 
 " Use C syntax highlighting in header files
 let g:c_syntax_for_h = 1
+
+" Use <C-l> to expand snippets
+inoremap <C-l> <Plug>(coc-snippets-expand)
 
 " Use <C-j> to jump to next placeholder, <C-k> to jump to previous placeholder;
 " it's default of coc.nvim
@@ -228,7 +232,9 @@ let g:vim_markdown_folding_style_pythonic = 1
 set t_Co=256
 
 " Enable 24-bit colour (truecolour)
-set termguicolors
+if has('termguicolors')
+    set termguicolors
+endif
 
 " Statusline takes care of displaying the mode already
 set noshowmode
@@ -238,12 +244,18 @@ set ttimeoutlen=10
 
 set background=dark
 
-let ayucolor="mirage"
+" For gruvbox-material colorscheme
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_foreground = 'material'
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_enable_italics = 1
+"let g:gruvbox_material_cursor = 'auto'
+let g:gruvbox_material_ui_contrast = 'high'
 
 " At last, set the theme
-colorscheme ayu
+colorscheme gruvbox-material
 " AIRLINE {{{
-let g:airline_theme = 'ayu'
+let g:airline_theme = 'gruvbox_material'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1

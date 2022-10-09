@@ -110,6 +110,8 @@ TRAPUSR1() { rehash } # Pacman rehash post-transaction hook
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export WINEPREFIX="$XDG_DATA_HOME/wine"
 
 # mkdir and cd
 function mkcdir()

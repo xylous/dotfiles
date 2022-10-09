@@ -202,6 +202,7 @@ client.background       #ffffff
 
 # Printscreen runs a custom script which is supposed to run scrot
 bindsym Print exec sleep 0.2 && screenshot
+bindsym $mod+Print exec sleep 0.2 && screenshot --all
 
 # Make all popups float by default
 for_window [window_role="pop-up"] floating enable
@@ -219,6 +220,8 @@ for_window [class="(?i)anki" title="(?i)ajouter"] floating enable
 bindsym $mod+Shift+o exec dunstctl close-all
 bindsym $mod+Shift+p exec dunstctl history-pop
 
-# Reserve $mod+x. I use it for Discord push to talk, and i don't want to input
-# an actual 'x' when I talk
+# Reserve $mod+x - used by Discord for push to talk
 bindsym $mod+x nop
+
+# Reserve $mod+Shift+m - used for OBS Replay Buffer
+bindsym $mod+Shift+m nop
