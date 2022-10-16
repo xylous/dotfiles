@@ -75,7 +75,8 @@ set nobackup
 " PLUGINS {{{
 " Plugins (with vim-plug) {{{
 " Install vim-plug if not already installed
-let plug_install_path = $HOME . "/.local/share/nvim/site/autoload/plug.vim"
+"let plug_install_path = $HOME . "/.local/share/nvim/site/autoload/plug.vim"
+let plug_install_path = "/home/xylous/.local/share/nvim/site/autoload/plug.vim"
 let plug_install_now = 0
 if ! filereadable(plug_install_path)
     echon 'Installing junegunn/vim-plug...'

@@ -21,10 +21,11 @@ $(DOTFILES):
 		exit 1; \
 	fi
 	@for file in $(shell find $@ -type f); do \
+		file="$${file/user\//}" \
 		dest_dir="$$(dirname $$XDG_CONFIG_HOME/$$file)"; \
 		mkdir --parents "$$dest_dir"; \
 		echo "creating a soft link at ~/.config/$${file} to $${file}..."; \
-		ln -sf "$$(realpath $$file)" ~/.config/$$file; \
+		ln -sf "$$(realpath ./user/$$file)" ~/.config/$$file; \
 	done
 
 # You can build any DOTFILE for the root user by creating soft links in
@@ -56,7 +57,7 @@ $(SYSTEM_DOTFILES):
 
 # Make a soft link to files in `./bin` from `$HOME/bin`
 bin:
-	@if [[ $${EUID} -e 0 ]]; then \
+	@if [[ $${EUID} == 0 ]]; then \
 		echo "error: won't create regular dotfiles for root user"; \
 		exit 1; \
 	fi

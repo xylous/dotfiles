@@ -200,7 +200,7 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-# Printscreen runs a custom script which is supposed to run scrot
+# Printscreen runs a custom script which runs scrot
 bindsym Print exec sleep 0.2 && screenshot
 bindsym $mod+Print exec sleep 0.2 && screenshot --all
 
