@@ -6,63 +6,74 @@ DOTFILES 		= $(shell find ./user -path ./user -prune -o -type d)
 SYSTEM_DOTFILES = $(shell find ./etc -path ./etc -prune -o -type d)
 ROOT_DOTFILES 	= $(shell find ./root -path ./root -prune -o -type d)
 
-.PHONY: all $(DOTFILES) $(SYSTEM_DOTFILES) $(ROOT_DOTFILES) bin system superuser
+.PHONY: all
 all: $(DOTFILES) bin
 
+.PHONY: system
 system: $(SYSTEM_DOTFILES)
 
+.PHONY: superuser
 superuser: $(ROOT_DOTFILES)
 
-# You can build any DOTFILE by creating soft links in ~/.config/$@ to the files
-# in ./$@
+# $1 = directory to look in
+# $2 = directory in which links should be made
+define dynamically_link
+	for file in $(shell find $(1) -type f) ; do 							\
+		file="$${file#*/}" 													; \
+		mkdir --parents "$$dest_dir" 										; \
+		echo -n "creating a soft link at $(2)/$${file} to $${file}..." 		; \
+		ln -sf "$$(realpath ./user/$$file)" $(2)/$$file 					; \
+		echo " done" 														; \
+	done
+endef
+
+# $1 = directory to look in
+# $2 = directory in which links should be made
+define statically_link
+	for file in $(shell find $(1) -type f); do 				\
+		orig_file="$$file" 									; \
+		file="$${file#*/}" 									; \
+		file="$${file#*/}" 									; \
+		dest_dir="$(2)" 									; \
+		mkdir --parents "$$dest_dir" 						; \
+		echo "copying $${orig_file} to $$dest_dir/$${file}" ; \
+		cp -f $$orig_file $$dest_dir/$$file 				; \
+	done
+endef
+
+.PHONY: $(DOTFILES)
 $(DOTFILES):
 	@if [[ $${EUID} == 0 ]]; then \
 		echo "error: won't create regular dotfiles for root user"; \
 		exit 1; \
 	fi
-	@for file in $(shell find $@ -type f); do \
-		file="$${file/user\//}" \
-		dest_dir="$$(dirname $$XDG_CONFIG_HOME/$$file)"; \
-		mkdir --parents "$$dest_dir"; \
-		echo "creating a soft link at ~/.config/$${file} to $${file}..."; \
-		ln -sf "$$(realpath ./user/$$file)" ~/.config/$$file; \
-	done
+	@dest_dir="$${XDG_CONFIG_HOME:-$$HOME/.config}"; \
+		$(call dynamically_link,$@,$$dest_dir)
 
-# You can build any DOTFILE for the root user by creating soft links in
-# /root/.config/$@ to the files in ./$@
+.PHONY: $(ROOT_DOTFILES)
 $(ROOT_DOTFILES):
 	@if [[ $${EUID} -ne 0 ]]; then \
 		echo "error: needs to be ran as root"; \
 		exit 1; \
 	fi
-	@for file in $(shell find $@ -type f); do \
-		file="$${file/root\//}" \
-		dest_dir="$$(dirname /root/.config/$$file)"; \
-		mkdir --parents "$$dest_dir"; \
-		echo "creating a soft link at /root/.config/$${file} to ./root/$${file}..."; \
-		ln -sf "$$(realpath ./root/$$file)" /root/.config/$$file; \
-	done
+	@dest_dir="/root/.config" ; \
+		$(call dynamically_link,$@,$$dest_dir)
 
-$(SYSTEM_DOTFILES):
+.PHONY: $(ETC_FILES)
+$(ETC_FILES):
 	@if [[ $${EUID} -ne 0 ]]; then \
 		echo "error: needs to be ran as root"; \
 		exit 1; \
 	fi
-	@for file in $(shell find $@ -maxdepth 1 -type f); do \
-		dest_dir="$$(dirname /$$file)"; \
-		mkdir --parents "$$dest_dir"; \
-		echo "copying ./$${file} to /$${file}"; \
-		cp ./$$file /$$file; \
-	done
+	@dest_dir="/etc/"; \
+		$(call statically_link,$@,$$dest_dir)
 
 # Make a soft link to files in `./bin` from `$HOME/bin`
+.PHONY: bin
 bin:
 	@if [[ $${EUID} == 0 ]]; then \
 		echo "error: won't create regular dotfiles for root user"; \
 		exit 1; \
 	fi
-	@[[ -d ~/bin ]] || mkdir ~/bin
-	@for file in bin/*; do \
-		echo "creating a soft link at ~/$${file} to $${file}..."; \
-		ln -sf $$(realpath $$file) ~/$$file; \
-	done
+	@dest_dir="$$HOME/bin"; \
+		$(call dynamically_link,./bin,$$dest_dir)
