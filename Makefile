@@ -2,9 +2,9 @@
 # ./root is assumed to be a directory containing dotfiles that needs to be moved
 # to ~/.config/ There's a trick here: if you want to add another folder to be
 # tracked, this rule handles it for you automatically
-DOTFILES = $(shell ls -I 'README.md' -I 'bin' -I 'Makefile' -I 'etc' -I 'LICENSE' -I 'root')
-SYSTEM_DOTFILES = $(shell find ./etc -type d)
-ROOT_DOTFILES = $(shell find ./root -path ./root -prune -o -type d)
+DOTFILES 		= $(shell find ./user -path ./user -prune -o -type d)
+SYSTEM_DOTFILES = $(shell find ./etc -path ./etc -prune -o -type d)
+ROOT_DOTFILES 	= $(shell find ./root -path ./root -prune -o -type d)
 
 .PHONY: all $(DOTFILES) $(SYSTEM_DOTFILES) $(ROOT_DOTFILES) bin system superuser
 all: $(DOTFILES) bin
