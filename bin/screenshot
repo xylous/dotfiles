@@ -89,13 +89,35 @@ function save()
     exit 1
 }
 
-function main() {
+function help()
+{
+cat <<EOF
+Usage: screenshot [-a | --all | help | -h | --help]
+       screenshot save <num> <title>
+
+By default, the program stores screenshots in a buffer, 0-indexed, of size 10.
+Old screenshots using the same filename are overwritten.
+
+If ran with no arguments, then it will prompt the user to select an area. If ran
+with '-a' or '--all' options, the entire screen is captured. In both cases,
+the resulting screenshot is copied to clipboard.
+
+If ran with the 'save' command, then you must provide the number of the screenshot
+you want to save (0-9) and the title it should be saved under. The photo is
+viewed with 'feh' and you are prompted to confirm that it's the correct screenshot.
+EOF
+}
+
+function main()
+{
     if [[ ! -d "${SCREENSHOTS_DIR}" ]]; then
         mkdir -p "${SCREENSHOTS_DIR}"
         mkdir -p "${SAVED_SCREENSHOTS_DIR}"
         echo "0" >"${LAST_SCREENSHOT_FILE}"
     fi
-    if [[ "$1" == "save" ]]; then
+    if [[ "$1" =~ ("help"|"-h"|"--help") ]]; then
+        help
+    elif [[ "$1" == "save" ]]; then
         save "$2" "$3"
     else
         screenshot "$1"
