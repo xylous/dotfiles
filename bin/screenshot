@@ -5,8 +5,17 @@
 # -a or --all to capture the entire screen
 
 readonly SCREENSHOTS_DIR="${HOME}/docs/screenshots"
+readonly SAVED_SCREENSHOTS_DIR="${SCREENSHOTS_DIR}/saved"
 readonly LAST_SCREENSHOT_FILE="${SCREENSHOTS_DIR}/.last-screenshot"
 readonly NUM_SCREENSHOTS=10
+
+###
+# Print all given arguments to stderr
+###
+function echoerr()
+{
+    cat <<< "$@" 1>&2
+}
 
 ###
 # Read the number from "${LAST_SCREENSHOT_FILE}" to determine which screenshot
@@ -30,7 +39,8 @@ function increment_screenshot()
 }
 
 ###
-# $1 - "-a" or "--all" flag
+# Use scrot to take a screenshot (default: select)
+# Arguments:    $1 "-a" or "--all" flag, to capture the entire screen
 ###
 function screenshot()
 {
@@ -38,21 +48,58 @@ function screenshot()
     local screenshot="${SCREENSHOTS_DIR}/${screenshot_title}.png"
 
     if [[ "$1" == "-a" ]] || [[ "$1" == "--all" ]]; then
-        scrot "${screenshot}"
+        scrot --overwrite "${screenshot}"
     else
-        scrot --select --freeze --silent "${screenshot}"
+        scrot --overwrite --select --freeze --silent "${screenshot}"
     fi
 
     xclip -selection clipboard -t image/png -i "${screenshot}" \
         && increment_screenshot
 }
 
+###
+# Rename a screenshot and put it into "${SAVED_SCREENSHOTS_DIR}", if the user
+# confirms that it's the correct photo
+# Arguments:    $1 the screenshot number
+#               $2 the title of the saved screenshot
+###
+function save()
+{
+    local num="$1"
+    local new_title="$2"
+    local screenshot_path="${SCREENSHOTS_DIR}/${num}.png"
+    local saved_screenshot_path="${SAVED_SCREENSHOTS_DIR}/${new_title}.png"
+
+    if [[ ! -f "${screenshot_path}" ]]; then
+        echoerr "couldn't save screenshot '${num}' - it does not exist"
+    elif [[ -z "${new_title}" ]]; then
+        echoerr "couldn't save screenshot: invalid (empty) title"
+    else
+        feh "${screenshot_path}"
+        echo "Save this screenshot with title '${new_title}'?"
+        select yn in "Yes" "No"; do
+            case "${yn}" in
+                Yes) cp "${screenshot_path}" "${saved_screenshot_path}" ;;
+                No) ;;
+            esac
+            exit 0
+        done
+    fi
+
+    exit 1
+}
+
 function main() {
     if [[ ! -d "${SCREENSHOTS_DIR}" ]]; then
         mkdir -p "${SCREENSHOTS_DIR}"
-        touch "${LAST_SCREENSHOT_FILE}"
+        mkdir -p "${SAVED_SCREENSHOTS_DIR}"
+        echo "0" >"${LAST_SCREENSHOT_FILE}"
     fi
-    screenshot "$1"
+    if [[ "$1" == "save" ]]; then
+        save "$2" "$3"
+    else
+        screenshot "$1"
+    fi
 }
 
 main "$@"
