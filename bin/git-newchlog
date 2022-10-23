@@ -16,6 +16,7 @@ function echoerr()
 
 if [[ -z ${GIT_PROJECT_ROOT} ]]; then
     echoerr "not in a git repository"
+    exit 1
 fi
 
 cat <<EOF >"${GIT_PROJECT_ROOT}/Changelog.md"
