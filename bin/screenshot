@@ -1,20 +1,58 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
-# Take a screenshot and put it into "${SCREENSHOTS_PATH}"
+# Take a screenshot and put it into "${SCREENSHOTS_DIR}"
 # default is to select the area you want to screenshot
 # -a or --all to capture the entire screen
 
-readonly SCREENSHOTS_PATH="${HOME}/screenshots"
+readonly SCREENSHOTS_DIR="${HOME}/docs/screenshots"
+readonly LAST_SCREENSHOT_FILE="${SCREENSHOTS_DIR}/.last-screenshot"
+readonly NUM_SCREENSHOTS=10
 
-function main() {
-    local screenshot_title="$(date +%Y%m%d%H%M%S)-screenshot"
-    local screenshot="${SCREENSHOTS_PATH}/${screenshot_title}.png"
+###
+# Read the number from "${LAST_SCREENSHOT_FILE}" to determine which screenshot
+# was saved last
+###
+function last_screenshot()
+{
+    cat "${LAST_SCREENSHOT_FILE}" 2>/dev/null \
+        || echo "0"
+}
+
+###
+# Write the number from "${LAST_SCREENSHOT_FILE}", but incremented, so that it's
+# not over "${NUM_SCREENSHOTS}"
+###
+function increment_screenshot()
+{
+    local last="$(last_screenshot)"
+    local new=$(((last + 1) % NUM_SCREENSHOTS))
+    echo "${new}" >"${LAST_SCREENSHOT_FILE}"
+}
+
+###
+# $1 - "-a" or "--all" flag
+###
+function screenshot()
+{
+    local screenshot_title="$(last_screenshot)"
+    local screenshot="${SCREENSHOTS_DIR}/${screenshot_title}.png"
+
     if [[ "$1" == "-a" ]] || [[ "$1" == "--all" ]]; then
         scrot "${screenshot}"
     else
         scrot --select --freeze --silent "${screenshot}"
     fi
-    xclip -selection clipboard -t image/png -i "${screenshot}"
+
+    xclip -selection clipboard -t image/png -i "${screenshot}" \
+        && increment_screenshot
+}
+
+function main() {
+    if [[ ! -d "${SCREENSHOTS_DIR}" ]]; then
+        mkdir -p "${SCREENSHOTS_DIR}"
+        touch "${LAST_SCREENSHOT_FILE}"
+    fi
+    screenshot "$1"
 }
 
 main "$@"
