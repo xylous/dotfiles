@@ -107,8 +107,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 " Plugin for visually displaying indent levels:
 Plug 'nathanaelkane/vim-indent-guides'
-" Basically, a more conservative version of vim-auto-pairs:
-Plug 'rstacruz/vim-closer'
+" For auto-pairing parentheses:
+Plug 'jiangmiao/auto-pairs'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
