@@ -34,6 +34,9 @@ setxkbmap -option caps:escape
 # Be easier on the eyes
 exec redshift -t 4200:1500 -m randr -l 44:26 &
 
+# this little custom script automatically changes the wallpaper every so often
+exec cwallpaperd &
+
 # feh for wallpaper + picom as compositer
 WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
 exec feh --no-fehbg --bg-scale ${WALLPAPER} &
