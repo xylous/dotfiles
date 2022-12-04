@@ -112,7 +112,7 @@ Plug 'jiangmiao/auto-pairs'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
 " Colorscheme
-Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/sonokai'
 " For Zettelkasten purposes
 Plug 'xylous/settle.vim'
 " For writing markdown. vim is a general purpose editor, you can't blame me.
@@ -246,17 +246,22 @@ set ttimeoutlen=10
 set background=dark
 
 " For gruvbox-material colorscheme
-let g:gruvbox_material_background = 'hard'
-let g:gruvbox_material_foreground = 'material'
-let g:gruvbox_material_enable_bold = 1
-let g:gruvbox_material_enable_italics = 1
+"let g:gruvbox_material_background = 'hard'
+"let g:gruvbox_material_foreground = 'material'
+"let g:gruvbox_material_enable_bold = 1
+"let g:gruvbox_material_enable_italics = 1
 "let g:gruvbox_material_cursor = 'auto'
-let g:gruvbox_material_ui_contrast = 'high'
+"let g:gruvbox_material_ui_contrast = 'high'
 
-" At last, set the theme
-colorscheme gruvbox-material
+" For sonokai colorscheme
+let g:sonokai_style = 'andromeda'
+let g:sonokai_better_performance = 0
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 0
+
+colorscheme sonokai
 " AIRLINE {{{
-let g:airline_theme = 'gruvbox_material'
+let g:airline_theme = 'sonokai'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1

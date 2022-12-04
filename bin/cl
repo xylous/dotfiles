@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
 # cl - Clear (broken) Links
 
@@ -10,6 +10,6 @@ if [[ "$1" == "-r" ]]; then
     shift
 fi
 
-declare num="$(find ${1:-.} ${maxdepth} -xtype l -print -delete | wc -l)"
+declare num="$(find "${1:-.}" ${maxdepth} -xtype l -print -delete | wc -l)"
 
 echo "found ${num} broken link(s) and removed them"
