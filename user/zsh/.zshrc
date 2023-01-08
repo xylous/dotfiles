@@ -45,7 +45,8 @@ export LC_NUMERIC="ro_RO.UTF-8"
 export LC_TIME="fr_FR.UTF-8"
 
 # Define LS_COLORS and use it when completing filenames
-export LS_COLORS="$(vivid generate molokai 2>/dev/null)"
+export LS_COLORS="$(cat ${ZDOTDIR}/LSCOLORS.txt)"
+
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 export PAGER='less'

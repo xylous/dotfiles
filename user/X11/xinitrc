@@ -35,11 +35,12 @@ setxkbmap -option caps:escape
 exec redshift -t 4200:1500 -m randr -l 44:26 &
 
 # this little custom script automatically changes the wallpaper every so often
+# it also sources said wallpaper
 exec cwallpaperd &
 
 # feh for wallpaper + picom as compositer
-WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
-exec feh --no-fehbg --bg-scale ${WALLPAPER} &
+#WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
+#exec feh --no-fehbg --bg-scale ${WALLPAPER} &
 exec picom &
 exec xrandr --output eDP --set TearFree on &
 
