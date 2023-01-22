@@ -2,6 +2,15 @@
 
 This repository contains most of my dotfiles. Enjoy.
 
+## Directory structure
+
+- `user`: configuration files destined for the user
+- `bin`: binaries for the user
+- `root`: configuration files destined for root
+- `etc`: configuration files destined for `/etc`
+- `template`: a README template and various license templates; not actually
+    built
+
 ## Building dotfiles
 
 The `Makefile` in this repository can be used to make all or just some dotfiles.
