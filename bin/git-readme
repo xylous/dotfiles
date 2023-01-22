@@ -9,7 +9,7 @@ readonly GIT_PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 # The path the README template is written to
 readonly README_DEST="${GIT_PROJECT_ROOT}/README.md"
 # URI to get the README contents from
-readonly REMOTE_README_URI='https://raw.github.com/xylous/repo-template/master/template_readme.md'
+readonly REMOTE_README_URI='https://raw.github.com/xylous/dotfiles/master/template/template_readme.md'
 
 # Print arguments to stderr, prefixed with `error: `
 function echoerr()

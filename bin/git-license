@@ -11,7 +11,7 @@ readonly GIT_PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 # The path the downloaded license is going to be written to
 readonly LICENSE_DEST="${GIT_PROJECT_ROOT}/LICENSE"
 # The URI of the remote we're fetching licenses from
-readonly REMOTE_LICENSE_REPO='https://raw.github.com/xylous/repo-template/master/licenses/'
+readonly REMOTE_LICENSE_REPO='https://raw.github.com/xylous/dotfiles/master/template/licenses/'
 
 # Print arguments to stderr, prefixed with `error: `
 function echoerr()

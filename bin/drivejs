@@ -1,5 +1,0 @@
-#!/usr/bin/sh
-
-# interface to drivejs
-
-node "${HOME}/projects/programming/drive/index.js" $@
