@@ -45,7 +45,8 @@ export LC_NUMERIC="ro_RO.UTF-8"
 export LC_TIME="fr_FR.UTF-8"
 
 # Define LS_COLORS and use it when completing filenames
-export LS_COLORS="$(cat ${ZDOTDIR}/LSCOLORS.txt)"
+[[ -f "${ZDOTDIR}/config/LSCOLORS.txt" ]] \
+    && export LS_COLORS="$(cat ${ZDOTDIR}/config/LSCOLORS.txt)"
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
@@ -56,17 +57,18 @@ export PAGER='less'
     && readonly HIST_OPTIONS_FILE="${ZDOTDIR}/config/history.zsh"
 [[ -f ${HIST_OPTIONS_FILE} ]] && source ${HIST_OPTIONS_FILE}
 
-## mzpm
-source "$ZDOTDIR/mzpm.zsh"
-mzpm 'zsh-users/zsh-history-substring-search'
-mzpm 'zsh-users/zsh-autosuggestions'
-mzpm 'zsh-users/zsh-syntax-highlighting'
-mzpm 'xylous/gitstatus'
-mzpm 'xylous/alias-zsh'
-mzpm 'xylous/hydrogen'
+## Aliases are kept in a separate file
+[[ -f "${ZDOTDIR}/config/aliases.zsh" ]] \
+    && source "${ZDOTDIR}/config/aliases.zsh"
 
-alias-zsh use "${ZDOTDIR}/aliases"
-alias-zsh load all
+## mzpm
+[[ -f "${ZDOTDIR}/mzpm.zsh" ]] \
+    && source "${ZDOTDIR}/mzpm.zsh" \
+    && mzpm 'zsh-users/zsh-history-substring-search' \
+    && mzpm 'zsh-users/zsh-autosuggestions' \
+    && mzpm 'zsh-users/zsh-syntax-highlighting' \
+    && mzpm 'xylous/gitstatus' \
+    && mzpm 'xylous/hydrogen'
 
 ## Prompt settings
 # Pressing UP and DOWN keys will go up and down in the entries in hitory that

@@ -3,7 +3,7 @@
 readonly disk="/dev/nvme0n1"
 readonly part="1"
 
-declare label="Arch Linux"
+declare label="Arch Linux 2"
 declare lts=''
 if [[ $1 == 'lts' ]]; then
     lts='-lts'
@@ -15,7 +15,7 @@ kernel_parameters+="root=${disk}p2 rw "
 kernel_parameters+='quiet '
 kernel_parameters+='vga=current '
 kernel_parameters+='loglevel=2 '
-kernel_parameters+='acpi_backlight=vendor '
+kernel_parameters+='acpi_backlight=native'
 kernel_parameters+='udev.log_level=2 '
 kernel_parameters+='vt.global_cursor_default=0 '
 kernel_parameters+='initrd=\amd-ucode.img '
