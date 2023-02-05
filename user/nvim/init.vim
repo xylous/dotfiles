@@ -138,6 +138,7 @@ nnoremap <leader>f :FZFFiles ~<cr>
 nnoremap <leader>o :SettleEdit<cr>
 nnoremap <leader>n :SettleNewUnderLink<cr>
 nnoremap <leader>w :SettleNewInteractive<cr>
+nnoremap <leader>x :SettleGraph<cr>
 au FileType markdown nnoremap <buffer> <cr> :SettleFollow<cr>
 " }}}
 " coc.nvim {{{
@@ -277,10 +278,10 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-"let g:airline_left_sep = ''
-"let g:airline_left_alt_sep = ''
-"let g:airline_right_sep = ''
-"let g:airline_right_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'

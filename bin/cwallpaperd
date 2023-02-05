@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 ### cwallpaperd - change wallpaper daemon
 ## author: xylous <xylous.e@gmail.com>

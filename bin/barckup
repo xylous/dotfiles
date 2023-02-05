@@ -3,7 +3,7 @@
 ### barckup, written by xylous <xylous.e@gmail.com>
 ## just. create a backup of my essentials.
 
-ZETTELKASTEN_DIR="$(settle zk)"
+ZETTELKASTEN_DIR="$(settle ls path)"
 JOURNAL_DIR="${HOME}/docs/journal"
 
 function main()
