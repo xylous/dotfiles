@@ -9,4 +9,4 @@ while pgrep -x polybar >/dev/null; do
 done
 
 # Launch
-polybar i3bar &
+polybar fixedtopbar &

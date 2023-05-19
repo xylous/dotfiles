@@ -37,9 +37,7 @@ alias of="onefetch"
 #############
 
 # "configure shell aliases"
-alias cfsa='$VISUAL "${ZDOTDIR}/config/aliases.sh"'
-# "configure git aliases"
-alias cfga='$VISUAL $ZDOTDIR/config/gitaliases.sh'
+alias cfsa='$VISUAL "${ZDOTDIR}/config/aliases.zsh"'
 # "configure intractive z-shell"
 alias cfizs='$VISUAL $ZDOTDIR/.zshrc'
 # "configure login z-shell"
@@ -123,6 +121,9 @@ alias stq="settle query"
 alias stge="settle -Sg"
 alias sts="settle sync"
 alias stls="settle ls"
+# basically this makes it very easy (for me) to get a good perspective on the
+# last things I wrote, since every note contains the date it was written
+alias stpr="settle query --text '\d{4}-\d{2}-\d{2}' --format '(%a) %t' | sort"
 
 function vstn() {
     nvim -c "SettleNew '',\"$1\""

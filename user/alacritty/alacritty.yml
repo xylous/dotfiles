@@ -57,7 +57,7 @@ scrolling:
 font:
   normal:
     #family: MxPlus IBM VGA 9x16
-    family: MesloLGS NF
+    family: Iosevka
     style: Regular
 
   bold:
@@ -73,7 +73,8 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 7.5
+  #size: 7.5
+  size: 8.5
 
 # Colors (Ayu Dark)
 colors:

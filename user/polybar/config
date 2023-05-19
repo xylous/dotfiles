@@ -28,7 +28,7 @@ alert = #ed404c
 [global/wm]
 margin-bottom = 20
 
-[bar/i3bar]
+[bar/floatingtopbar]
 width = 100%:-19
 height = 36
 offset-x = 10
@@ -43,7 +43,7 @@ bottom = false
 ; Don't use separators
 separator =
 
-fixed-center = true
+fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -67,8 +67,8 @@ font-1 = unifont:fontformat=truetype:size=20:antialias=true;0
 font-2 = siji:pixelsize=20;0
 font-3 = MesloLGS NF:style=Regular:size=16;2
 
-modules-left = i3
-modules-center =
+modules-left =
+modules-center = i3
 modules-right = pulseaudio wlan battery date
 
 ; Ah, tray icons.
@@ -77,8 +77,50 @@ tray-padding = 2
 tray-maxsize = 16
 tray-offset-x = -4
 
+; practically, make i3 treat this bar as if it doesn't exist
+; i.e. ignore it when tiling windows
 wm-restack = i3
 override-redirect = true
+
+[bar/fixedtopbar]
+width = 100%:
+height = 36
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+; Don't put gaps betweeen borders and the bar
+border-size = 0
+border-color = #00000000
+
+; A little padding of the tray icons is fine, but not on the workspace buttons
+padding-left = 1
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 1
+
+; note to future self; the number after ';' is vertical offset from the top
+font-0 = MXPlus IBM VGA 9x16:style=Regular:size=15;2
+font-1 = unifont:fontformat=truetype:size=20:antialias=true;0
+font-2 = siji:pixelsize=20;0
+font-3 = MesloLGS NF:style=Regular:size=16;2
+
+; pin the modules in the center
+fixed-center = true
+
+; modules configuration
+modules-left =
+modules-center = i3
+modules-right = pulseaudio wlan battery date
+
+; Ah, tray icons.
+tray-position = left
+tray-padding = 3
+tray-maxsize = 16
+tray-offset-x = 0
 
 [module/xwindow]
 type = internal/xwindow
@@ -183,7 +225,7 @@ interval = 5
 date =
 date-alt = " %Y-%m-%d"
 
-time = %H:%M
+time = %H:%M:%S
 time-alt = %H:%M:%S
 
 label = %date% %time%
