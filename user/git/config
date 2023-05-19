@@ -1,7 +1,7 @@
 [user]
 	name = xylous
 	email = xylous.e@gmail.com
-	signingkey = A9E6DA43F5E78D24
+	signingkey = A184BFAFADCC058D
 
 [core]
 	editor = nvim
