@@ -60,13 +60,22 @@ function screenshot()
 ###
 # Rename a screenshot and put it into "${SAVED_SCREENSHOTS_DIR}", if the user
 # confirms that it's the correct photo
-# Arguments:    $1 the screenshot number
+# Arguments:    $1 the screenshot number, or `last`
 #               $2 the title of the saved screenshot
 ###
 function save()
 {
     local num="$1"
     local new_title="$2"
+
+
+    if [[ "${num}" == "last" ]]; then
+        num=$(($(last_screenshot) - 1))
+        if [[ "${num}" -lt 0 ]]; then
+            num=$(($num + 10))
+        fi
+    fi
+
     local screenshot_path="${SCREENSHOTS_DIR}/${num}.png"
     local saved_screenshot_path="${SAVED_SCREENSHOTS_DIR}/${new_title}.png"
 
@@ -104,7 +113,9 @@ the resulting screenshot is copied to clipboard.
 
 If ran with the 'save' command, then you must provide the number of the screenshot
 you want to save (0-9) and the title it should be saved under. The photo is
-viewed with 'feh' and you are prompted to confirm that it's the correct screenshot.
+viewed with 'feh' and you are prompted to confirm that it's the correct
+screenshot. Note that you can specify "last" as a screenshot number, and it
+conveniently finds the last screenshot you took.
 EOF
 }
 
