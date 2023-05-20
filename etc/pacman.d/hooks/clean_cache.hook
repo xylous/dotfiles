@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Remove
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Depends = pacman-contrib
+When = PostTransaction
+Exec = /usr/bin/paccache -rvuk0 && /usr/bin/paccache -rvk2
