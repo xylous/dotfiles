@@ -34,9 +34,8 @@ setxkbmap -option caps:escape
 # Be easier on the eyes
 exec redshift -t 4200:1500 -m randr -l 44:26 &
 
-# this little custom script automatically changes the wallpaper every so often
-# it also sources said wallpaper
-exec cwallpaperd &
+# trigger a custom systemd target that triggers certain services
+systemctl --user start X.target &
 
 # feh for wallpaper + picom as compositer
 #WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"

@@ -1,0 +1,8 @@
+[Unit]
+Description=Change wallpaper periodically
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/xylous/.config/X11/Xauthority
+ExecStart=/bin/zsh -c "/home/xylous/bin/rand_wp"

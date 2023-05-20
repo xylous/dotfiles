@@ -4,6 +4,7 @@
 ## requires `feh`
 # Change wallpaper (with `feh`) on the spot, until next change
 
+# symlink pointing to the current wallpaper
 WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
 
 # Print arguments to stderr, prefixed with `error: `

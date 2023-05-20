@@ -1,0 +1,9 @@
+[Unit]
+Description=Change wallpapers every hour
+
+[Timer]
+OnActiveSec=0sec
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=X.target

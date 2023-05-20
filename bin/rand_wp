@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+### rand_wp
+## author: xylous <xylous.e@gmail.com>
+# pick a random wallpaper to use, given a directory full of them
+
+# directory containing the wallpapers to be used
+WALLPAPERS_DIRECTORY="${XDG_CONFIG_HOME}/wallpapers"
+# symlink pointing to the current wallpaper
+WALLPAPER_SYMLINK="${XDG_CONFIG_HOME}/wallpaper"
+
+old="$(readlink -f "${WALLPAPER_SYMLINK}")"
+# pick a random wallpaper to use, as long as it's different from the last one
+new="${old}"
+#while [[ "${new}" == "${old}" ]]; do
+    new="$(find -L "${WALLPAPERS_DIRECTORY}" -maxdepth 1 -type f -print0 | shuf -z -n 1 | tr -d '\000')"
+#done
+/home/xylous/bin/wallpaper "${new}"
