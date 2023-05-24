@@ -3,7 +3,7 @@
 readonly disk="/dev/nvme0n1"
 readonly part="1"
 
-declare label="Arch Linux 2"
+declare label="Arch Linux"
 declare lts=''
 if [[ $1 == 'lts' ]]; then
     lts='-lts'

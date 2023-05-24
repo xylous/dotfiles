@@ -5,14 +5,32 @@
 # pick a random wallpaper to use, given a directory full of them
 
 # directory containing the wallpapers to be used
-WALLPAPERS_DIRECTORY="${XDG_CONFIG_HOME}/wallpapers"
-# symlink pointing to the current wallpaper
-WALLPAPER_SYMLINK="${XDG_CONFIG_HOME}/wallpaper"
+WALLPAPERS_DIRECTORY="${XDG_CONFIG_HOME}/wallpapers/"
+# file containing the paths to all wallpapers which have been used already
+WP_ALREADY_USED="${XDG_CACHE_HOME}/rand_wp.txt"
 
-old="$(readlink -f "${WALLPAPER_SYMLINK}")"
-# pick a random wallpaper to use, as long as it's different from the last one
-new="${old}"
-#while [[ "${new}" == "${old}" ]]; do
-    new="$(find -L "${WALLPAPERS_DIRECTORY}" -maxdepth 1 -type f -print0 | shuf -z -n 1 | tr -d '\000')"
-#done
-/home/xylous/bin/wallpaper "${new}"
+function main()
+{
+    # re-initialise the list if we went through all possible wallpapers
+    if [[ ! -f "${WP_ALREADY_USED}" ]] \
+    || (( $(cat "${WP_ALREADY_USED}" | wc -l) >= $(ls "${WALLPAPERS_DIRECTORY}" | wc -l) )); then
+        rm -f "${WP_ALREADY_USED}"
+        touch "${WP_ALREADY_USED}"
+    fi
+
+    # this is for excluding wallpapers that we have previously used, which
+    # guarantees that we'll see all of them rather evenly
+    readarray -t used_wp <<<$(cat "${WP_ALREADY_USED}")
+    for used in "${used_wp[@]}"; do
+        if [[ -f "${used}" ]]; then
+            find_exclude+="-not -wholename ${used} "
+        fi
+    done
+
+    # do the actual wallpaper-setting
+    new="$(find -L "${WALLPAPERS_DIRECTORY}" ${find_exclude} -type f -print0 | shuf -z -n 1 | tr -d '\000')"
+    echo "${new}" >> "${WP_ALREADY_USED}"
+    wallpaper "${new}"
+}
+
+main "$@"
