@@ -131,15 +131,23 @@ let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = "FZF"
 
 " Use CTRL-f to open FZF quickly, in the home directory
-nnoremap <C-f> :FZFFiles .<cr>
-nnoremap <leader>f :FZFFiles ~<cr>
+nnoremap <C-f> :FZFFiles .<CR>
+nnoremap <leader>f :FZFFiles ~<CR>
 " }}}
 " settle.vim {{{
-nnoremap <leader>o :SettleEdit<cr>
-nnoremap <leader>n :SettleNewUnderLink<cr>
-nnoremap <leader>w :SettleNewInteractive<cr>
-nnoremap <leader>x :SettleGraph<cr>
-au FileType markdown nnoremap <buffer> <cr> :SettleFollow<cr>
+nnoremap <leader>o :SettleQuery<CR>
+nnoremap <leader>q :SettleQuery '--project inbox'<CR>
+nnoremap <leader>w :SettleNewFromPrompt<CR>
+nnoremap <leader>x :SettleGraph<CR>
+nnoremap <leader>td :execute ':e ' . settle#zettelkasten_path() . '/inbox/TODO.md'<CR>
+nnoremap <leader>ta :execute ':e ' . settle#zettelkasten_path() . '/inbox/TODO Anki.md'<CR>
+" bindings meant to be used only in a Markdown buffer
+augroup SETTLE_MARKDOWN
+    autocmd!
+    autocmd FileType markdown nnoremap <buffer> <CR> :SettleFollow<CR>
+    autocmd Filetype markdown nnoremap <buffer> <BS> :SettleBacklink<CR>
+    autocmd Filetype markdown nnoremap <buffer> <leader>n :SettleNewFromLink<CR>
+augroup END
 " }}}
 " coc.nvim {{{
 " Use <TAB> to navigate the completions list
@@ -173,7 +181,7 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " List of extensions
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
+let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-pyright', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
@@ -332,11 +340,21 @@ inoremap <C-c> <NOP>
 vnoremap <C-c> <NOP>
 
 " If the filename under cursor doesn't exist, create it and then go to it
-nnoremap <leader>gf :e <cfile><cr>
+nnoremap <leader>gf :e <cfile><CR>
 
-" Unbind backspace in insert mode and delete key. Use `dw` or `db` or `x` in normal mode
+" Unbind backspace and delete key. Use the superior vim-exclusive movements
+let g:AutoPairsMapBS=0
+noremap <BS> <NOP>
 inoremap <BS> <NOP>
 noremap <DEL> <NOP>
+inoremap <DEL> <NOP>
+
+" Unbind mouse
+set mouse=
+set mousemodel=extend
+set t_BE=
+map <MiddleMouse> <NOP>
+imap <MiddleMouse> <NOP>
 
 " Copy the entire file to clipboard
 nnoremap <leader>p :% y+<CR>
@@ -345,17 +363,10 @@ nnoremap <leader>p :% y+<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
 " Quit a buffer without closing the window it was on
-nnoremap <leadeR>bq :bp<bar>sp<bar>bp<bar>bd<cr>
+nnoremap <leader>bq :bp<bar>sp<bar>bp<bar>bd<CR>
 " }}}
 " AUTOCOMMANDS {{{
-augroup MARKDOWN_OPTIONS
-    autocmd!
-    autocmd BufWinEnter *.md setlocal foldmethod=manual
-    autocmd BufWinLeave *.md mkview
-    autocmd BufWinEnter *.md silent! loadview
-augroup END
-
-augroup BUFFER_WRITE
+augroup REMOVE_TRAILING_WHITESPACE
     autocmd!
     " Remove trailing whitespace from every line
     autocmd BufWritePre * :mark p

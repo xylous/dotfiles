@@ -112,6 +112,14 @@ alias cgc="cargo clippy"
 alias cgs="cargo search"
 alias cgt="cargo test"
 
+
+###############
+### HASKELL ###
+###############
+
+alias ghc="stack ghc --"
+alias ghci="stack ghci --"
+
 ##############
 ### SETTLE ###
 ##############
@@ -138,7 +146,7 @@ function vstni() {
 }
 
 function vste() {
-    nvim -c "SettleEdit"
+    nvim -c "SettleQuery"
 }
 
 function vstg() {

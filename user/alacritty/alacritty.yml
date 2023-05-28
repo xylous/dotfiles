@@ -121,7 +121,7 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style:
-    shape: Block
+    shape: Beam
     blinking: Always
   blink_interval: 450 # time in milliseconds
 
@@ -131,7 +131,7 @@ cursor:
   # the style of the active value of the normal cursor.
   #
   # See `cursor.style` for available options.
-  vi_mode_style: Block
+  vi_mode_style: Beam
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
@@ -139,7 +139,7 @@ cursor:
 
   # Thickness of the cursor relative to the cell width as floating point number
   # from `0.0` to `1.0`.
-  thickness: 0.15
+  thickness: 0.25
 
 # Live config reload (changes require restart)
 live_config_reload: true
