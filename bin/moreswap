@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+### moreswap
+## author: xylous <xylous.e@gmail.com>
+# in case of emergency, make a swapfile of a given size and priority
+#
+# arguments:    $1 amount of GB to allocate to the swapfile
+#               $2 priority of the new swapfile
+#
+# NOTE: this script is meant to be ran as root
+function main()
+{
+    local gigs="$1"
+    local priority="$2"
+    local date="$(date "+%Y-%m-%d")"
+    if [[ -z "${gigs}" ]] || [[ ! "${priority}" =~ ^[0-9]+$ ]]; then
+        echo "warning: '${gigs}' is not a number, defaulting to 4 GB"
+        gigs="4"
+    fi
+    if [[ -z "${priority}" ]] || [[ "${priority}" -lt 0 ]] || [[ ! "${priority}" =~ ^[0-9]+$ ]]; then
+        echo "warning: '${priority}' is not a number, defaulting to priority 0"
+        priority="0"
+    fi
+    local file="/swapfile-${date}"
+
+    echo "${file} , ${gigs}GB , priority: ${priority}"
+    read -p "Are you sure? [y/N] " -n 1 -r
+    echo
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+        if [[ "${USER}" == "root" ]]; then
+            fallocate -l "${gigs}"G "${file}" \
+                && mkswap "${file}" \
+                && swapon "${file}" -p "${priority}" \
+                && echo "${file} swap swap sw,pri=${priority} 0 0" >>/etc/fstab \
+                && echo "success"
+        else
+            echo "you are not the root user; abort"
+        fi
+    fi
+
+}
+
+main "$@"

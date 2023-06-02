@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+# copy an image into the clipboard
+# arguments:    $1 the path to the image
+
+function main()
+{
+    local file="$1"
+    if [[ ! -f "${file}" ]]; then
+        echo "error: '${file}' is not a file or it doesn't exist"
+        exit 1
+    fi
+
+    local extension="${file##*.}"
+    case "${extension}" in
+        # For some reason, WebP images are copied under the PNG target
+        "png" | "webp")
+            type=png
+            ;;
+        "jpg" | "jpeg")
+            type=jpeg
+            ;;
+        "bmp" | "wbmp")
+            type=bmp
+            ;;
+        *)
+            echo "error: extension '${extension}' not recognised"
+            exit 1
+            ;;
+    esac
+    xclip -t "image/${type}" -selection clipboard "${file}"
+}
+
+main "$@"

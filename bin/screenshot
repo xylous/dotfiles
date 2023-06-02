@@ -18,24 +18,32 @@ function echoerr()
 }
 
 ###
-# Read the number from "${LAST_SCREENSHOT_FILE}" to determine which screenshot
-# was saved last
+# Return the padding zeroes necessary for filenames of equal length
+# Arguments:    $1 the screenshot number
 ###
-function last_screenshot()
+function padding_zeroes()
 {
-    cat "${LAST_SCREENSHOT_FILE}" 2>/dev/null \
-        || echo "0"
+    for i in $(seq $((${#NUM_SCREENSHOTS} - ${#1}))); do
+        echo -n "0"
+    done
 }
 
 ###
-# Write the number from "${LAST_SCREENSHOT_FILE}", but incremented, so that it's
-# not over "${NUM_SCREENSHOTS}"
+# Remove the screenshot indexed `$NUM_SCREENSHOTS` - 1 and move every other one
+# forwards, so that the files are always in order, screenshot 1 being the most
+# recent and `$NUM_SCREENSHOTS` - 1 being the oldest
 ###
-function increment_screenshot()
+function increment_screenshots()
 {
-    local last="$(last_screenshot)"
-    local new=$(((last + 1) % NUM_SCREENSHOTS))
-    echo "${new}" >"${LAST_SCREENSHOT_FILE}"
+    local max="$((${NUM_SCREENSHOTS} - 1))"
+    for ss in $(seq 0 "${max}" | sort -nr); do
+        local increment="$(("${ss}" + 1))"
+        local original="${SCREENSHOTS_DIR}/$(padding_zeroes ${ss})${ss}.png"
+        local new="${SCREENSHOTS_DIR}/$(padding_zeroes ${increment})${increment}.png"
+        if [[ -f "${original}" ]]; then
+            mv "${original}" "${new}"
+        fi
+    done
 }
 
 ###
@@ -44,8 +52,7 @@ function increment_screenshot()
 ###
 function screenshot()
 {
-    local screenshot_title="$(last_screenshot)"
-    local screenshot="${SCREENSHOTS_DIR}/${screenshot_title}.png"
+    local screenshot="${SCREENSHOTS_DIR}/$(padding_zeroes 0)0.png"
 
     if [[ "$1" == "-a" ]] || [[ "$1" == "--all" ]]; then
         scrot --overwrite "${screenshot}"
@@ -54,7 +61,7 @@ function screenshot()
     fi
 
     xclip -selection clipboard -t image/png -i "${screenshot}" \
-        && increment_screenshot
+        && increment_screenshots
 }
 
 ###
@@ -70,10 +77,7 @@ function save()
 
 
     if [[ "${num}" == "last" ]]; then
-        num=$(($(last_screenshot) - 1))
-        if [[ "${num}" -lt 0 ]]; then
-            num=$(($num + 10))
-        fi
+        num=1
     fi
 
     local screenshot_path="${SCREENSHOTS_DIR}/${num}.png"
@@ -104,18 +108,20 @@ cat <<EOF
 Usage: screenshot [-a | --all | help | -h | --help]
        screenshot save <num> <title>
 
-By default, the program stores screenshots in a buffer, 0-indexed, of size 10.
-Old screenshots using the same filename are overwritten.
+By default, the program stores screenshots in a buffer, 1-indexed, of size 10.
+Screenshots are stored in a given directory (by default: ~/docs/screenshots),
+with 1.png always being the most recent, 2 always being the secondmost recent
+and so on and so forth.
 
-If ran with no arguments, then it will prompt the user to select an area. If ran
-with '-a' or '--all' options, the entire screen is captured. In both cases,
-the resulting screenshot is copied to clipboard.
+Under the hood, it uses scrot. If ran with no arguments, then it will prompt the
+user to select an area. If ran with '-a' or '--all' options, the entire screen
+is captured. In both cases, the resulting screenshot is copied to clipboard.
 
 If ran with the 'save' command, then you must provide the number of the screenshot
 you want to save (0-9) and the title it should be saved under. The photo is
 viewed with 'feh' and you are prompted to confirm that it's the correct
-screenshot. Note that you can specify "last" as a screenshot number, and it
-conveniently finds the last screenshot you took.
+screenshot. Note that specifying "last" as a screenshot number matches the last
+screenshot taken.
 EOF
 }
 
