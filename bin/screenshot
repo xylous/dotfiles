@@ -7,7 +7,7 @@
 readonly SCREENSHOTS_DIR="${HOME}/docs/screenshots"
 readonly SAVED_SCREENSHOTS_DIR="${SCREENSHOTS_DIR}/saved"
 readonly LAST_SCREENSHOT_FILE="${SCREENSHOTS_DIR}/.last-screenshot"
-readonly NUM_SCREENSHOTS=10
+readonly NUM_SCREENSHOTS=100
 
 ###
 # Print all given arguments to stderr
@@ -80,7 +80,7 @@ function save()
         num=1
     fi
 
-    local screenshot_path="${SCREENSHOTS_DIR}/${num}.png"
+    local screenshot_path="${SCREENSHOTS_DIR}/$(padding_zeroes ${num})${num}.png"
     local saved_screenshot_path="${SAVED_SCREENSHOTS_DIR}/${new_title}.png"
 
     if [[ ! -f "${screenshot_path}" ]]; then

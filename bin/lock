@@ -19,6 +19,8 @@ pre_lock() {
     # Tell spotify to stop
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
         org.mpris.MediaPlayer2.Player.Stop &>/dev/null
+    # Stop any other active playing sound
+    playerctl pause
 
     return
 }
