@@ -1,0 +1,8 @@
+[Unit]
+Description=Create a backup of essentials every sunday at 10pm
+
+[Timer]
+OnCalendar=Sun *-*-* 22:00:00
+
+[Install]
+WantedBy=X.target

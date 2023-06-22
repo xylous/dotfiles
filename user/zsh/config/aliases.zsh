@@ -29,6 +29,8 @@ alias help='run-help'
 
 alias v='$VISUAL'
 alias sv='sudo $VISUAL'
+alias ':q'='exit'
+alias ':wq'='exit'
 
 alias of="onefetch"
 

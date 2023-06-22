@@ -54,26 +54,28 @@ scrolling:
   multiplier: 3
 
 # Font configuration
+# note to future self: fonts are from https://int10h.org/oldschool-pc-fonts/
 font:
   normal:
     #family: MxPlus IBM VGA 9x16
-    family: Iosevka
+    #family: MesloLGS NF
+    #family: Iosevka
+    family: MxPlus ToshibaSat 8x16
     style: Regular
 
   bold:
-    family: MesloLGS NF
+    family: MxPlus ToshibaSat 8x16
     style: Bold
 
   italic:
-    family: MesloLGS NF
+    family: MxPlus ToshibaSat 8x16
     style: Italic
 
   bold_italic:
-    family: MesloLGS NF
+    family: MxPlus ToshibaSat 8x16
     style: Bold Italic
 
   # Point size
-  #size: 7.5
   size: 8.5
 
 # Colors (Ayu Dark)

@@ -111,12 +111,12 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jiangmiao/auto-pairs'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
-" Colorscheme
-Plug 'sainnhe/sonokai'
 " For Zettelkasten purposes
 Plug 'xylous/settle.vim'
 " For writing markdown. vim is a general purpose editor, you can't blame me.
 Plug 'preservim/vim-markdown'
+" Colorscheme
+Plug 'sainnhe/sonokai'
 " add plugins only above this line
 call plug#end()
 
@@ -145,8 +145,10 @@ nnoremap <leader>ta :execute ':e ' . settle#zettelkasten_path() . '/inbox/TODO A
 augroup SETTLE_MARKDOWN
     autocmd!
     autocmd FileType markdown nnoremap <buffer> <CR> :SettleFollow<CR>
-    autocmd Filetype markdown nnoremap <buffer> <BS> :SettleBacklink<CR>
-    autocmd Filetype markdown nnoremap <buffer> <leader>n :SettleNewFromLink<CR>
+    autocmd FileType markdown nnoremap <buffer> <leader>gt :SettleFollowTag<CR>
+    autocmd FileType markdown nnoremap <buffer> <leader>gs :SettleFollowTag!<CR>
+    autocmd FileType markdown nnoremap <buffer> <BS> :SettleBacklink<CR>
+    autocmd FileType markdown nnoremap <buffer> <leader>n :SettleNewFromLink<CR>
 augroup END
 " }}}
 " coc.nvim {{{
@@ -363,7 +365,8 @@ nnoremap <leader>p :% y+<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
 " Quit a buffer without closing the window it was on
-nnoremap <leader>bq :bp<bar>sp<bar>bp<bar>bd<CR>
+command! BW :bn|:bd#
+nnoremap <leader>bw :BW<CR>
 " }}}
 " AUTOCOMMANDS {{{
 augroup REMOVE_TRAILING_WHITESPACE
