@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+# toggle active window opacity with picom
+
+readonly PICOM_CONF="${XDG_CONFIG_HOME}/picom/picom.conf"
+readonly DESIRED_OPACITY="0.95"
+
+function main() {
+    local transparent="active-opacity = ${DESIRED_OPACITY}"
+    sed_expr=""
+    if grep '^active-opacity = 1$' "${PICOM_CONF}" 1>/dev/null; then
+        sed_expr="s/^active-opacity = 1$/${transparent}/"
+    else
+        sed_expr="s/^${transparent}$/active-opacity = 1/"
+    fi
+    sed "${sed_expr}" -i --follow-symlinks "${PICOM_CONF}"
+}
+
+main

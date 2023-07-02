@@ -135,8 +135,11 @@ nnoremap <C-f> :FZFFiles .<CR>
 nnoremap <leader>f :FZFFiles ~<CR>
 " }}}
 " settle.vim {{{
-nnoremap <leader>o :SettleQuery<CR>
-nnoremap <leader>q :SettleQuery '--project inbox'<CR>
+nnoremap <leader>qa :SettleQuery<CR>
+nnoremap <leader>qi :SettleQuery '--project inbox'<CR>
+nnoremap <leader>qg :SettleQueryGhosts<CR>
+nnoremap <leader>qf :SettleQueryNoteForwardlinks<CR>
+nnoremap <leader>qb :SettleQueryNoteBacklinks<CR>
 nnoremap <leader>w :SettleNewFromPrompt<CR>
 nnoremap <leader>x :SettleGraph<CR>
 nnoremap <leader>td :execute ':e ' . settle#zettelkasten_path() . '/inbox/TODO.md'<CR>
@@ -145,9 +148,9 @@ nnoremap <leader>ta :execute ':e ' . settle#zettelkasten_path() . '/inbox/TODO A
 augroup SETTLE_MARKDOWN
     autocmd!
     autocmd FileType markdown nnoremap <buffer> <CR> :SettleFollow<CR>
+    autocmd FileType markdown nnoremap <buffer> <BS> :SettleBacklink<CR>
     autocmd FileType markdown nnoremap <buffer> <leader>gt :SettleFollowTag<CR>
     autocmd FileType markdown nnoremap <buffer> <leader>gs :SettleFollowTag!<CR>
-    autocmd FileType markdown nnoremap <buffer> <BS> :SettleBacklink<CR>
     autocmd FileType markdown nnoremap <buffer> <leader>n :SettleNewFromLink<CR>
 augroup END
 " }}}

@@ -60,23 +60,25 @@ font:
     #family: MxPlus IBM VGA 9x16
     #family: MesloLGS NF
     #family: Iosevka
-    family: MxPlus ToshibaSat 8x16
+    #family: Source Code Pro
+    #family: MxPlus ToshibaSat 8x16
+    family: xos4 Terminus
     style: Regular
 
   bold:
-    family: MxPlus ToshibaSat 8x16
+    family: xos4 Terminus
     style: Bold
 
   italic:
-    family: MxPlus ToshibaSat 8x16
+    family: xos4 Terminus
     style: Italic
 
   bold_italic:
-    family: MxPlus ToshibaSat 8x16
+    family: xos4 Terminus
     style: Bold Italic
 
   # Point size
-  size: 8.5
+  size: 8.0
 
 # Colors (Ayu Dark)
 colors:
