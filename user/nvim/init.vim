@@ -76,7 +76,7 @@ set nobackup
 " Plugins (with vim-plug) {{{
 " Install vim-plug if not already installed
 "let plug_install_path = $HOME . "/.local/share/nvim/site/autoload/plug.vim"
-let plug_install_path = "/home/xylous/.local/share/nvim/site/autoload/plug.vim"
+let plug_install_path = $XDG_DATA_HOME . "/share/nvim/site/autoload/plug.vim"
 let plug_install_now = 0
 if ! filereadable(plug_install_path)
     echon 'Installing junegunn/vim-plug...'
@@ -85,6 +85,8 @@ if ! filereadable(plug_install_path)
         \ . ' --create-dirs'
         \ . ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     echon ' done'
+    let plug_install_now = 1
+elseif !isdirectory($XDG_CONFIG_HOME . "/nvim/plugged")
     let plug_install_now = 1
 endif
 unlet plug_install_path
@@ -111,9 +113,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jiangmiao/auto-pairs'
 " Display a git diff in the sign column on the left:
 Plug 'airblade/vim-gitgutter'
-" For Zettelkasten purposes
+" For Zettelkasten (and, in general, just writing) purposes
 Plug 'xylous/settle.vim'
-" For writing markdown. vim is a general purpose editor, you can't blame me.
 Plug 'preservim/vim-markdown'
 " Colorscheme
 Plug 'sainnhe/sonokai'
@@ -135,6 +136,7 @@ nnoremap <C-f> :FZFFiles .<CR>
 nnoremap <leader>f :FZFFiles ~<CR>
 " }}}
 " settle.vim {{{
+let g:settle_wikilink_hl_guifg="#b221de"
 nnoremap <leader>qa :SettleQuery<CR>
 nnoremap <leader>qi :SettleQuery '--project inbox'<CR>
 nnoremap <leader>qg :SettleQueryGhosts<CR>
@@ -380,6 +382,11 @@ augroup REMOVE_TRAILING_WHITESPACE
     autocmd BufWritePre * :'p
     autocmd BufWritePre * :delmarks p
 augroup END
+
+augroup markdown
+    " start with first header fold open on new markdown buffers
+    autocmd filetype markdown setlocal foldlevel=1
+augroup end
 " }}}
 
 " Set custom path for viminfo
