@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ### git-mgdp, written by xylous (xylous.e@gmail.com)
-# merge current branch with master, delete it, then push master to remote
+# MERGE the current branch with master, DELETE the current branch, PUSH master
 
 function main()
 {

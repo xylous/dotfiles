@@ -96,7 +96,6 @@ call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
 " NOTE: Be careful, as too many plugins will slow vim down!
 " Lean status/tabline for vim:
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 " Quickly comment out multile lines:
 Plug 'preservim/nerdcommenter'
 " Code autocompletion:
@@ -118,6 +117,7 @@ Plug 'xylous/settle.vim'
 Plug 'preservim/vim-markdown'
 " Colorscheme
 Plug 'sainnhe/sonokai'
+Plug 'sainnhe/edge'
 " add plugins only above this line
 call plug#end()
 
@@ -136,6 +136,7 @@ nnoremap <C-f> :FZFFiles .<CR>
 nnoremap <leader>f :FZFFiles ~<CR>
 " }}}
 " settle.vim {{{
+let g:settle_wikilink_hl_enable=0
 let g:settle_wikilink_hl_guifg="#b221de"
 nnoremap <leader>qa :SettleQuery<CR>
 nnoremap <leader>qi :SettleQuery '--project inbox'<CR>
@@ -269,15 +270,19 @@ set background=dark
 "let g:gruvbox_material_cursor = 'auto'
 "let g:gruvbox_material_ui_contrast = 'high'
 
-" For sonokai colorscheme
+" Colorscheme related
 let g:sonokai_style = 'andromeda'
 let g:sonokai_better_performance = 0
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 0
 
-colorscheme sonokai
+let g:edge_style = 'default'
+let g:edge_better_performance = 0
+
+colorscheme edge
 " AIRLINE {{{
-let g:airline_theme = 'sonokai'
+"let g:airline_theme = 'sonokai'
+let g:airline_theme = 'edge'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
@@ -345,6 +350,14 @@ nnoremap <leader>L :wincmd L<CR>
 
 inoremap <C-c> <NOP>
 vnoremap <C-c> <NOP>
+
+" Embed Latex in Markdown with this simple trick. The first is for equations
+" spanning entire lines, and the second is for in-line equations.
+inoremap <C-a> $$$$<Esc>hi
+"inoremap <C-l>i $$<Esc>i
+
+" Enter the current date in YYYY-MM-DD format
+nnoremap <C-d> :put =strftime('%Y-%m-%d') <bar> :-join<CR>
 
 " If the filename under cursor doesn't exist, create it and then go to it
 nnoremap <leader>gf :e <cfile><CR>

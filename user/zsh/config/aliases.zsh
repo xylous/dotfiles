@@ -108,12 +108,17 @@ alias grm="git rm"
 #############
 
 alias cg="cargo"
-alias cgb="cargo build"
-alias cgr="cargo run"
-alias cgc="cargo clippy"
+alias cgb="cargo build --release"
+alias cgr="cargo run --release"
+alias cgc="cargo clippy --release --no-deps"
 alias cgs="cargo search"
-alias cgt="cargo test"
+alias cgt="cargo test --release"
 
+##############
+### PYTHON ###
+##############
+
+alias pipib="pip install --break-system-packages"
 
 ###############
 ### HASKELL ###

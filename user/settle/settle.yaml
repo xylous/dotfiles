@@ -1,0 +1,3 @@
+---
+zettelkasten: ~/docs/zettelkasten
+template: $XDG_CONFIG_HOME/settle/ZETTEL_TEMPLATE.md
