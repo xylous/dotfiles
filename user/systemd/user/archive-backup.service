@@ -3,4 +3,4 @@ Description=Create a backup of essentials
 
 [Service]
 Type=oneshot
-ExecStart=/bin/zsh -c "/home/xylous/bin/barckup"
+ExecStart=/bin/zsh -c "/home/xylous/bin/barckup --drive"

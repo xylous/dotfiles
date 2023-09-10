@@ -16,6 +16,7 @@ function gratitude()
 cat <<EOF > "${entry}"
 # ${date}
 
+
 EOF
     fi
     ${EDITOR} "${entry}"

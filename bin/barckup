@@ -1,28 +1,27 @@
 #!/usr/bin/sh
 
 ### barckup, written by xylous <xylous.e@gmail.com>
-## just. create a backup of my essentials.
+## create a backup of essentials and upload them to Google Drive, archived
 
 ZETTELKASTEN_DIR="$(settle ls path)"
 JOURNAL_DIR="${HOME}/docs/journal"
+GOOGLE_DRIVE_BACKUP_DIR_ID='1BEP4gX1LXa88d2kD1VaFDxQFAK9LTT9D'
 
-function main()
-{
-    local inputpath="$1"
+declare backupsdir="${HOME}/docs/backup"
+declare archivepath="${backupsdir}/$(date +%Y-%m-%d).tar.gz"
 
-    declare date="$(date +%Y-%m-%d)"
-    declare workdir="${HOME}/docs/backup/${date}"
-    declare archivename="$(basename "${inputpath}")"
-    declare archivepath="${workdir}/${archivename}.tar.gz"
+mkdir -p "${backupsdir}"
 
-    mkdir -p "${workdir}"
-
-    echo -n "Creating ${archivepath} archive..."
-    tar -czf "${archivepath}" -C "${inputpath}/.." "${archivename}"
-    if [[ -f "${archivepath}" ]]; then
-        echo " done"
+echo -n "Compressing Journal and Zettelkasten directories into ${archivepath} archive..."
+tar -czf "${archivepath}" \
+    -C "${ZETTELKASTEN_DIR}/.." "$(basename ${ZETTELKASTEN_DIR})"  \
+    -C "${JOURNAL_DIR}/.." "$(basename ${JOURNAL_DIR})"
+if [[ -f "${archivepath}" ]]; then
+    echo " done."
+    if [[ "$1" == "--drive" ]]; then
+        echo -n "Uploading archive to Google Drive... "
+        gdrive files upload "${archivepath}" \
+            --parent "${GOOGLE_DRIVE_BACKUP_DIR_ID}" 1>/dev/null \
+            && echo " done."
     fi
-}
-
-main "${ZETTELKASTEN_DIR}"
-main "${JOURNAL_DIR}"
+fi

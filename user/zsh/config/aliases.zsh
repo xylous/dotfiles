@@ -138,7 +138,9 @@ alias sts="settle sync"
 alias stls="settle ls"
 # basically this makes it very easy (for me) to get a good perspective on the
 # last things I wrote, since every note contains the date it was written
-alias stpr="settle query --text '\d{4}-\d{2}-\d{2}' --format '(%a) %t' | sort"
+alias stpr="settle query --text '\d{4}-\d{2}-\d{2}' --format '(%a) %t' | sort -- -"
+# just open the graph of the Zettelkasten with firefox
+alias vizk="settle query --graph vizk >$(settle ls path)/vizk.html && firefox $(settle ls path)/vizk.html"
 
 function vstn() {
     nvim -c "SettleNew '',\"$1\""

@@ -5,4 +5,5 @@
 
 ### What inspired this thought?
 
-- ${DATE}: (author? book/article? platform? link to content?)
+- ${DATE}:
+    - [Authors] - [Title] ([year]), [book/article/PhD], [link/IBAN]

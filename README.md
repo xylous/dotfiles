@@ -10,9 +10,9 @@ This repository contains most of my dotfiles. Enjoy.
 - `etc`: configuration files destined for `/etc`
 - `template`: a README template and various license templates; not actually
     built
-- `wallpapers`: all the wallpapers that I use at any given point in time (the
-    `cwallpaperd` program in `bin/` automatically shuffles between them every
-    hour)
+- `wallpapers`: all the wallpapers that I use at any given point in time (there
+    is a systemd timer and service in the user configuration,
+    `wallpaper-change`, which swaps it every so often)
 
 ## Building dotfiles
 
