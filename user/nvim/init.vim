@@ -140,6 +140,7 @@ let g:settle_wikilink_hl_enable=0
 let g:settle_wikilink_hl_guifg="#b221de"
 nnoremap <leader>qa :SettleQuery<CR>
 nnoremap <leader>qi :SettleQuery '--project inbox'<CR>
+nnoremap <leader>qd :SettleQuery '--project drafts'<CR>
 nnoremap <leader>qg :SettleQueryGhosts<CR>
 nnoremap <leader>qf :SettleQueryNoteForwardlinks<CR>
 nnoremap <leader>qb :SettleQueryNoteBacklinks<CR>

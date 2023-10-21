@@ -236,3 +236,6 @@ bindsym $mod+x nop
 
 # Reserve $mod+Shift+m - used for OBS Replay Buffer
 bindsym $mod+Shift+m nop
+
+# Change wallpaper
+bindsym $mod+p exec rand_wp
