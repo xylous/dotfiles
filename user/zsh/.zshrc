@@ -142,3 +142,7 @@ if ! ps -p "${SSH_AGENT_PID}" | grep ssh-agent >/dev/null; then
     ssh-agent >"${SSH_AGENT_FILE}"
     . "${SSH_AGENT_FILE}" >/dev/null
 fi
+
+# Stop debuginfod from creating massive cache folders
+# (while possibly ruining debugging tools in the process)
+export DEBUGINFOD_URLS=""

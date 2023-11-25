@@ -1,5 +1,5 @@
-# Add only unique entries to $path and $PATH
-typeset -U path PATH
+# Add only unique entries
+typeset -U path PATH fpath FPATH
 # Add $HOME/bin to $PATH via the $path array
 export path=("${HOME}/bin" "${HOME}/.local/bin" "${HOME}/.local/share/cargo/bin" ${path})
 # Enforce $PATH to child processes
@@ -8,5 +8,6 @@ export PATH
 export fpath=("${ZDOTDIR}/completion" ${fpath})
 # Enforce $PATH to child processes
 export FPATH
-# Just Haskell things
+
+# Haskell
 export STACK_ROOT="${XDG_DATA_HOME}/stack"

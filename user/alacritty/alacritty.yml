@@ -62,7 +62,6 @@ font:
     #family: Iosevka
     #family: Source Code Pro
     #family: MxPlus ToshibaSat 8x16
-    #family: xos4 Terminus
     style: Regular
 
   bold:
@@ -125,9 +124,9 @@ cursor:
   #   - _ Underline
   #   - | Beam
   style:
-    shape: Block
+    shape: Beam
     blinking: Always
-  blink_interval: 450 # time in milliseconds
+  blink_interval: 300 # time in milliseconds
 
   # Vi mode cursor style
   #
@@ -143,10 +142,10 @@ cursor:
 
   # Thickness of the cursor relative to the cell width as floating point number
   # from `0.0` to `1.0`.
-  thickness: 0.25
+  thickness: 0.4
 
 # Live config reload (changes require restart)
-live_config_reload: true
+live_config_reload: false
 
 # Shell
 #

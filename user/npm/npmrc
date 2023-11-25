@@ -1,0 +1,5 @@
+prefix=/home/xylous/.local/share/npm
+cache=/home/xylous/.cache/npm
+tmp=/run/user/1000/npm
+init-module=/home/xylous/.config/npm/config/npm-init.js
+update-notifier=false

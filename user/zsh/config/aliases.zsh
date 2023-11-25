@@ -94,6 +94,7 @@ alias gciuh="git commit --amend"
 
 alias gcl="git clone"
 alias gpsh="git push"
+alias gpsha="git push && git push --tags"
 alias gpl="git pull"
 
 alias gbr="git branch"
@@ -124,7 +125,6 @@ alias pipib="pip install --break-system-packages"
 ### HASKELL ###
 ###############
 
-alias ghc="stack ghc --"
 alias ghci="stack ghci --"
 
 ##############

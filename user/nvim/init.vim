@@ -190,7 +190,18 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " List of extensions
-let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-pyright', 'coc-clangd', 'coc-sh', 'coc-rust-analyzer']
+let g:coc_global_extensions = [
+    \ 'coc-vimlsp',
+    \ 'coc-snippets',
+    \ 'coc-sh',
+    \ 'coc-clangd',
+    \ 'coc-rust-analyzer',
+    \ 'coc-pyright',
+    \ 'coc-tsserver',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-json',
+\ ]
 
 " Integrate coc.nvim with Airline
 let g:airline#exxtensions#coc#enabled = 1
@@ -216,12 +227,20 @@ let g:indent_guides_guide_size = 1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {
+        "vim",
+        "markdown",
+        "bash",
         "c",
         "rust",
         "haskell",
-        "bash",
+        "python",
+        "javascript",
+        "html",
+        "css",
         "json",
-        "toml",
+    },
+    indent = {
+        enable = false,
     },
     highlight = {
         enable = true,
