@@ -21,7 +21,6 @@ define symlink
 	for file in $(shell find $(1) -type f); do \
 		orig_file="$$file"; \
 		file="$${file#*/}"; \
-		mkdir --parents "$(2)"; \
 		$(call symlink_single,$$orig_file,$(2)/$$file); \
 	done
 endef
@@ -29,6 +28,7 @@ endef
 # $1 = file/directory that the link will point to
 # $2 = path to the link file
 define symlink_single
+	mkdir --parents "$$(dirname $(2))"; \
 	ln -nsf "$$(realpath $(1))" "$$(realpath --no-symlinks $(2))" \
 		&& echo "symlink $(2) -> $(1)"
 endef
@@ -40,7 +40,7 @@ define copy_directory_files
 		orig_file="$$file"; \
 		file="$${file#*/}"; \
 		dest_dir="$(2)"; \
-		mkdir --parents "$$dest_dir"; \
+		mkdir --parents "$$(basename $$file)"; \
 		cp -f "$$orig_file" "$$dest_dir/$$file" \
 			&& echo "copied $${orig_file} -> $$dest_dir/$${file}"; \
 	done
