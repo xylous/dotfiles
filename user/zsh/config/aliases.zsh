@@ -53,7 +53,7 @@ alias cfi3='$VISUAL $XDG_CONFIG_HOME/i3/config'
 # "configure xinitrc"
 alias cfxin='$VISUAL $XDG_CONFIG_HOME/X11/xinitrc'
 # "configure alacritty"
-alias cfal='$VISUAL $XDG_CONFIG_HOME/alacritty/alacritty.yml'
+alias cfal='$VISUAL $XDG_CONFIG_HOME/alacritty/alacritty.toml'
 # "configure tmux"
 alias cftmux='$VISUAL $XDG_CONFIG_HOME/tmux/tmux.conf'
 # "Configure polybar"

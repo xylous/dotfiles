@@ -71,6 +71,9 @@ export PAGER='less'
     && mzpm 'xylous/hydrogen'
 
 ## Prompt settings
+# Enable vim mode
+bindkey -v
+
 # Pressing UP and DOWN keys will go up and down in the entries in hitory that
 # start with what has already been typed in
 bindkey "${terminfo[kcuu1]}" history-substring-search-up
@@ -95,9 +98,6 @@ bindkey -M menuselect "l" vi-forward-char
 # Be able to use Ctrl-[N|P] to navigate tab completion menu
 bindkey '^N' expand-or-complete
 bindkey '^P' reverse-menu-complete
-
-# Enable vim mode
-bindkey -v
 
 # Remove character under cursor when the <Delete> key is pressed
 bindkey "^[[3~" vi-delete-char

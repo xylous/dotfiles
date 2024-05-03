@@ -240,7 +240,19 @@ require'nvim-treesitter.configs'.setup {
         "json",
     },
     indent = {
-        enable = false,
+        disable = {
+            "vim",
+            "markdown",
+            "bash",
+            "c",
+            "rust",
+            "haskell",
+            "python",
+            "html",
+            "css",
+            "json",
+        },
+        enable = true,
     },
     highlight = {
         enable = true,
