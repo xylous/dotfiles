@@ -311,10 +311,10 @@ let g:sonokai_disable_italic_comment = 0
 let g:edge_style = 'default'
 let g:edge_better_performance = 0
 
-colorscheme edge
+colorscheme sonokai
 " AIRLINE {{{
-"let g:airline_theme = 'sonokai'
-let g:airline_theme = 'edge'
+let g:airline_theme = 'sonokai'
+"let g:airline_theme = 'edge'
 
 " Separators for empty sections look horrifying
 let g:airline_skip_empty_sections = 1
@@ -357,7 +357,7 @@ let g:airline_section_x = '%Y'
 let mapleader = '\'
 " Quick access to vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <C-s> :source $MYVIMRC<CR>
+nnoremap <leader>s :source $MYVIMRC<CR>
 
 " Disable arrow keys
 inoremap <up> <NOP>
@@ -417,6 +417,9 @@ nnoremap <leader>bn :bn<CR>
 " Quit a buffer without closing the window it was on
 command! BW :bn|:bd#
 nnoremap <leader>bw :BW<CR>
+" Useful for editing Markdown files
+inoremap <C-j> **<ESC>i
+inoremap <C-b> ****<ESC>hi
 " }}}
 " AUTOCOMMANDS {{{
 augroup REMOVE_TRAILING_WHITESPACE

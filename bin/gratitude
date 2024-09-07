@@ -8,7 +8,10 @@
 
 function gratitude()
 {
-    local date="$(date +%y-%m-%d)"
+    local date="$(date '+%y-%m-%d')"
+    if [[ $(date '+%H') -lt 5 ]]; then
+        date="$(date -d '-1 day' '+%y-%m-%d')"
+    fi
 
     mkdir -p "${JOURNAL_DIR}/gratitude"
     local entry="${JOURNAL_DIR}/gratitude/${date}.md"

@@ -18,6 +18,7 @@ function main()
         touch "${WP_ALREADY_USED}"
     fi
 
+
     # this is for excluding wallpapers that we have previously used, which
     # guarantees that we'll see all of them rather evenly
     readarray -t used_wp <<<$(cat "${WP_ALREADY_USED}")
@@ -28,7 +29,7 @@ function main()
     done
 
     # do the actual wallpaper-setting
-    new="$(find -L "${WALLPAPERS_DIRECTORY}" ${find_exclude} -type f -print0 | shuf -z -n 1 | tr -d '\000')"
+    new="$(find -L "${WALLPAPERS_DIRECTORY}" -maxdepth 1 ${find_exclude} -type f -print0 | shuf -z -n 1 | tr -d '\000')"
     echo "${new}" >> "${WP_ALREADY_USED}"
     wallpaper "${new}"
 }

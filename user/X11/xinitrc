@@ -40,6 +40,7 @@ systemctl --user start X.target &
 # feh for wallpaper + picom as compositer
 #WALLPAPER="${XDG_CONFIG_HOME}/wallpaper"
 #exec feh --no-fehbg --bg-scale ${WALLPAPER} &
+exec count-days &
 exec picom &
 exec xrandr --output eDP --set TearFree on &
 
